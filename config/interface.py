@@ -21,14 +21,26 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
-supportedDevices = ["PIC32MZ"]
-notSupportedVariants = []
+#Essential changes for each release
+releaseVersion = "v2.0.1"
+releaseYear    = "2021"
 
-def loadModule():
-    print("Load Module: Harmony Class B Library")
-    device_name = Variables.get("__PROCESSOR")
-    for x in supportedDevices:
-        if x in device_name:
-            if device_name not in notSupportedVariants:
-                classBComponent = Module.CreateComponent("lib_classb_pic32mzw", "Class B Library", "/ClassB/", "config/classb_pic32mzw1_wfi32e01.py")
 
+deviceNode = ATDF.getNode("/avr-tools-device-file/devices")
+deviceChild = []
+deviceChild = deviceNode.getChildren()
+deviceName = deviceChild[0].getAttribute("series")
+print(deviceName)
+
+global getDeviceName
+getDeviceName = classBComponent.createStringSymbol("DEVICE_NAME", classBMenu)
+getDeviceName.setDefaultValue(deviceName)
+getDeviceName.setVisible(False)
+
+getreleaseVersion = classBComponent.createStringSymbol("REL_VER", classBMenu)
+getreleaseVersion.setDefaultValue(releaseVersion)
+getreleaseVersion.setVisible(False)
+
+getreleaseYear = classBComponent.createStringSymbol("REL_YEAR", classBMenu)
+getreleaseYear.setDefaultValue(releaseYear)
+getreleaseYear.setVisible(False)

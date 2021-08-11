@@ -1,6 +1,5 @@
-# coding: utf-8
-"""*****************************************************************************
-* Copyright (C) 2021 Microchip Technology Inc. and its subsidiaries.
+/*******************************************************************************
+* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -20,15 +19,10 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
-*****************************************************************************"""
-supportedDevices = ["PIC32MZ"]
-notSupportedVariants = []
+*******************************************************************************/
 
-def loadModule():
-    print("Load Module: Harmony Class B Library")
-    device_name = Variables.get("__PROCESSOR")
-    for x in supportedDevices:
-        if x in device_name:
-            if device_name not in notSupportedVariants:
-                classBComponent = Module.CreateComponent("lib_classb_pic32mzw", "Class B Library", "/ClassB/", "config/classb_pic32mzw1_wfi32e01.py")
+#ifndef __OSAL_DEFINITIONS_H
+#define __OSAL_DEFINITIONS_H
 
+#include "osal/osal_impl_basic.h"
+#endif//__OSAL_DEFINITIONS_H
