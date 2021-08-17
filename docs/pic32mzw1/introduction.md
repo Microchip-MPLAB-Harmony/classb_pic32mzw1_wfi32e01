@@ -5,6 +5,7 @@ title: Class B Peripheral Library Introduction
 nav_order: 2
 ---
 
+# Harmony 3 Class B Library for PIC32MZW1
 
 The Class B Library provides APIs to perform self-tests for the on-board systems of the microcontroller.
 

@@ -6,6 +6,9 @@ has_children: true
 
 technology: classb
 ---
+
+# Harmony 3 Class B Library for PIC32MZW1
+
 ## [Introduction](./introduction.md)
 ## [Using the library](./usage.md)
 ## [Configuring the library](./configuration.md)

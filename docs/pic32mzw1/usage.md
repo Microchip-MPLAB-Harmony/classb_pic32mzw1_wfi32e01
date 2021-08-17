@@ -5,10 +5,10 @@ title: Class B Peripheral Library Usage
 nav_order: 3
 ---
 
-## Class B Peripheral Library Usage
+# Class B Peripheral Library Usage
 
-This topic describes the basic architecture of the Class B library and provides information and examples on how to use it.
-APIs defined by the Class B library can be used either by the start-up code or by the application code.
+This document describes the basic architecture of the Class B library and provides information and examples on how to use it.
+APIs defined by the Class B library can be used either at start-up or by the application code.
 The application may use PLIBs, drivers or middleware from the Harmony 3 software framework along with the Class B library code.
 
 **Interface Header File** : classb.h
@@ -43,10 +43,10 @@ that uses the Class B should include classb.h.
 
 The following picture shows positioning of Class B library in a Harmony 3 based application.
 
-Figure - Class B library in MPLAB Harmony 3
-
-![](./images/H3_ClassB_Architecture.png)
-
+<figure align="center">
+<img src="./images/H3_ClassB_Architecture.png"/>
+<figcaption>Class B library in MPLAB Harmony 3</figcaption>
+</figure>
 
 ## Start-up vs. Run-time
 
@@ -75,25 +75,22 @@ in the microcontroller. These tests are non-destructive. In the case of run-time
 shall decide which test to execute when.
 
 **Note**
-Disable IRQs before running self-test for SRAM or CPU clock.
-Interrupting SRAM test can result in unexpected variable values if the test has been running on the
-SRAM area used by the application. Interrupting clock test can result in incorrect test results since
-the test is timing dependent.
+> Disable IRQs before running self-test for SRAM or CPU clock. Interrupting SRAM test can result in unexpected variable values if the test has been running on the SRAM area used by the application. Interrupting clock test can result in incorrect test results since the test is timing dependent.
 
 
 ## Components in the Library
 
 The Class B library contains self-test routines for different components inside the CPU.
 
-Figure – Components in the Class B library
-
-![](./images/ClassB_SYS_Elements.png)
-
+<figure align="center">
+<img src="./images/ClassB_SYS_Elements.png"/>
+<figcaption>Components in the Class B library</figcaption>
+</figure>
 
 ### Critical and Non-critical Components
 
 Based on the impact of failure, different components inside this Class B library are categorized
-as critical or non-critical.
+as `critical` or `non-critical`.
 
 If the self-test for CPU registers, PC or Flash detects a failure, the code execution is stopped,
 and it remains in an infinite loop. This is to prevent unsafe code execution. In the case of non-critical
@@ -111,9 +108,10 @@ in this case of SRAM failure can be toggling of an IO pin.
 1. CPU registers including the Program Counter
 2. Internal Flash program memory
 
-Generic Flow of Critical Tests
-
-![](./images/Generic_flow_Critical_test.png)
+<figure align="center">
+<img src="./images/Generic_flow_Critical_test.png"/>
+<figcaption>Generic Flow of Critical Tests</figcaption>
+</figure>
 
 #### Non-critical Components
 
@@ -122,10 +120,11 @@ Generic Flow of Critical Tests
 3. Interrupts
 4. IO pins
 
-Generic Flow of Non-Critical Tests
 
-![](./images/Generic_flow_Non_critial_tests.png)
-
+<figure align="center">
+<img src="./images/Generic_flow_Non_critial_tests.png"/>
+<figcaption>Generic Flow of Non-Critical Tests</figcaption>
+</figure>
 
 ## Self-tests for Components in the Library
 
@@ -139,9 +138,11 @@ is detected in any of the CPU registers.
 It can be used at startup as well as run-time. The Program Counter (PC) self-test is designed
 as a separate test since this register cannot be checked with usual test data patterns.
 
-Flow chart of the self-test for CPU registers
+<figure align="center">
+<img src="./images/DD_Test_CPU.png"/>
+<figcaption>Flow chart of the self-test for CPU registers</figcaption>
+</figure>
 
-![](./images/DD_Test_CPU.png)
 
 
 ## Program Counter (PC)
@@ -154,9 +155,10 @@ The self-test for PC calls multiple functions in predefined order and verifies t
 is executed and returns the expected value. If the return values of all test functions are correct,
 the Program Counter is assumed to be working fine. This self-test can be used at startup as well as run-time.
 
-Flow chart of the self-test for Program Counter (PC)
-
-![](./images/DD_PC_TEST.png)
+<figure align="center">
+<img src="./images/DD_PC_TEST.png"/>
+<figcaption>Flow chart of the self-test for Program Counter (PC)</figcaption>
+</figure>
 
 The optimization level for the source file classb_cpu_pc_test.c must be kept as -O1.
 If compiler optimization level for the MPLAB Harmony 3 project is set to something other than -O0 or -O1,
@@ -165,11 +167,16 @@ right clicking on the source file. Modify the settings as shown in the below scr
 after generating the project.
 
 Select the check box 'override build options'
-![](./images/FileOptimization_1.png)
+
+<figure align="center">
+<img src="./images/FileOptimization_1.png"/>
+</figure>
+
 
 In xc32-gcc options, set optimization to -O1 using the highlighted drop-down menus,
-![](./images/FileOptimization_2.png)
- 
+<figure align="center">
+<img src="./images/FileOptimization_2.png"/>
+</figure>
 
 
 
@@ -190,7 +197,9 @@ it remains in an infinite loop.
 
 Flow chart of the self-test for internal flash program memory
 
-![](./images/DD_FLASH.png)
+<figure align="center">
+<img src="./images/DD_FLASH.png"/>
+</figure>
 
 
 ## SRAM
@@ -208,13 +217,15 @@ It provides three standard tests to detect error conditions,
 2. March C minus
 3. March B
 
-Flow chart of the self-test for SRAM
+<figure align="center">
+<img src="./images/DD_Test_Init_SRAM.png"/>
+<figcaption>Flow chart of the self-test for SRAM</figcaption>
+</figure>
 
-![](./images/DD_Test_Init_SRAM.png)
-
-Flow chart of the internal routine for SRAM self-test
-
-![](./images/DD_Test_SRAM.png)
+<figure align="center">
+<img src="./images/DD_Test_SRAM.png"/>
+<figcaption>Flow chart of the internal routine for SRAM self-test</figcaption>
+</figure>
 
 
 ## Clock
@@ -234,9 +245,11 @@ for some other purpose, it must be reconfigured after running the clock self-tes
 the XOSC32K, this self-test cannot not be used during run-time.
 3. Keep the clock test duration lesser than the WDT timeout period, to avoid the WDT resetting the device.
 
-Flow chart of the self-test for CPU clock frequency
 
-![](./images/DD_Clock.png)
+<figure align="center">
+<img src="./images/DD_Clock.png"/>
+<figcaption>Flow chart of the self-test for CPU clock frequency</figcaption>
+</figure>
 
 
 ## Interrupt
@@ -251,13 +264,13 @@ by the TC0 is greater than one and less than the specified upper limit. The cloc
 internal OSCULP32K and for TC0 the clock is same as the default CPU clock (48MHz from the DFLL48M).
 The interrupt self-test can be used only at startup.
 
-**Note**
-1. This startup self-test utilizes the interrupts generated by RTC and TC0. For run-time testing of interrupts,
+> **Note** This startup self-test utilizes the interrupts generated by RTC and TC0. For run-time testing of interrupts,
 a separate self-test need to be developed.
 
-Flow chart of the self-test for interrupts
-
-![](./images/DD_SST_Interrupt.png)
+<figure align="center">
+<img src="./images/DD_SST_Interrupt.png"/>
+<figcaption>Flow chart of the self-test for interrupts</figcaption>
+</figure>
 
 
 ## IO pin
@@ -270,6 +283,8 @@ configure the IO pin direction and drive the pin to the expected state before ca
 When testing an input pin, ensure that the IO pin is externally kept at a defined logic state.
 The IO pin self-test can be used only at run-time.
 
-Flow chart of the self-test for IO pins
 
-![](./images/DD_RST_IO.png)
+<figure align="center">
+<img src="./images/DD_RST_IO.png"/>
+<figcaption>Flow chart of the self-test for IO pins</figcaption>
+</figure>

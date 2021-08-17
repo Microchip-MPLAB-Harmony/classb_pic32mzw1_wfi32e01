@@ -43,7 +43,7 @@ The following applications are provided to demonstrate the typical or interestin
 
 | Examples | Status |
 | --- | :---: |
-| [classb_api_usage](apps/classb_pic32mzw1_wfi32e01/classb_api_usage/readme.md) | ![app-beta](https://img.shields.io/badge/application-beta-orange?style=plastic) |
+| [classb_api_usage](apps/pic32mzw1/readme.md) | ![app-beta](https://img.shields.io/badge/application-beta-orange?style=plastic) |
 
 
 # Supported Devices Families
@@ -52,7 +52,7 @@ The following applications are provided to demonstrate the typical or interestin
 
 | Devices Family | Status |
 | --- | :---: |
-| [PIC32MZW1](docs/classb_pic32mzw1_wfi32e01/docs/readme.md) | ![app-beta](https://img.shields.io/badge/middleware-beta-orange?style=plastic) |
+| [PIC32MZW1](docs/pic32mzw1/readme.md) | ![app-beta](https://img.shields.io/badge/middleware-beta-orange?style=plastic) |
 ____
 
 [![License](https://img.shields.io/badge/license-Harmony%20license-orange.svg)](https://github.com/Microchip-MPLAB-Harmony/classb_pic32mzw1_wfi32e01/blob/master/mplab_harmony_license.md)

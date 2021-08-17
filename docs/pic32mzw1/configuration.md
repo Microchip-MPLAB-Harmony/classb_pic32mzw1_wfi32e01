@@ -16,7 +16,9 @@ When the Class B library is added into the project with the help of MHC, the lin
 
 `-mreserve=data@0x00000000:0x00000400`
 
-![](./images/xc32_ld_SRAM_Reserve.png)
+<figure align="center">
+<img src="./images/xc32_ld_SRAM_Reserve.png"/>
+</figure>
 
 
 ## Modified Startup Sequence
@@ -32,9 +34,7 @@ a fail-safe function after detecting a failure. In such case, the `CLASSB_SelfTe
 called when a failure is detected. In the case of critical failures (CPU registers or internal flash),
 the corresponding self-test remains in an infinite loop to avoid unsafe execution of code.
 
-**Note**
-1. The library defines the `_on_bootstrap` function and handles some of the reset causes.
-The application developer shall insert functions to handle the rest of the reset causes.
+> **Note** The library defines the `_on_bootstrap` function and handles some of the reset causes. The application developer shall insert functions to handle the rest of the reset causes.
 
 
 ## WDT Test and Timeout
@@ -50,8 +50,13 @@ When execution reaches the main() function, the WDT configuration will be same a
 So the WDT should be configured via fuses, as needed by the application.
 The WDT timeout should be larger than the time taken by any of the self-tests used during run-time.
 
-![](./images/WDT_STARTUP_A.png)
-![](./images/WDT_STARTUP_B.png)
+<figure align="center">
+<img src="./images/WDT_STARTUP_A.png"/>
+</figure>
+
+<figure align="center">
+<img src="./images/WDT_STARTUP_B.png"/>
+<figure>
 
 ## Configuring Startup Tests via MHC
 
