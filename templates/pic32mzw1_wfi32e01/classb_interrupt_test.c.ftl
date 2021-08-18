@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Class B Library v2.0.1 Release
+  Class B Library ${REL_VER} Release
 
   Company:
     Microchip Technology Inc.
@@ -16,7 +16,7 @@
 *******************************************************************************/
 
 /*******************************************************************************
-* Copyright (C) 2021 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) ${REL_YEAR} Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -43,30 +43,23 @@
  *----------------------------------------------------------------------------*/
 #include "classb/classb_interrupt_test.h"
 #include "definitions.h"
-#include <time.h>
+
 /*----------------------------------------------------------------------------
  *     Constants
  *----------------------------------------------------------------------------*/
 
-#define decimaltobcd(x)                 (((x/10)<<4)+((x - ((x/10)*10))))
-#define bcdtodecimal(x)                 ((x & 0xF0) >> 4) * 10 + (x & 0x0F)
 
-#define CLASSB_INTR_DEVICE_VECT_OFFSET      (16U)
-//#define CLASSB_INTR_VECTOR_TABLE_SIZE       (CLASSB_INTR_DEVICE_VECT_OFFSET + PERIPH_MAX_IRQn)
-#define CLASSB_INTR_MAX_INT_COUNT           (60U)
-#define CLASSB_INTR_TEST_RTC_COUNT          (50U)
-#define CLASSB_INTR_TEST_TC_COUNT           (100U)
+#define CLASSB_INTR_MAX_INT_COUNT           (15U)
+
 
 /*----------------------------------------------------------------------------
  *     Global Variables
  *----------------------------------------------------------------------------*/
-extern uint32_t __svectors;
+
 extern volatile uint8_t * interrupt_tests_status;
 extern volatile uint32_t * interrupt_count;
-// Align the vector table at 1024 byte boundary
-__attribute__ ((aligned (1024)))
-//uint32_t classb_ram_vector_table[CLASSB_INTR_VECTOR_TABLE_SIZE];
-uint32_t vtor_default_value = 0;
+static uint32_t ebase_org;
+static uint32_t off_org;
 
 /*----------------------------------------------------------------------------
  *     Functions
@@ -74,149 +67,153 @@ uint32_t vtor_default_value = 0;
 extern void _CLASSB_UpdateTestResult(CLASSB_TEST_TYPE test_type,
     CLASSB_TEST_ID test_id, CLASSB_TEST_STATUS value);
 
+
+
 /*============================================================================
-static void _CLASSB_RTC_handler(void)
+static void _CLASSB_TMR2_Handler(void)
 ------------------------------------------------------------------------------
-Purpose: Custom handler used for RTC Interrupt test
-Input  : None.
-Output : None.
-Notes  : The RTC is reset after successfully performing the test.
-============================================================================*/
-#if 0
-static void _CLASSB_RTC_Handler(void)
-{
-    // Clear the checked interrupt flag
-    RTC_REGS->MODE0.RTC_INTFLAG = RTC_MODE0_INTFLAG_CMP0_Msk;
-    *interrupt_tests_status = CLASSB_TEST_STARTED;
-    // Reset the tested peripheral
-    RTC_REGS->MODE0.RTC_CTRLA = RTC_MODE0_CTRLA_SWRST_Msk;
-    while((RTC_REGS->MODE0.RTC_SYNCBUSY & RTC_MODE0_SYNCBUSY_SWRST_Msk) == RTC_MODE0_SYNCBUSY_SWRST_Msk)
-    {
-        // Wait for Synchronization after Software Reset
-        ;
-    }
-}
-#endif
-/*============================================================================
-static void _CLASSB_TC0_Handler(void)
-------------------------------------------------------------------------------
-Purpose: Custom handler used for TC Interrupt test. It clears the interrupt
+Purpose: Custom handler used for Timer Interrupt test. It clears the interrupt
          flag and updates the interrupt count variable.
 Input  : None.
 Output : None.
 Notes  : None.
 ============================================================================*/
-#if 0
-static void _CLASSB_TC0_Handler(void)
-{
-    // Clear the checked interrupt flag
-    TC0_REGS->COUNT16.TC_INTFLAG = TC_INTFLAG_OVF_Msk;
-    (*interrupt_count)++;
-}
-#endif
-
-/* All the handlers are defined here.  Each will call its PLIB-specific function. */
-void __ISR(_TIMER_1_VECTOR, ipl1SRS) TIMER_1_Handler (void)
-{
-    IFS0CLR = _IFS0_T1IF_MASK;
-    (*interrupt_count)++;
-    
-}
-
-void __ISR(_RTCC_VECTOR, ipl1SRS) RTCC_Handler (void)
+void  __attribute__((interrupt(IPL1SRS))) __attribute__((address(0x90002200),nomips16,nomicromips) ) _CLASSB_TMR2_Handler(void)
 {
     /* Clear the status flag */
-    IFS1CLR = 0x2;
-    //CLASSB_INTR_TEST_RTC_COUNT++;
-    *interrupt_tests_status = CLASSB_TEST_STARTED;
+    IFS0CLR = _IFS0_T2IF_MASK;
+    (*interrupt_count)++;
 }
 
 /*============================================================================
-static void _CLASSB_BuildVectorTable(void)
+static void set_ebase(void)
 ------------------------------------------------------------------------------
-Purpose: Build the vector table for Interrupt self-test
+Purpose: Setting value of Ebase and TMR2 OFF register   
 Input  : None.
 Output : None.
-Notes  : The vector table used by this test is placed in SRAM.
 ============================================================================*/
-#if 0
-static void _CLASSB_BuildVectorTable(void)
+static void set_ebase(unsigned int value)
 {
-    uint32_t i = 0;
-    uint32_t vector_start = (uint32_t)&__svectors;
-
-    for(i = 0; i < CLASSB_INTR_VECTOR_TABLE_SIZE; i++)
-    {
-        // Get the interrupt handler address from the original vector table.
-        classb_ram_vector_table[i] = *(uint32_t *)(vector_start + (i * 4));
-    }
-    // Modify the tested interrupt handler address
-    classb_ram_vector_table[CLASSB_INTR_DEVICE_VECT_OFFSET + RTC_IRQn] = (uint32_t )&_CLASSB_RTC_Handler;
-    classb_ram_vector_table[CLASSB_INTR_DEVICE_VECT_OFFSET + TC0_IRQn] = (uint32_t )&_CLASSB_TC0_Handler;
-    vtor_default_value = SCB->VTOR;
-    // Update VTOR to point to the new vector table in SRAM
-    SCB->VTOR = ((uint32_t)&classb_ram_vector_table[0] & SCB_VTOR_TBLOFF_Msk);
-}
-#endif
-/*============================================================================
-static void _CLASSB_RTC_Init(void)
-------------------------------------------------------------------------------
-Purpose: Configure RTC peripheral for Interrupt self-test
-Input  : None.
-Output : None.
-Notes  : The clocks required for RTC are enabled after reset. This function
-         does not modify the default clocks.
-============================================================================*/
-#if 0
-static void _CLASSB_RTC_Init(void) {
-    
-   /* Unlock System */
+    /* unlock system */
     SYSKEY = 0x00000000;
     SYSKEY = 0xAA996655;
     SYSKEY = 0x556699AA;
-
-    /* Initialize RTCC */
-    RTCCONSET = _RTCCON_RTCWREN_MASK;  /* Enable writes to RTCC */
-
-    /* Lock System */
-    SYSKEY = 0x00000000;
-
-    RTCCONCLR = _RTCCON_ON_MASK;   /* Disable clock to RTCC */
-
-    /* wait for clock to stop. Block too long? */
-    while(RTCCONbits.RTCCLKON);  /* clock disabled? */
-
-    /* initialize the time, date and alarm */
-    RTCTIME = 0x23595000;   /* Set RTCC time */
-
-    RTCDATE = 0x18123100;  /* Set RTCC date */
-
-    RTCALRMCLR = _RTCALRM_ALRMEN_MASK;  /* Disable alarm */
-
-    while(RTCALRMbits.ALRMSYNC);  /* Wait for disable */
-
-    ALRMTIME = 0x23595100;   /* Set alarm time */
-
-    ALRMDATE = 0x00123100;   /* Set alarm date */
-
-    /* repeat forever or 0-255 times */
-    RTCALRMSET = _RTCALRM_CHIME_MASK;  /* Set alarm to repeat forever */
-
-    RTCALRMbits.AMASK = 6;
-
-    RTCCONCLR = _RTCCON_RTCOE_MASK;  /* Enable RTCC output */
-
-    /* Set RTCC clock source (LPRC/SOSC) */
-    RTCCONbits.RTCCLKSEL = 0;
-
-    /* start the RTC */
-    RTCCONSET = _RTCCON_ON_MASK;
+    
+    
+    /*Set the CP0 registers for multi-vector interrupt */
+    INTCONCLR = _INTCON_MVEC_MASK;// Set the MVEC bit
+    
+    unsigned int temp_CP0;// Temporary register for CP0 register storing 
+    asm volatile("di");// Disable all interrupts 
+    asm volatile("ehb");// Disable all interrupts 
+    
+    temp_CP0 = _CP0_GET_STATUS();// Get Status 
+    temp_CP0 |= 0x00400000;// Set Bev 
+    _CP0_SET_STATUS(temp_CP0);// Update Status
+    asm volatile("ehb");
+    
+    _CP0_SET_INTCTL(0x10 << 5);
+    asm volatile("ehb");
+    
+    /****************Setting new ebase and offset *****************/
+    _CP0_SET_EBASE(value);// Set an EBase value
+    asm volatile("ehb");
+    OFF009 = 0x200;// setting new offset value
+    /**********************************/
+    
+    temp_CP0 = _CP0_GET_CAUSE();// Get Cause 
+    temp_CP0 |= 0x00800000;// Set IV 
+    _CP0_SET_CAUSE(temp_CP0);// Update Cause
+    asm volatile("ehb");
+    
+    temp_CP0 = _CP0_GET_STATUS();// Get Status 
+    //temp_CP0 &= 0xFFBFFFFD;//  
+    temp_CP0 &= 0xFFBFFFFF;//Clear Bev
+    _CP0_SET_STATUS(temp_CP0);// Update Status
+    asm volatile("ehb");
+    
+    INTCONSET = _INTCON_MVEC_MASK;// Set the MVEC bit
+    /* Lock system  */
+    SYSKEY = 0x33333333;
 }
-#endif
+
+/*============================================================================
+static void _CLASSB_BuildVectorTable(void)
+------------------------------------------------------------------------------
+Purpose: Build the vector table for Interrupt self-test . Internally it will call set_ebase function to set new ebase value and timer2 OFF register value
+Input  : None.
+Output : None.
+============================================================================*/
+static void _CLASSB_BuildVectorTable(void)
+{
+    ebase_org = _CP0_GET_EBASE();
+    off_org = OFF009;
+    __builtin_disable_interrupts();
+    set_ebase( ((uint32_t)&_CLASSB_TMR2_Handler) - 0x200 ); 
+}
+
+/*============================================================================
+static void set_ebase_org(void)
+------------------------------------------------------------------------------
+Purpose: Setting original value of Ebase and TMR2 OFF register   
+Input  : None.
+Output : None.
+============================================================================*/
+static void set_ebase_org(unsigned int value)
+{
+    /* unlock system */
+    SYSKEY = 0x00000000;
+    SYSKEY = 0xAA996655;
+    SYSKEY = 0x556699AA;
+    
+    
+    /*Set the CP0 registers for multi-vector interrupt */
+    INTCONCLR = _INTCON_MVEC_MASK;// Set the MVEC bit
+    
+    unsigned int temp_CP0;// Temporary register for CP0 register storing 
+    asm volatile("di");// Disable all interrupts 
+    asm volatile("ehb");// Disable all interrupts 
+    
+    temp_CP0 = _CP0_GET_STATUS();// Get Status 
+    temp_CP0 |= 0x00400000;// Set Bev 
+    _CP0_SET_STATUS(temp_CP0);// Update Status
+    asm volatile("ehb");
+    
+    _CP0_SET_INTCTL(0x10 << 5);
+    asm volatile("ehb");
+    
+    /****************Setting new ebase and offset *****************/
+    _CP0_SET_EBASE(value);// Set an EBase value
+    asm volatile("ehb");
+    OFF009 = off_org;// setting new offset value
+    /**********************************/
+    
+    temp_CP0 = _CP0_GET_CAUSE();// Get Cause 
+    temp_CP0 |= 0x00800000;// Set IV 
+    _CP0_SET_CAUSE(temp_CP0);// Update Cause
+    asm volatile("ehb");
+    
+    temp_CP0 = _CP0_GET_STATUS();// Get Status 
+    //temp_CP0 &= 0xFFBFFFFD;//  
+    temp_CP0 &= 0xFFBFFFFF;//Clear Bev
+    _CP0_SET_STATUS(temp_CP0);// Update Status
+    asm volatile("ehb");
+    
+    INTCONSET = _INTCON_MVEC_MASK;// Set the MVEC bit
+    /* Lock system  */
+    SYSKEY = 0x33333333;
+}
+
+/*============================================================================
+static void _CLASSB_INT_CLK_Initialize(void)
+------------------------------------------------------------------------------
+Purpose: Configure clock for Interrupt self-test
+Input  : None.
+Output : None.
+============================================================================*/
 static void _CLASSB_INT_CLK_Initialize(void)
 {
-    return ;
-     /* unlock system for clock configuration */
+    /* unlock system for clock configuration */
     SYSKEY = 0x00000000;
     SYSKEY = 0xAA996655;
     SYSKEY = 0x556699AA;
@@ -266,40 +263,30 @@ static void _CLASSB_INT_CLK_Initialize(void)
     Nop();
 
     while( OSCCONbits.OSWEN );        /* wait for indication of successful clock change before proceeding */
-
-
-  
+ 
 
     /* Peripheral Module Disable Configuration */
-    CFGCON0bits.PMDLOCK = 0;
+    
 
-    PMD1 = 0x25808981;
-    PMD2 = 0x7e0f0f;
-    PMD3 = 0x19031317;
+    PMD1 = 0x25818981;
+    PMD2 = 0x7c0f0f;
+    PMD3 = 0x19031316;
 
-    CFGCON0bits.PMDLOCK = 1;
-
+   
     /* Lock system since done with clock configuration */
     SYSKEY = 0x33333333;
 }
 
 
-
-
-void rtc_start(void)
-{
-    IEC1SET = 0x2;
-    RTCALRMSET = _RTCALRM_ALRMEN_MASK;
-}
 /*============================================================================
-static void _CLASSB_TC0_CompareInit(void)
+static void _CLASSB_TMR1_Initialize(void)
 ------------------------------------------------------------------------------
-Purpose: Configure TC peripheral for Interrupt self-test
+Purpose: Configure TMR1 peripheral for Interrupt self-test
 Input  : None.
 Output : None.
-Notes  : The TC0 is reset after successfully performing the test.
+Notes  : The TMR1 is reset after successfully performing the test.
 ============================================================================*/
-void _CLASSB_TMR1_INIT(void)
+void _CLASSB_TMR1_Initialize(void)
 {
     /* Disable Timer */
     T1CONCLR = _T1CON_ON_MASK;
@@ -307,29 +294,27 @@ void _CLASSB_TMR1_INIT(void)
     /*
     SIDL = 0
     TWDIS = 0
-    TECS = 1
+    TECS = 2
     TGATE = 0
     TCKPS = 3
     TSYNC = 0
     TCS = 0
     */
-    T1CONSET = 0x130;
+    T1CONbits.TCS = 0;
+    T1CONSET = 0x00;
+    T1CONSET = 0x230;
 
     /* Clear counter */
     TMR1 = 0x0;
 
     /*Set period */
-    PR1 = 7811; // 7811 = 20ms
-    
-    IEC0SET = _IEC0_T1IE_MASK;
-    
-    T1CONSET = _T1CON_ON_MASK;
+    PR1 = 39061;
 }
 
 /*============================================================================
-static void _CLASSB_NVIC_Init(void)
+static void Classb_EVIC_Initialize(void)
 ------------------------------------------------------------------------------
-Purpose: Initializes the NVIC
+Purpose: Initializes the EVIC
 Input  : None.
 Output : None.
 Notes  : None.
@@ -339,14 +324,99 @@ void Classb_EVIC_Initialize( void )
     INTCONSET = _INTCON_MVEC_MASK;
 
     /* Set up priority and subpriority of enabled interrupts */
-    IPC1SET = 0x4 | 0x0;  /* TIMER_1:  Priority 1 / Subpriority 0 */
-    IPC8SET = 0x400 | 0x0;  /* RTCC:  Priority 1 / Subpriority 0 */
+    IPC2SET = 0x400 | 0x0;  /* TIMER_2:  Priority 1 / Subpriority 0 */
     
     /* Configure Shadow Register Set */
     PRISS = 0x76543210;
 }
 
+/*============================================================================
+static void _CLASSB_TMR2_Initialize(void)
+------------------------------------------------------------------------------
+Purpose: Configure TMR2 peripheral for Interrupt self-test
+Input  : None.
+Output : None.
+Notes  : The TMR2 is reset after successfully performing the test.
+============================================================================*/
 
+void _CLASSB_TMR2_Initialize(void)
+{
+    /* Disable Timer */
+    T2CONCLR = _T2CON_ON_MASK;
+
+    /*
+    SIDL = 0
+    TCKPS =7
+    T32   = 0
+    TCS = 0
+    */
+    T2CONSET = 0x70;
+
+    /* Clear counter */
+    TMR2 = 0x0;
+
+    /*Set period */
+    PR2 = 3905U;
+
+    /* Enable TMR Interrupt */
+    IEC0SET = _IEC0_T2IE_MASK;
+
+}
+
+
+/*============================================================================
+static void _CLASSB_INT_TMR1_Period_Set(void)
+------------------------------------------------------------------------------
+Purpose: Configure TMR1 peripheral for Interrupt self-test
+Input  : None.
+Output : None.
+Notes  : The clocks required for TMR1 are configured in a separate function.
+============================================================================*/
+static void _CLASSB_INT_TMR1_Period_Set(uint32_t period)
+{
+    PR1 = period;
+    EVIC_SourceEnable(INT_SOURCE_TIMER_1);
+}
+
+
+/*============================================================================
+static void _CLASSB_INT_TMR1_Enable(void)
+------------------------------------------------------------------------------
+Purpose: Enables the TMR1
+Input  : None.
+Output : None.
+Notes  : None.
+============================================================================*/
+static void _CLASSB_INT_TMR1_Start ( void )
+{
+    T1CONSET = _T1CON_ON_MASK;
+}
+
+/*============================================================================
+static void _CLASSB_INT_TMR2_Start(void)
+------------------------------------------------------------------------------
+Purpose: Enables the TMR2
+Input  : None.
+Output : None.
+Notes  : None.
+============================================================================*/
+static void _CLASSB_INT_TMR2_Start(void)
+{
+    T2CONSET = _T2CON_ON_MASK;
+}
+
+/*============================================================================
+static void _CLASSB_INT_TMR2_Stop(void)
+------------------------------------------------------------------------------
+Purpose: Stops the TMR2
+Input  : None.
+Output : None.
+Notes  : None.
+============================================================================*/
+static void _CLASSB_INT_TMR2_Stop (void)
+{
+    T2CONCLR = _T2CON_ON_MASK;
+}
 
 /*============================================================================
 CLASSB_TEST_STATUS CLASSB_SST_InterruptTest(void)
@@ -359,53 +429,53 @@ Notes  : None.
 CLASSB_TEST_STATUS CLASSB_SST_InterruptTest(void)
 {
     
-    //CLASSB_TEST_STATUS intr_test_status = CLASSB_TEST_NOT_EXECUTED;
-
+    CLASSB_TEST_STATUS intr_test_status = CLASSB_TEST_NOT_EXECUTED;
+    EVIC_SourceStatusClear(INT_SOURCE_TIMER_1); 
     // Reset the counter
     *interrupt_count = 0;
     _CLASSB_UpdateTestResult(CLASSB_TEST_TYPE_SST, CLASSB_TEST_INTERRUPT,
         CLASSB_TEST_INPROGRESS);
     
-#if 0
+
     _CLASSB_BuildVectorTable();
-#endif
     __builtin_disable_interrupts();
     _CLASSB_INT_CLK_Initialize();
-    
-    //_CLASSB_RTC_Init();
-    _CLASSB_TMR1_INIT();
+    _CLASSB_TMR2_Initialize();
+    _CLASSB_TMR1_Initialize();
     Classb_EVIC_Initialize();
     
     /* Enable global interrupts */
     __builtin_enable_interrupts();
-    //rtc_start();
     
-    // Wait until the flags are updated from the interrupt handlers
-    /*while((*interrupt_tests_status == CLASSB_TEST_NOT_STARTED))
-    {
-        ;
-    }*/
+    _CLASSB_INT_TMR1_Period_Set(39061);
+       
+    _CLASSB_INT_TMR1_Start();
+    _CLASSB_INT_TMR2_Start();
+    
+    while(!EVIC_SourceStatusGet(INT_SOURCE_TIMER_1));
+    EVIC_SourceStatusClear(INT_SOURCE_TIMER_1);    
+        
+    _CLASSB_INT_TMR2_Stop();
+    
     
     if ((*interrupt_count < CLASSB_INTR_MAX_INT_COUNT)
         &&  (*interrupt_count > 0))
     {
-        T1CONCLR = _T1CON_ON_MASK;// stop timer
-        RTCALRMCLR = _RTCALRM_ALRMEN_MASK; // stop rtc
-        //intr_test_status = CLASSB_TEST_PASSED;
+        T1CONCLR = _T1CON_ON_MASK;// stop timer1
+        intr_test_status = CLASSB_TEST_PASSED;
         _CLASSB_UpdateTestResult(CLASSB_TEST_TYPE_SST, CLASSB_TEST_INTERRUPT,
             CLASSB_TEST_PASSED);
-        return 1;
-
+        set_ebase_org(((uint32_t)ebase_org));
     }
     else
     {
-        //intr_test_status = CLASSB_TEST_FAILED;
+        intr_test_status = CLASSB_TEST_FAILED;
         _CLASSB_UpdateTestResult(CLASSB_TEST_TYPE_SST, CLASSB_TEST_INTERRUPT,
             CLASSB_TEST_FAILED);
-        return 1;
+        set_ebase_org(((uint32_t)ebase_org));
         // The failsafe function must not return.
-        //CLASSB_SelfTest_FailSafe(CLASSB_TEST_INTERRUPT);
+        CLASSB_SelfTest_FailSafe(CLASSB_TEST_INTERRUPT);
     }
-   // __builtin_disable_interrupts();
+   return intr_test_status;
     
 }
