@@ -5,10 +5,10 @@ frameworkPath: E:\git_repo\rio_ofc_repo_3_4_1_new
 processor: PIC32MZ1025W104132
 projectName: classb_api_usage
 settings:
-  PackageFilter: bsp;classb_pic32mzw1_wfi32e01;classb_pic32mzw1_wfi32e01_bp;classb_sam_e5x_d5x_bp;core;crypto;cryptoauthlib;csp;csp_B0;net;quick_docs;usb;wireless_apps_pic32mzw1_wfi32e01;wireless_system_pic32mzw1_wfi32e01;wireless_wifi;wireless_wifi_B0
+  PackageFilter: bsp;classb_pic32mzw1_wfi32e01;core;core_apps_pic32mz_w1;core_dev;crypto;cryptoauthlib;csp;csp_dev;net;quick_docs;usb;wireless_apps_pic32mzw1_wfi32e01;wireless_system_pic32mzw1_wfi32e01;wireless_wifi;wireless_wifi_rio2_integration
   FORCE_OPTIMIZATION: 'false'
   GENERATE_BACKUP: 'true'
   TRUSTZONE: 'false'
   CMSISPath: .\dev_packs\arm\CMSIS\5.7.0
   MERGE_STRATEGY: USER_ALL
-  DFPPath: .\dev_packs\Microchip\PIC32MZ-W_DFP\1.3.177\atdf\PIC32MZ1025W104132.atdf
+  DFPPath: .\dev_packs\Microchip\PIC32MZ-W_DFP\1.4.193\atdf\PIC32MZ1025W104132.atdf

@@ -47,7 +47,7 @@
  *     Constants
  *----------------------------------------------------------------------------*/
  
- 
+
 
 #define FLASH_START_ADDR 0x90000000
 #define FLASH_SIZE       0x100000
@@ -424,10 +424,10 @@ static CLASSB_STARTUP_STATUS CLASSB_Startup_Tests(void) {
     cb_test_status = CLASSB_SRAM_MarchTestInit((uint32_t *)CLASSB_SRAM_APP_AREA_START,
         CLASSB_SRAM_STARTUP_TEST_SIZE, CLASSB_SRAM_MARCH_C, false);
         if (cb_test_status == CLASSB_TEST_PASSED) {
-            
+
             cb_temp_startup_status = CLASSB_STARTUP_TEST_PASSED;
         } else if (cb_test_status == CLASSB_TEST_FAILED) {
-            
+
 
             cb_temp_startup_status = CLASSB_STARTUP_TEST_FAILED;
         }
@@ -443,12 +443,25 @@ static CLASSB_STARTUP_STATUS CLASSB_Startup_Tests(void) {
         }
         else if (cb_test_status == CLASSB_TEST_FAILED)
         {
-            
+
             cb_temp_startup_status = CLASSB_STARTUP_TEST_FAILED;
         }
         CLASSB_WDT_Clear();
     
     
+
+    // Interrupt Test
+    *ongoing_sst_id = CLASSB_TEST_INTERRUPT;
+    cb_test_status = CLASSB_SST_InterruptTest();
+    if (cb_test_status == CLASSB_TEST_PASSED)
+    {
+        cb_temp_startup_status = CLASSB_STARTUP_TEST_PASSED;
+    }
+    else if (cb_test_status == CLASSB_TEST_FAILED)
+    {
+        cb_temp_startup_status = CLASSB_STARTUP_TEST_FAILED;
+    }
+    CLASSB_WDT_Clear();
 
 
     if (cb_temp_startup_status == CLASSB_STARTUP_TEST_PASSED) {
