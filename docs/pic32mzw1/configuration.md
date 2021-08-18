@@ -23,10 +23,9 @@ When the Class B library is added into the project with the help of MHC, the lin
 
 ## Modified Startup Sequence
 
-When generating project with help of MPLAB Harmony 3, the startup code is present in a file named `startup_xc32`.
-This file contains the `Reset_Handler` which has all startup code that runs before the `main()` function.
+When generating project with help of MPLAB Harmony 3, the startup code is present in a file named `crt0.s`. This is a compiler provided file and can be found in local folder of pc `..\xc32\v3.01\pic32mx\lib` , after installation of `xc32` compiler.
 Initialization of the Class B library is done from the `_on_bootstrap` function which is
-to be executed inside the `Reset_Handler` before `main()`. The function named `CLASSB_Startup_Tests` executes all startup self-tests
+to be executed inside before `main()`. The function named `CLASSB_Startup_Tests` executes all startup self-tests
 inserted into `classb.c` file by the MHC. If none of the self-tests are failed, this function returns `CLASSB_STARTUP_TEST_PASSED`.
 If any of the startup self-tests are failed, this function does not return.
 The self-tests for SRAM, Clock and Interrupt are considered non-critical since it may be possible to execute
@@ -40,9 +39,8 @@ the corresponding self-test remains in an infinite loop to avoid unsafe executio
 ## WDT Test and Timeout
 
 The Watchdog timer is used as a recovery mechanism in case of software failures.
-The Class B library enables the WDT and checks whether a WDT reset is issued if the timer is not cleared.
-In `CLASSB_Startup_Tests`, before performing startup self-tests, the WDT timeout period is configured.
-This timing can be adjusted based on the number of self-tests run during startup.
+The Class B library enables the WDT and checks whether a WDT reset is issued if the timer is not cleared. Before performing startup self-tests, the WDT timeout period is configured. This timing can be adjusted based on the number of self-tests run during startup.
+In `CLASSB_Startup_Tests`, the WDT is enabled.
 If any of these self-tests takes more time than the WDT timeout period, it results in a WDT reset.
 Thus, properly configuring the WDT period is essential during startup.
 If all of the self-tests pass during startup, then the Class B library startup resets the device.
@@ -56,7 +54,9 @@ The WDT timeout should be larger than the time taken by any of the self-tests us
 
 <figure align="center">
 <img src="./images/WDT_STARTUP_B.png"/>
-<figure>
+</figure>
+
+
 
 ## Configuring Startup Tests via MHC
 

@@ -34,7 +34,7 @@ Refer to the MHC project graph for the components used and the respective config
     * Hardware Used
         * PIC32MZ W1 Curiosity Board
     * Hardware Setup
-        * Ensure the the tested IO pins are kept at specified logic levels.
+        * Ensure the tested IO pins are kept at specified logic levels.
 
 ## Setting up PIC32MZ W1 Curiosity Board
 
@@ -51,12 +51,13 @@ Refer to the MHC project graph for the components used and the respective config
     - Flow Control : None
 3. Build and Program the application using the MPLAB X IDE.
 4. Observe the messages shown on the console.
+5. Code for Runtime self-test are included in `main.c` file. 
 
 **NOTE:** 
 
 **1) In the application, for runtime flash test, at first `CLASSB_FlashCRCGenerate()` function is being used to generate CRC and then store it in a memory location using Harmony provided NVM component. `CLASSB_FlashCRCGenerate()` function is part of classB library.**
 
-**2) Currently MHC generated code, lock PMD registers during initialzation part after configurig it with user defined configuration via MHC.    Due to this PMD registers can nnot be modified by the rest of the application.**
+**2) Currently MHC generated code, locks PMD registers during initialzation part after configurig it with user defined configuration via MHC.    Due to this PMD registers can not be modified by the rest of the application.**
 
 **Clock self test, requires PMD register to enable TMR1 module . Due this reason, Currently , to support clock test during runtime user need to comment/remove below lines of code manually in "CLK_Initialize()" function :**
 -   CFGCON0bits.PMDLOCK = 0;
