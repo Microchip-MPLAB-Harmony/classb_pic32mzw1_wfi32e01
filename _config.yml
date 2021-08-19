@@ -15,7 +15,7 @@
 # in the templates via {{ site.myvariable }}.
 
 name: Microchip Technology
-title: Microchip MPLAB Harmony Class B Library help
+title: Microchip MPLAB Harmony Class B Library for PIC32MZW1/WFI32 help
 lang: en-US
 timezone: Asia/Kolkata
 
@@ -94,4 +94,4 @@ aux_links:
 logo: "/assets/images/vendor/microchip_mplab_harmony_logo_150_transparent.png"
 
 # Footer content appears at the bottom of every page's main content
-footer_content: "<img src='https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_logo.png' /><br />Copyright &copy; 2020 Microchip Technology."
+footer_content: "<img src='https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_logo.png' /><br />Copyright &copy; 2021 Microchip Technology."
