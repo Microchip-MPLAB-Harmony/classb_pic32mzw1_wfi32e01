@@ -98,6 +98,8 @@ void app_classb_tests(void) {
     SYS_CONSOLE_PRINT("\r\n\tResult of SRAM SST is %s\r\n", test_status_str[classb_test_status]);
     classb_test_status = CLASSB_GetTestResult(CLASSB_TEST_TYPE_SST, CLASSB_TEST_FLASH);
     SYS_CONSOLE_PRINT("\r\n\tResult of Flash SST is %s\r\n", test_status_str[classb_test_status]);
+    SYS_CONSOLE_PRINT("\t\tFlash test is disabled in the demo since user needs to add CRC.\r\n");
+    SYS_CONSOLE_PRINT("\t\tPlease refer to the class B documentation.\r\n");
     classb_test_status = CLASSB_GetTestResult(CLASSB_TEST_TYPE_SST, CLASSB_TEST_CLOCK);
     SYS_CONSOLE_PRINT("\r\n\tResult of Clock SST is %s\r\n", test_status_str[classb_test_status]);
     classb_test_status = CLASSB_GetTestResult(CLASSB_TEST_TYPE_SST, CLASSB_TEST_INTERRUPT);
@@ -146,7 +148,6 @@ void app_classb_tests(void) {
     classb_test_status = CLASSB_FlashCRCTest(0x90000000, 0xFE000,
             *(uint32_t *) crc_val_flash, true);
     SYS_CONSOLE_PRINT("\r\n\tResult of Flash RST is %s\r\n", test_status_str[classb_test_status]);
-    SYS_CONSOLE_PRINT("\r\n\t\tFlash test is disabled in the demo since user needs to add CRC. Please refer to the class B documentation.\r\n");
 
     /*CPU Clock self test*/
     __builtin_disable_interrupts();
