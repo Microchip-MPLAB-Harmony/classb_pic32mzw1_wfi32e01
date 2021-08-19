@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Class B Library v2.0.1 Release
+  Class B Library v1.0.0 Release
 
   Company:
     Microchip Technology Inc.
@@ -335,7 +335,7 @@ CLASSB_TEST_STATUS CLASSB_ClockTest(uint32_t cpu_clock_freq,
         /*Core timer increments at half the system clock frequency (SYSCLK).*/
         expected_ticks = expected_ticks/2 ;
         ticks_passed = (systick_count_b - systick_count_a) * CLASSB_CLOCK_MUL_FACTOR;
-        
+
 
         if (ticks_passed < expected_ticks)
         {

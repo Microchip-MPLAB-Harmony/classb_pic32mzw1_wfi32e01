@@ -13,76 +13,76 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 436FA3197E9DC5B765726AF9D212B505
-- generatedChecksum: 9D4B74CC9E272FC46DC19B9C6ED3410D
+- generatedChecksum: A109D34257BCD0B33A0C165AECC290CD
   logicalPath: config/pic32mzw1/classb
   name: classb.c
   physicalPath: classb
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 9D4B74CC9E272FC46DC19B9C6ED3410D
-- generatedChecksum: FAC9D36E5D52F2F21C533F1F2B045A04
+  userChecksum: A109D34257BCD0B33A0C165AECC290CD
+- generatedChecksum: 0E0CC987FACE30BF1EFC2BAC1BA56A8F
   logicalPath: config/pic32mzw1/classb
   name: classb_clock_test.c
   physicalPath: classb
   security: NON_SECURE
   type: SOURCE
-  userChecksum: FAC9D36E5D52F2F21C533F1F2B045A04
-- generatedChecksum: F5F46AAB1B325662A21334491FA0717F
+  userChecksum: 0E0CC987FACE30BF1EFC2BAC1BA56A8F
+- generatedChecksum: 3EDF913277BB9254A3CDDE02E8DC4D30
   logicalPath: config/pic32mzw1/classb
   name: classb_cpu_pc_test.c
   physicalPath: classb
   security: NON_SECURE
   type: SOURCE
-  userChecksum: F5F46AAB1B325662A21334491FA0717F
-- generatedChecksum: 34B50F0F0BCC5FD3C66867CF4724B1E4
+  userChecksum: 3EDF913277BB9254A3CDDE02E8DC4D30
+- generatedChecksum: 6081CCC79534092D24B451C9BF013342
   logicalPath: config/pic32mzw1/classb
   name: classb_cpu_reg_test.c
   physicalPath: classb
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 34B50F0F0BCC5FD3C66867CF4724B1E4
-- generatedChecksum: F511BB51F9B61C839F5288934A4F2F24
+  userChecksum: 6081CCC79534092D24B451C9BF013342
+- generatedChecksum: 1967E67C0802AE052D0FDDDF6F118B23
   logicalPath: config/pic32mzw1/classb
   name: classb_cpu_reg_test_asm.S
   physicalPath: classb
   security: NON_SECURE
   type: SOURCE
-  userChecksum: F511BB51F9B61C839F5288934A4F2F24
-- generatedChecksum: 0B2E3F50B99927FA9487C71D8DEB43D9
+  userChecksum: 1967E67C0802AE052D0FDDDF6F118B23
+- generatedChecksum: 9909DD22EF45498668819E552846A729
   logicalPath: config/pic32mzw1/classb
   name: classb_flash_test.c
   physicalPath: classb
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 0B2E3F50B99927FA9487C71D8DEB43D9
-- generatedChecksum: 5EB6B8DAD401EEEF5FCBD26091385CA3
+  userChecksum: 9909DD22EF45498668819E552846A729
+- generatedChecksum: EA3810BF6CD6FFE88952F1073ABDA7D5
   logicalPath: config/pic32mzw1/classb
   name: classb_interrupt_test.c
   physicalPath: classb
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 5EB6B8DAD401EEEF5FCBD26091385CA3
-- generatedChecksum: E9DA1A1AB6A84F0FFF50504D5769813F
+  userChecksum: EA3810BF6CD6FFE88952F1073ABDA7D5
+- generatedChecksum: 8B70DFF3AD44F920BFC5269D20B5B121
   logicalPath: config/pic32mzw1/classb
   name: classb_io_pin_test.c
   physicalPath: classb
   security: NON_SECURE
   type: SOURCE
-  userChecksum: E9DA1A1AB6A84F0FFF50504D5769813F
-- generatedChecksum: 9D13A8D2724DB5AB95FA986F3B5E9B85
+  userChecksum: 8B70DFF3AD44F920BFC5269D20B5B121
+- generatedChecksum: 39456CB8BDA8BEF1D423E93D6C385B2D
   logicalPath: config/pic32mzw1/classb
   name: classb_result_management.S
   physicalPath: classb
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 9D13A8D2724DB5AB95FA986F3B5E9B85
-- generatedChecksum: BC23CBADAB66851693A8779A01A73C2E
+  userChecksum: 39456CB8BDA8BEF1D423E93D6C385B2D
+- generatedChecksum: 272E189745C45A6A8F27D54DF6729965
   logicalPath: config/pic32mzw1/classb
   name: classb_sram_test.c
   physicalPath: classb
   security: NON_SECURE
   type: SOURCE
-  userChecksum: BC23CBADAB66851693A8779A01A73C2E
+  userChecksum: 272E189745C45A6A8F27D54DF6729965
 - generatedChecksum: D230A6B646D2E78CEAA6AA924E04FCA0
   logicalPath: config/pic32mzw1
   name: exceptions.c
@@ -117,7 +117,7 @@ files:
   physicalPath: peripheral/clk
   security: NON_SECURE
   type: SOURCE
-  userChecksum: F00BCC0500AECDBF9E4F9E131538B310
+  userChecksum: D97FAAECFD6664972F98D9221C891BE7
 - generatedChecksum: D1E3BBAFAE83571C644CD56C2747168C
   logicalPath: config/pic32mzw1/peripheral/evic
   name: plib_evic.c
@@ -223,13 +223,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: D4C6E928D289C9C949F1D14FE0887451
-- generatedChecksum: 9BCFFD379813352A1B1578266DF28B45
+- generatedChecksum: D614D9C5E6622E2DBFDAA744DF625DD5
   logicalPath: config/pic32mzw1/classb
   name: classb.h
   physicalPath: classb
   security: NON_SECURE
   type: HEADER
-  userChecksum: 9BCFFD379813352A1B1578266DF28B45
+  userChecksum: D614D9C5E6622E2DBFDAA744DF625DD5
 - generatedChecksum: 4610410CCB83BB916036504DF58CA285
   logicalPath: config/pic32mzw1/classb
   name: classb_clock_test.h
@@ -237,48 +237,48 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 4610410CCB83BB916036504DF58CA285
-- generatedChecksum: 75E66AB201A469248F36F0ADA0DB8F6D
+- generatedChecksum: 7C781B545616BA86AE63B497BD567927
   logicalPath: config/pic32mzw1/classb
   name: classb_common.h
   physicalPath: classb
   security: NON_SECURE
   type: HEADER
-  userChecksum: 75E66AB201A469248F36F0ADA0DB8F6D
-- generatedChecksum: 766FA7D73F5BDDB5C5A3A662E1E60E34
+  userChecksum: 7C781B545616BA86AE63B497BD567927
+- generatedChecksum: 383078DD94D1525A498207F6BDD12009
   logicalPath: config/pic32mzw1/classb
   name: classb_cpu_reg_test.h
   physicalPath: classb
   security: NON_SECURE
   type: HEADER
-  userChecksum: 766FA7D73F5BDDB5C5A3A662E1E60E34
-- generatedChecksum: 9194BF4328BD9DCA3F40C81121E50396
+  userChecksum: 383078DD94D1525A498207F6BDD12009
+- generatedChecksum: 58DE6EFB75B43AFCFC2FAB93647E01EC
   logicalPath: config/pic32mzw1/classb
   name: classb_flash_test.h
   physicalPath: classb
   security: NON_SECURE
   type: HEADER
-  userChecksum: 9194BF4328BD9DCA3F40C81121E50396
-- generatedChecksum: 1EA58D99878D53B0E229FC742A096B30
+  userChecksum: 58DE6EFB75B43AFCFC2FAB93647E01EC
+- generatedChecksum: E9E98982AD2444E46530C1DD7E46EE62
   logicalPath: config/pic32mzw1/classb
   name: classb_interrupt_test.h
   physicalPath: classb
   security: NON_SECURE
   type: HEADER
-  userChecksum: 1EA58D99878D53B0E229FC742A096B30
-- generatedChecksum: 131CC8306DA97AD53A51B1BC47A20B53
+  userChecksum: E9E98982AD2444E46530C1DD7E46EE62
+- generatedChecksum: 0AB21DFAAB61618363B8E890476C5A0D
   logicalPath: config/pic32mzw1/classb
   name: classb_io_pin_test.h
   physicalPath: classb
   security: NON_SECURE
   type: HEADER
-  userChecksum: 131CC8306DA97AD53A51B1BC47A20B53
-- generatedChecksum: F60FDA6A09523F64469D50B901D8BCBE
+  userChecksum: 0AB21DFAAB61618363B8E890476C5A0D
+- generatedChecksum: 057E4194E0BBC74232A6DC777B836F47
   logicalPath: config/pic32mzw1/classb
   name: classb_sram_test.h
   physicalPath: classb
   security: NON_SECURE
   type: HEADER
-  userChecksum: F60FDA6A09523F64469D50B901D8BCBE
+  userChecksum: 057E4194E0BBC74232A6DC777B836F47
 - generatedChecksum: 043CCE68FD781855F0C15288BBD5A182
   logicalPath: config/pic32mzw1
   name: configuration.h

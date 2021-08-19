@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Class B Library implementation file
+  Class B Library v1.0.0 implementation file
 
   Summary:
     This file contains the implementation for 
@@ -9,7 +9,7 @@
 *******************************************************************************/
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
-Copyright (c) 2016 released Microchip Technology Inc.  All rights reserved.
+Copyright (c) 2021 released Microchip Technology Inc.  All rights reserved.
 
 Microchip licenses to  you  the  right  to  use,  modify,  copy  and  distribute
 Software only when embedded on a Microchip  microcontroller  or  digital  signal
