@@ -76,13 +76,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 39456CB8BDA8BEF1D423E93D6C385B2D
-- generatedChecksum: 272E189745C45A6A8F27D54DF6729965
+- generatedChecksum: CF484EC81C06CF6AE96C0861C0E54434
   logicalPath: config/pic32mzw1/classb
   name: classb_sram_test.c
   physicalPath: classb
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 272E189745C45A6A8F27D54DF6729965
+  userChecksum: CF484EC81C06CF6AE96C0861C0E54434
 - generatedChecksum: D230A6B646D2E78CEAA6AA924E04FCA0
   logicalPath: config/pic32mzw1
   name: exceptions.c
@@ -272,13 +272,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 0AB21DFAAB61618363B8E890476C5A0D
-- generatedChecksum: 057E4194E0BBC74232A6DC777B836F47
+- generatedChecksum: 64609223D50F6E1063D17348E4EBB8DD
   logicalPath: config/pic32mzw1/classb
   name: classb_sram_test.h
   physicalPath: classb
   security: NON_SECURE
   type: HEADER
-  userChecksum: 057E4194E0BBC74232A6DC777B836F47
+  userChecksum: 64609223D50F6E1063D17348E4EBB8DD
 - generatedChecksum: 043CCE68FD781855F0C15288BBD5A182
   logicalPath: config/pic32mzw1
   name: configuration.h

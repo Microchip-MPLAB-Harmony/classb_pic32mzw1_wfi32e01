@@ -87,9 +87,9 @@ typedef enum classb_sram_march_algo
  *     Functions
  *----------------------------------------------------------------------------*/
 
-CLASSB_TEST_STATUS CLASSB_SRAM_MarchTestInit(uint32_t * start_addr,
+CLASSB_TEST_STATUS __attribute__((optimize("-O0"))) CLASSB_SRAM_MarchTestInit(uint32_t * start_addr,
     uint32_t test_size, CLASSB_SRAM_MARCH_ALGO march_algo, bool running_context);
-CLASSB_TEST_STATUS CLASSB_SRAM_MarchTest(uint32_t * start_addr,
+CLASSB_TEST_STATUS  __attribute__((optimize("-O0"))) CLASSB_SRAM_MarchTest(uint32_t * start_addr,
     uint32_t test_size, CLASSB_SRAM_MARCH_ALGO march_algo, bool running_context);
 
 /* RAM march algorithms

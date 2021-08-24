@@ -121,7 +121,7 @@ void app_classb_tests(void) {
     /*SRAM self test*/
     __builtin_disable_interrupts();
     classb_test_status = CLASSB_SRAM_MarchTestInit((uint32_t *) CLASSB_SRAM_APP_AREA_START,
-            SRAM_RST_SIZE, CLASSB_SRAM_MARCH_C, false);
+            SRAM_RST_SIZE, CLASSB_SRAM_MARCH_C, true);
     /* Enable global interrupts */
     __builtin_enable_interrupts();
     SYS_CONSOLE_PRINT("\r\n\tResult of SRAM RST is %s\r\n", test_status_str[classb_test_status]);
