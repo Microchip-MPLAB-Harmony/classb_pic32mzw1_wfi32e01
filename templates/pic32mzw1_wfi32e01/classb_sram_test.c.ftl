@@ -74,7 +74,7 @@ Input  : None
 Output : Address stored in the Stack Pointer register.
 Notes  : This function is used by SRAM tests.
 ============================================================================*/
-static uint32_t _CLASSB_GetStackPointer(void)
+static uint32_t __attribute__((optimize("-O0"))) _CLASSB_GetStackPointer(void)
 {
     unsigned char* result = (unsigned char*)regstackptr;
     return (uint32_t)result;
@@ -88,7 +88,7 @@ Input  : New address for the Stack.
 Output : None
 Notes  : This function is used by SRAM tests.
 ============================================================================*/
-static void _CLASSB_SetStackPointer(uint32_t new_stack_address)
+static void __attribute__((optimize("-O0"))) _CLASSB_SetStackPointer(uint32_t new_stack_address)
 {
     //__ASM volatile ("MSR msp, %0\n" : : "r" (new_stack_address));
     regstackptr = (unsigned char *)(new_stack_address) ;
