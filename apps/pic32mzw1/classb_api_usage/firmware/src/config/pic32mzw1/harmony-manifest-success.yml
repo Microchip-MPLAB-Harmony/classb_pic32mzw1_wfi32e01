@@ -16,6 +16,6 @@ modules:
     - {name: "csp", version: "v3.9.1"}
     - {name: "core", version: "v3.9.2"}
     - {name: "dev_packs", version: "v3.9.0"}
-    - {name: "classb_pic32mzw1_wfi32e01", version: "unknown"}
+    - {name: "classb_pic32mzw1_wfi32e01", version: "v1.0.0"}
     - {name: "bsp", version: "v3.9.0"}
 
