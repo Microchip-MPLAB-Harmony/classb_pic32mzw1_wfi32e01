@@ -68,7 +68,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  *----------------------------------------------------------------------------*/
 CLASSB_TEST_STATUS CLASSB_ClockTest(uint32_t cpu_clock_freq,
     uint8_t error_limit,
-    uint16_t clock_test_rtc_cycles,
+    uint32_t clock_test_rtc_cycles,
     bool running_context);
 
 // DOM-IGNORE-BEGIN

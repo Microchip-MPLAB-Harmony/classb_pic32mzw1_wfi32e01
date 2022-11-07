@@ -47,7 +47,8 @@
  *     Constants
  *----------------------------------------------------------------------------*/
 #define CLASSB_CLOCK_MAX_CLOCK_FREQ         (200000000U)
-#define CLASSB_CLOCK_MAX_SYSTICK_VAL        (0xffffffU)
+#define CLASSB_CLOCK_MAX_SYSTICK_VAL        (0xffffffffU)
+#define CLASSB_CLOCK_MAX_TMR1_PERIOD_VAL        (654U)
 #define CLASSB_CLOCK_TMR1_CLK_FREQ           (32768U)
 #define CLASSB_CLOCK_MAX_TEST_ACCURACY      (5U)
 /* Since no floating point is used for clock test, multiply intermediate
@@ -137,19 +138,49 @@ static void _CLASSB_Clock_TMR1_Init(void)
     TECS = 2
     TGATE = 0
     TCKPS = 0
-    TSYNC = 0
+    TSYNC = 1
     TCS = 1
     */
-    T1CONSET = 0x202;
+    //T1CONSET = 0x206; //Prescaler - 1:1, External clock LPRC, Synchronization mode enabled
+    
+    /*
+    SIDL = 0
+    TWDIS = 0
+    TECS = 0
+    TGATE = 0
+    TCKPS = 0
+    TSYNC = 1
+    TCS = 1
+    */
+    T1CONSET = 0x6; //Prescaler - 1:1, External clock SOSC, Synchronization mode enabled
 
     /* Clear counter */
     TMR1 = 0x0;
 
     /*Set period */
-    PR1 = 162;
+    PR1 = 162; // 5 Ms
 
     /* Setup TMR1 Interrupt */
     //TMR1_InterruptEnable();  /* Enable interrupt on the way out */
+    
+    /* Wait for SOSC ready */
+    while(!(CLKSTAT & 0x00000014)) ;
+}
+
+/*============================================================================
+void _CLASSB_CLock_EVIC_SourceEnable( INT_SOURCE source )
+------------------------------------------------------------------------------
+Purpose: Enable EVIC source for CPU clock self-test
+Input  : None.
+Output : None.
+Notes  : None.
+============================================================================*/
+void _CLASSB_CLock_EVIC_SourceEnable( INT_SOURCE source )
+{
+    volatile uint32_t *IECx = (volatile uint32_t *) (&IEC0 + ((0x10 * (source / 32)) / 4));
+    volatile uint32_t *IECxSET = (volatile uint32_t *)(IECx + 2);
+
+    *IECxSET = 1 << (source & 0x1f);
 }
 
 /*============================================================================
@@ -163,7 +194,61 @@ Notes  : The clocks required for TMR1 are configured in a separate function.
 static void _CLASSB_Clock_TMR1_Period_Set(uint32_t period)
 {
     PR1 = period;
-    EVIC_SourceEnable(INT_SOURCE_TIMER_1);
+    _CLASSB_CLock_EVIC_SourceEnable(INT_SOURCE_TIMER_1);
+}
+
+/*============================================================================
+static void DelayMs ( uint32_t delay_ms)
+------------------------------------------------------------------------------
+Purpose: This function is used for introducing delay during clock initialization
+Input  : delay in ms.
+Output : None.
+============================================================================*/
+static void DelayMs ( uint32_t delay_ms)
+{
+    uint32_t startCount, endCount;
+    /* Calculate the end count for the given delay */
+    endCount=(CORE_TIMER_FREQ/1000)*delay_ms;
+    startCount=_CP0_GET_COUNT();
+    while((_CP0_GET_COUNT()-startCount)<endCount);
+}
+
+/*============================================================================
+static void _CLASSB_Wifi_Spi_Write(unsigned int spi_addr, unsigned int data)
+------------------------------------------------------------------------------
+Purpose: This function is used for clock initialization
+Input  : None.
+Output : None.
+============================================================================*/
+static void _CLASSB_Wifi_Spi_Write(unsigned int spi_addr, unsigned int data)
+{
+    unsigned int  addr_bit, data_bit, bit_idx;
+    unsigned int cs_high, clk_high, en_bit_bang;
+    unsigned int *wifi_spi_ctrl_reg = (unsigned int *)0xBF8C8028;
+    clk_high = 0x1 ;
+    cs_high  = 0x2;
+    en_bit_bang  = 0x1 << 31;
+    addr_bit = 0; data_bit = 0;
+
+    *wifi_spi_ctrl_reg = en_bit_bang | cs_high ;
+    *wifi_spi_ctrl_reg = (en_bit_bang | cs_high | clk_high );
+     *wifi_spi_ctrl_reg = (en_bit_bang);
+     *wifi_spi_ctrl_reg = (en_bit_bang | clk_high);
+
+    for (bit_idx=0;bit_idx<=7;bit_idx++) {
+        addr_bit = (spi_addr>>(7-bit_idx)) & 0x1;
+        *wifi_spi_ctrl_reg = (en_bit_bang | (addr_bit << 2 ));               // Falling edge of clk
+        *wifi_spi_ctrl_reg = (en_bit_bang | (addr_bit << 2 ) | clk_high);    // Rising edge of clk
+    }
+
+    for (bit_idx=0;bit_idx<=15;bit_idx++) {
+        data_bit = (data>>(15-bit_idx)) & 0x1;
+        *wifi_spi_ctrl_reg = (en_bit_bang | (data_bit << 2 ));                // Falling edge of clk with data bit
+        *wifi_spi_ctrl_reg = (en_bit_bang | (data_bit << 2 ) | clk_high);     // Rising edge of clk
+    }
+
+    *wifi_spi_ctrl_reg = (en_bit_bang | cs_high | clk_high); // Rising edge of clk
+    *wifi_spi_ctrl_reg = 0;                                // Set the RF override bit and CS_n high
 }
 
 /*============================================================================
@@ -175,62 +260,81 @@ Output : None.
 ============================================================================*/
 static void _CLASSB_Clock_CLK_Initialize(bool running_context)
 {
+    volatile unsigned int *PMDRCLR = (unsigned int *) 0xBF8000B4;
+	//volatile unsigned int *RFSPICTL = (unsigned int *) 0xBF8C8028;
     /* unlock system for clock configuration */
     SYSKEY = 0x00000000;
     SYSKEY = 0xAA996655;
     SYSKEY = 0x556699AA;
 
+    
     switch(running_context)
     {
         
         case false :
         {
-            OSCCONbits.FRCDIV = 0;
+            if(((DEVID & 0x0FF00000) >> 20) == PIC32MZW1_B0)
+            {
+                CFGCON2  |= 0x300; // Start with POSC Turned OFF
+                /* if POSC was on give some time for POSC to shut off */
+                DelayMs(2);
+                // Read counter part is there only for debug and testing, or else not needed, so use ifdef as needed
+                _CLASSB_Wifi_Spi_Write(0x85, 0x00F0); /* MBIAS filter and A31 analog_test */ //if (wifi_spi_read (0x85) != 0xF0) {Error, Stop};
+                _CLASSB_Wifi_Spi_Write(0x84, 0x0001); /* A31 Analog test */// if (wifi_spi_read (0x84) != 0x1) {Error, Stop};
+                _CLASSB_Wifi_Spi_Write(0x1e, 0x510); /* MBIAS reference adjustment */ //if (wifi_spi_read (0x1e) != 0x510) {Error, Stop};
+                _CLASSB_Wifi_Spi_Write(0x82, 0x6400); /* XTAL LDO feedback divider (1.3+v) */ //if (wifi_spi_read (0x82) != 0x6000) {Error, Stop};
 
-            /* SPLLBSWSEL   = 5   */
-            /* SPLLPWDN     = PLL_ON     */
-            /* SPLLPOSTDIV1 = 4 */
-            /* SPLLFLOCK    = NO_ASSERT    */
-            /* SPLLRST      = NO_ASSERT      */
-            /* SPLLFBDIV    = 20  */
-            /* SPLLREFDIV   = 1   */
-            /* SPLLICLK     = POSC     */
-            /* SPLL_BYP     = NO_BYPASS     */
-            SPLLCON = 0x414045;
+                /* Enable POSC */
+                CFGCON2  &= 0xFFFFFCFF; // enable POSC
 
-            /* Power down the UPLL */
-            UPLLCONbits.UPLLPWDN = 1;
+                /* Wait for POSC ready */
+                while(!(CLKSTAT & 0x00000004)) ;
 
-            /* Power down the EWPLL */
-            EWPLLCONbits.EWPLLPWDN = 1;
+                /*Configure SPLL*/
+                CFGCON3 = 10;
+                CFGCON0bits.SPLLHWMD = 1;
 
-            /* Power down the BTPLL */
-            BTPLLCONbits.BTPLLPWDN = 1;
+                /* SPLLCON = 0x01496869 */
+                /* SPLLBSWSEL   = 5   */
+                /* SPLLPWDN     = PLL_ON     */
+                /* SPLLPOSTDIV1 = 4 */
+                /* SPLLFLOCK    = NO_ASSERT    */
+                /* SPLLRST      = NO_ASSERT      */
+                /* SPLLFBDIV    = 20  */
+                /* SPLLREFDIV   = 1   */
+                /* SPLLICLK     = POSC     */
+                /* SPLL_BYP     = NO_BYPASS     */
+                SPLLCON = 0x414045;
 
-            /* ETHPLLPOSTDIV2 = a */
-            /* SPLLPOSTDIV2   = 0 */
-            /* BTPLLPOSTDIV2  = 0 */
-            CFGCON3 = 10;
+                /* OSWEN    = SWITCH_COMPLETE    */
+                /* SOSCEN   = OFF   */
+                /* UFRCEN   = USBCLK   */
+                /* CF       = NO_FAILDET       */
+                /* SLPEN    = IDLE    */
+                /* CLKLOCK  = UNLOCKED  */
+                /* NOSC     = SPLL     */
+                /* WAKE2SPD = SELECTED_CLK */
+                /* DRMEN    = NO_EFFECT    */
+                /* FRCDIV   = OSC_FRC_DIV_1   */
+                OSCCON = 0x100;
 
-            /* OSWEN    = SWITCH_COMPLETE    */
-            /* SOSCEN   = OFF   */
-            /* UFRCEN   = USBCLK   */
-            /* CF       = NO_FAILDET       */
-            /* SLPEN    = IDLE    */
-            /* CLKLOCK  = UNLOCKED  */
-            /* NOSC     = SPLL     */
-            /* WAKE2SPD = SELECTED_CLK */
-            /* DRMEN    = NO_EFFECT    */
-            /* FRCDIV   = OSC_FRC_DIV_1   */
-            OSCCON = 0x100;
+                OSCCONSET = _OSCCON_OSWEN_MASK;  /* request oscillator switch to occur */
 
-            OSCCONSET = _OSCCON_OSWEN_MASK;  /* request oscillator switch to occur */
+                while( OSCCONbits.OSWEN );
+                DelayMs(5);
 
-            Nop();
-            Nop();
+                /* Power down the EWPLL */
+                EWPLLCONbits.EWPLLPWDN = 1;
 
-            while( OSCCONbits.OSWEN );        /* wait for indication of successful clock change before proceeding */
+                /* Power down the UPLL */
+                UPLLCONbits.UPLLPWDN = 1;
 
+                /* Power down the BTPLL */
+                BTPLLCONbits.BTPLLPWDN = 1;
+
+                *(PMDRCLR)  = 0x1000;
+            }
+            
             /* Peripheral Module Disable Configuration */
 
             PMD1 = 0x25818981;
@@ -251,9 +355,10 @@ static void _CLASSB_Clock_CLK_Initialize(bool running_context)
 /*============================================================================
 static void _CLASSB_EVIC_Initialize(void)
 ------------------------------------------------------------------------------
-Purpose: Configure EVIC settings for TMR1
+Purpose: Initialize EVIC register set
 Input  : None.
 Output : None.
+Notes  : None.
 ============================================================================*/
 static void _CLASSB_EVIC_Initialize(void)
 {
@@ -261,6 +366,37 @@ static void _CLASSB_EVIC_Initialize(void)
     
     /* Configure Shadow Register Set */
     PRISS = 0x76543210;
+}
+
+/*============================================================================
+bool _CLASSB_Clock_EVIC_SourceStatusGet( INT_SOURCE source )
+------------------------------------------------------------------------------
+Purpose: Get EVIC source status
+Input  : None.
+Output : None.
+Notes  : None.
+============================================================================*/
+bool _CLASSB_Clock_EVIC_SourceStatusGet( INT_SOURCE source )
+{
+    volatile uint32_t *IFSx = (volatile uint32_t *)(&IFS0 + ((0x10 * (source / 32)) / 4));
+
+    return (bool)((*IFSx >> (source & 0x1f)) & 0x1);
+}
+
+/*============================================================================
+void _CLASSB_Clock_EVIC_SourceStatusClear( INT_SOURCE source )
+------------------------------------------------------------------------------
+Purpose: Clear EVIC source status
+Input  : None.
+Output : None.
+Notes  : None.
+============================================================================*/
+void _CLASSB_Clock_EVIC_SourceStatusClear( INT_SOURCE source )
+{
+    volatile uint32_t *IFSx = (volatile uint32_t *) (&IFS0 + ((0x10 * (source / 32)) / 4));
+    volatile uint32_t *IFSxCLR = (volatile uint32_t *)(IFSx + 1);
+
+    *IFSxCLR = 1 << (source & 0x1f);
 }
 
 /*============================================================================
@@ -279,23 +415,30 @@ Notes  : None.
 
 CLASSB_TEST_STATUS CLASSB_ClockTest(uint32_t cpu_clock_freq,
     uint8_t error_limit,
-    uint16_t clock_test_tmr1_cycles,
+    uint32_t clock_test_tmr1_cycles,
     bool running_context)
 {
     
     CLASSB_TEST_STATUS clock_test_status = CLASSB_TEST_NOT_EXECUTED;
-    int64_t expected_ticks = ((cpu_clock_freq / CLASSB_CLOCK_TMR1_CLK_FREQ) * clock_test_tmr1_cycles);
-    volatile uint32_t systick_count_a = 0;
-    volatile uint32_t systick_count_b = 0;
-    int64_t ticks_passed = 0;
-    uint8_t calculated_error_limit = 0;
-    /*Below initialization required for TMR1 module and system clock to operate properly */
-    __builtin_disable_interrupts();
-    _CLASSB_Clock_CLK_Initialize(running_context);
-    _CLASSB_EVIC_Initialize();
-    __builtin_enable_interrupts();
-
-    if ((expected_ticks > CLASSB_CLOCK_MAX_SYSTICK_VAL)
+    uint64_t expected_ticks = (uint64_t)(((uint64_t)cpu_clock_freq / CLASSB_CLOCK_TMR1_CLK_FREQ) * clock_test_tmr1_cycles);
+    volatile uint32_t systick_count_a = 0U;
+    volatile uint32_t systick_count_b = 0U;
+    int32_t ticks_passed = 0;
+    uint8_t calculated_error_limit = 0U;
+    
+    if (running_context == true)
+    {
+        _CLASSB_UpdateTestResult(CLASSB_TEST_TYPE_RST, CLASSB_TEST_CLOCK,
+            CLASSB_TEST_NOT_EXECUTED);
+    }
+    else
+    {
+        _CLASSB_UpdateTestResult(CLASSB_TEST_TYPE_SST, CLASSB_TEST_CLOCK,
+            CLASSB_TEST_NOT_EXECUTED);
+    }
+    
+    if ((clock_test_tmr1_cycles > CLASSB_CLOCK_MAX_TMR1_PERIOD_VAL)
+        ||(expected_ticks > CLASSB_CLOCK_MAX_SYSTICK_VAL)
         || (cpu_clock_freq > CLASSB_CLOCK_MAX_CLOCK_FREQ)
         || (error_limit < CLASSB_CLOCK_MAX_TEST_ACCURACY))
     {
@@ -303,6 +446,12 @@ CLASSB_TEST_STATUS CLASSB_ClockTest(uint32_t cpu_clock_freq,
     }
     else
     {
+        /*Below initialization required for TMR1 module and system clock to operate properly */
+        __builtin_disable_interrupts();
+        _CLASSB_Clock_CLK_Initialize(running_context);
+        _CLASSB_EVIC_Initialize();
+        __builtin_enable_interrupts();
+        
         if (running_context == true)
         {
             _CLASSB_UpdateTestResult(CLASSB_TEST_TYPE_RST, CLASSB_TEST_CLOCK,
@@ -319,22 +468,20 @@ CLASSB_TEST_STATUS CLASSB_ClockTest(uint32_t cpu_clock_freq,
         _CLASSB_Clock_SysTickStart();
         _CLASSB_Clock_TMR1_Enable();
 		
-        while(!EVIC_SourceStatusGet(INT_SOURCE_TIMER_1));
-        EVIC_SourceStatusClear(INT_SOURCE_TIMER_1);
+        while(!_CLASSB_Clock_EVIC_SourceStatusGet(INT_SOURCE_TIMER_1));
+        _CLASSB_Clock_EVIC_SourceStatusClear(INT_SOURCE_TIMER_1);
 		
         systick_count_a = _CLASSB_Clock_SysTickGetVal();
-        while(!EVIC_SourceStatusGet(INT_SOURCE_TIMER_1))
+        while(!_CLASSB_Clock_EVIC_SourceStatusGet(INT_SOURCE_TIMER_1))
         {
             ;
         }
         
         systick_count_b = _CLASSB_Clock_SysTickGetVal();
-
-        expected_ticks = expected_ticks * CLASSB_CLOCK_MUL_FACTOR;
         
         /*Core timer increments at half the system clock frequency (SYSCLK).*/
         expected_ticks = expected_ticks/2 ;
-        ticks_passed = (systick_count_b - systick_count_a) * CLASSB_CLOCK_MUL_FACTOR;
+        ticks_passed = (systick_count_b - systick_count_a);
 
 
         if (ticks_passed < expected_ticks)

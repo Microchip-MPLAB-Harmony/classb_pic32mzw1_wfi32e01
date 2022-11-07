@@ -76,10 +76,10 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 */
 typedef enum classb_port_index
 {
-    CLASSB_GPIO_PORT_A = 0,
-    CLASSB_GPIO_PORT_B = 1,
-    CLASSB_GPIO_PORT_C = 2,
-    CLASSB_GPIO_PORT_K = 3,
+    CLASSB_GPIO_PORT_A = 0U,
+    CLASSB_GPIO_PORT_B = 1U,
+    CLASSB_GPIO_PORT_C = 2U,
+    CLASSB_GPIO_PORT_K = 3U,
 } CLASSB_PORT_INDEX;
 
 // *****************************************************************************
@@ -96,38 +96,38 @@ typedef enum classb_port_index
 */
 typedef enum classb_port_pin
 {
-    PIN0 = 0,
-    PIN1 = 1,
-    PIN2 = 2,
-    PIN3 = 3,
-    PIN4 = 4,
-    PIN5 = 5,
-    PIN6 = 6,
-    PIN7 = 7,
-    PIN8 = 8,
-    PIN9 = 9,
-    PIN10 = 10,
-    PIN11 = 11,
-    PIN12 = 12,
-    PIN13 = 13,
-    PIN14 = 14,
-    PIN15 = 15,
-    PIN16 = 16,
-    PIN17 = 17,
-    PIN18 = 18,
-    PIN19 = 19,
-    PIN20 = 20,
-    PIN21 = 21,
-    PIN22 = 22,
-    PIN23 = 23,
-    PIN24 = 24,
-    PIN25 = 25,
-    PIN26 = 26,
-    PIN27 = 27,
-    PIN28 = 28,
-    PIN29 = 29,
-    PIN30 = 30,
-    PIN31 = 31
+    PIN0 = 0U,
+    PIN1 = 1U,
+    PIN2 = 2U,
+    PIN3 = 3U,
+    PIN4 = 4U,
+    PIN5 = 5U,
+    PIN6 = 6U,
+    PIN7 = 7U,
+    PIN8 = 8U,
+    PIN9 = 9U,
+    PIN10 = 10U,
+    PIN11 = 11U,
+    PIN12 = 12U,
+    PIN13 = 13U,
+    PIN14 = 14U,
+    PIN15 = 15U,
+    PIN16 = 16U,
+    PIN17 = 17U,
+    PIN18 = 18U,
+    PIN19 = 19U,
+    PIN20 = 20U,
+    PIN21 = 21U,
+    PIN22 = 22U,
+    PIN23 = 23U,
+    PIN24 = 24U,
+    PIN25 = 25U,
+    PIN26 = 26U,
+    PIN27 = 27U,
+    PIN28 = 28U,
+    PIN29 = 29U,
+    PIN30 = 30U,
+    PIN31 = 31U
 } CLASSB_PORT_PIN;
 
 // *****************************************************************************
@@ -144,9 +144,9 @@ typedef enum classb_port_pin
 */
 typedef enum classb_port_pin_state
 {
-    PORT_PIN_LOW  = 0,
-    PORT_PIN_HIGH = 1,
-    PORT_PIN_INVALID = 2
+    PORT_PIN_LOW  = 0U,
+    PORT_PIN_HIGH = 1U,
+    PORT_PIN_INVALID = 2U
 } CLASSB_PORT_PIN_STATE;
 
 /*----------------------------------------------------------------------------

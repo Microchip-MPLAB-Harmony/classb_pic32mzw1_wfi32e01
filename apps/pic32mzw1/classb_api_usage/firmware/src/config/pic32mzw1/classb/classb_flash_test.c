@@ -52,6 +52,8 @@
  */
 #define CLASSB_FLASH_CRC32_POLYNOMIAL (0xedb88320U)
 #define FLASH_SIZE 0x100000
+#define CLASSB_NVM_FLASH_START_ADDRESS    (0x90000000U)
+#define CLASSB_NVM_FLASH_START_ADDRESS1    (0xB0000000U)
 /*----------------------------------------------------------------------------
  *     Global Variables
  *----------------------------------------------------------------------------*/
@@ -74,7 +76,7 @@ uint32_t CLASSB_FlashCRCGenerate(uint32_t start_addr, uint32_t size)
 {
     uint32_t   i, value;
     uint32_t   crc32_table[256];
-    uint32_t   crc = 0xffffffff;
+    uint32_t   crc = 0xFFFFFFFFU;
     uint8_t    data;
     uint8_t    j;
 
@@ -122,13 +124,25 @@ CLASSB_TEST_STATUS CLASSB_FlashCRCTest(uint32_t start_addr,
     uint32_t test_size, uint32_t crc_val, bool running_context)
 {
     CLASSB_TEST_STATUS crc_test_status = CLASSB_TEST_NOT_EXECUTED;
-    uint32_t calculated_crc = 0;
-    uint32_t final_addr_tested = (start_addr + test_size) - 1;
-
+    uint32_t calculated_crc = 0U;
+    uint32_t final_addr_tested = (start_addr + test_size) - 1U;
+    
+    if (running_context == true)
+    {
+        _CLASSB_UpdateTestResult(CLASSB_TEST_TYPE_RST, CLASSB_TEST_FLASH,
+            CLASSB_TEST_NOT_EXECUTED);
+    }
+    else
+    {
+        _CLASSB_UpdateTestResult(CLASSB_TEST_TYPE_SST, CLASSB_TEST_FLASH,
+            CLASSB_TEST_NOT_EXECUTED);
+    }
+    
     /* Size must be less than the total flash size
      * Tested address must not exceed the available flash memory address
      */
-    if ((test_size <= FLASH_SIZE) && (final_addr_tested < (FLASH_SIZE + start_addr)))
+    if ((((CLASSB_NVM_FLASH_START_ADDRESS <= start_addr) && (start_addr<=(CLASSB_NVM_FLASH_START_ADDRESS + FLASH_SIZE))) || ((CLASSB_NVM_FLASH_START_ADDRESS1 <= start_addr) && (start_addr<=(CLASSB_NVM_FLASH_START_ADDRESS1 + FLASH_SIZE))))
+            && (test_size <= FLASH_SIZE) && (final_addr_tested < (FLASH_SIZE + start_addr)))
     {
         /* Update test status to 'In Progress' */
         if (running_context == true)

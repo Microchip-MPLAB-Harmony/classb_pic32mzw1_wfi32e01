@@ -1,0 +1,888 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /><meta name="copyright" content="(C) Copyright 2022" />
+<meta name="DC.rights.owner" content="(C) Copyright 2022" />
+<meta name="DC.type" content="topic" />
+<meta name="DC.title" content="MPLAB® Harmony Class B Library for PIC32MZ W1 devices" />
+<meta name="DC.relation" scheme="URI" content="GUID-CCE57066-B6C1-4371-8E09-EF0F70ADC922.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-AD62D00F-1E5E-4B0A-8F53-1866CD47D30B.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-61E01A71-6A37-4EEA-8292-F1D1D6A9B680.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-619641B0-DBDC-4B08-BBA8-6BCEEFD110A0.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-8C976313-0E57-48A3-8EA6-4599439A0092.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-E1D68AD2-7422-4A2A-A558-391FD77CD340.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-8BA16DEC-E553-44E7-9EBC-78EAE1446F27.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-4537661B-6C75-4B5F-AA07-3269CF6B3C6E.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-3D73A66C-FC6C-4BCC-A0A1-21FF31F2A71E.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-6CECDC39-7E68-46E6-B958-F48B3392CB1C.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-9823EFF4-2B47-4077-BB8D-BF1C74FFCB66.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-45405342-E12D-476A-9B86-77BD501E1766.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-A079F8CC-E2A0-452E-9166-F285E1AEE2C9.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-F61F612F-75CB-4600-AD6F-7CF7D75407D3.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-F7768298-7179-49A1-8489-5D4BD3D37579.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-51127D44-8908-469D-8943-1F7483224DAE.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-27B8A7B2-0038-445F-AD77-A372C0554B45.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-9D925FFD-EFF2-40B0-8B8E-855D5F7D071D.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-602A1334-714B-4289-9EBA-FAE91ED4066E.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-E5118550-D100-4A77-95AF-30797C1A9537.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-AD30D375-BA6E-4C5B-A90D-4711D3F09F31.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-23A88CA4-D27F-4DF9-8076-2AF71C7004AE.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-8AAE4BDD-EFBF-48C3-8889-84955E137C8E.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-452BC9BE-F5D8-4DE1-BE7B-1B147B5044A7.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-74D6C5A5-5188-47CC-8F65-2FA26514AFBE.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-8C5BC531-7BAE-4369-982F-1F18D6CD2528.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-DA8C77CC-D696-4480-9DDF-10237F31C00A.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-97A3FD8F-647D-4590-9878-1C1268CD4757.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-143383FB-0090-4FC4-9577-DED0B7EAB186.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-9235F2F4-3CDF-46A4-B710-D290AA09B1D4.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-7106413A-66EF-4F12-A8AE-69BA77F50E23.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-F89756AD-AEC4-4FD9-A23F-0E1505980E96.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-E330D7D0-F057-48C1-8F00-8271644ACA35.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-17088B6E-BCED-4B42-AF08-72AB2FE31ED0.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-26329DD5-2467-43AD-BAED-65C7CF94C7C2.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-45E10218-E3FB-466E-A125-94AC6CD4D8B3.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-048C12C1-6ED3-4155-AE80-CB6F20E59FCD.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-350D1148-A2A0-4F9D-A166-BE25FEB2A842.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-F6690318-A4BF-4962-A6CE-7524D60D1FF5.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-77029010-B5F8-46CB-B99A-AD73D24F9115.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-35E81007-8341-48AB-AD50-4AEE24DC3326.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-5D425E8C-8325-4F9F-8557-59282A6B63B1.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-2300B24F-0091-4818-BC0F-B79341A26941.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-17237FED-3B75-4E81-B1B9-FFE1653B648B.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-88043599-F30C-4941-A65B-5D6DEF191040.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-4B422C6C-B783-4B28-91AF-04FFEB0CEE83.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-11D799A9-929A-47E1-9459-CF7599F61310.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-A60BF63D-D41D-4183-8A79-69B779C7AF3A.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-AD965D66-F722-466F-871C-FD8CD73DAB08.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-75A1E221-5BCA-4562-A22E-438504EFA9CA.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-0E6BF7A6-377C-4384-8421-D81F30D77E09.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-A1A352F6-517A-43CA-9680-72C02A8945E9.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-9F52A374-7DDE-47D7-B87E-64096C98B5E7.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-E59AD698-A8C2-4AE8-9279-1DC3A7DECDB5.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-206721F4-2684-4736-A544-44D11B17DEA2.html" />
+<meta name="DC.relation" scheme="URI" content="GUID-28A74005-FBD0-483A-8CB5-4DFC36E9B81F.html" />
+<meta name="DC.format" content="XHTML" />
+<meta name="DC.identifier" content="mplab-harmony-class-b-library-for-pic32mz-w1-devices" />
+<link rel="stylesheet" type="text/css" href="stylesheets/commonltr.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/atmel.css" />
+<link rel="stylesheet" type="text/css" href="./stylesheets/common-extended.css" /><title>MPLAB® Harmony Class B Library for PIC32MZ W1 devices</title>
+<meta name="Microsoft.Help.Id" content="GUID-63B342D0-4F6B-42A8-836C-7193B5C0BC90-mplab-harmony-class-b-library-for-pic32mz-w1-devices" />
+<meta name="Microsoft.Help.TocParent" content="GUID-63B342D0-4F6B-42A8-836C-7193B5C0BC90" />
+<meta name="Microsoft.Help.TocOrder" content="0" />
+<meta name="Microsoft.Help.Locale" content="en-US" />
+<meta name="Microsoft.Help.TopicLocale" content="en-US" />
+<meta name="Microsoft.Help.DisplayVersion" content="MPLAB® Harmony Class B Library for PIC32MZ W1 devices Reference A 05/2022" />
+<script language="javascript">
+       
+       if (window.parent.location.protocol != 'file:') {
+				document.addEventListener('click', function(e) {
+				    if (e.target) {
+               if (e.target.nodeName == "A" ) {
+                    if (!e.target.target) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                              
+                      var origUrl = window.parent.location.href.substr(0, window.parent.location.href.indexOf("?"));
+                      if (origUrl.length === 0) {
+                          origUrl = window.parent.location.href;
+                      }
+                      var href= e.target.getAttribute("href");
+                      var parts = href.split("#");
+          
+                      var url = "";
+                      if (parts.length == 2 ) {
+                        if (!parts[0].length) {
+                            url = window.parent.location.search.replace('?','')
+                        } else {
+                            url = parts[0].replace('.html','');
+                        }
+                      } else {
+                        url = parts[0].replace('.html','');
+                      }
+
+                      if (parts.length == 2) {
+                          url += "#" + parts[1];
+                      }
+    
+                      window.parent.location.href = origUrl + "?" + url;
+
+                      return false;
+                    }
+               }
+            }
+				});
+			}
+
+		</script><script language="javascript">
+        function cpy(id, button) {
+        
+            var element = document.getElementById(id);
+            var content = element.getAttribute("content");
+            var textArea = document.createElement("textarea");
+            
+            // Place in the top-left corner of screen regardless of scroll position.
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            
+            // Ensure it has a small width and height. Setting to 1px / 1em
+            // doesn't work as this gives a negative w/h on some browsers.
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            
+            // We don't need padding, reducing the size if it does flash render.
+            textArea.style.padding = 0;
+            
+            // Clean up any borders.
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            
+            // Avoid flash of the white box if rendered for any reason.
+            textArea.style.background = 'transparent';
+            
+            
+            textArea.value = content;
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+               var successful = document.execCommand('copy');
+               var msg = successful ? 'successful' : 'unsuccessful';
+               if (!button.classList.contains("copied")){
+                  button.textContent = "Copied";
+                  button.classList.add("copied");
+                  setTimeout(function(){
+                    button.textContent = "Copy";
+                    button.classList.remove("copied");
+                  },1000);
+               }
+            } catch (err) {
+              console.log('Oops, unable to copy');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+      </script><script language="javascript">
+          
+          // Add the MathML namespace to html
+          var html = document.getElementsByTagName("html")[0],
+          head = document.getElementsByTagName("head")[0];
+          
+          var mathJax = document.createElement("script");
+          mathJax.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML";
+          head.appendChild(mathJax);
+          
+          html.setAttribute("xmlns:m","http://www.w3.org/1998/Math/MathML");
+          
+          function inIframe() { try { return window.self !== window.top; } catch (e) { return true; } }
+          
+          if (!inIframe()) { 
+          
+          var Default = "index.html?GUID-B046F97C-6BDC-45FC-BC1F-8C54B8F6F09A"; 
+          
+          var displaylocation = "value" + window.location.href;
+          
+          var GUIDS = displaylocation.split('GUID');          
+          
+          if (displaylocation.indexOf('#GUID') != -1) {            
+          var First = GUIDS[1].split('.html');  
+          if (GUIDS[3]){First = GUIDS[2].split('.html');}
+          if (GUIDS[4]){First = GUIDS[3].split('.html');}
+          if (GUIDS[5]){First = GUIDS[4].split('.html');}
+          
+          var Second = GUIDS[2].split('#');   
+          if (GUIDS[3]){Second = GUIDS[3].split('#');}
+          if (GUIDS[4]){Second = GUIDS[4].split('#');}
+          if (GUIDS[5]){Second = GUIDS[5].split('#');}
+          
+          Default = "index.html?" + "GUID" + First[0] + "GUID" + Second[0];     
+          }                    
+          window.top.location = Default;
+          }       
+          
+        </script><style xml:space="">
+        
+          button.copy-code{
+            display:none;
+            padding:0.7em 1.4em;
+            margin:0 0.3em 0.3em 0;
+            border-radius:0.15em;
+            box-sizing: border-box;
+            text-decoration:none;
+            font-family:'Roboto',sans-serif;
+            text-transform:uppercase;
+            font-weight:400;
+            color:#FFFFFF;
+            background-color:#9c9c9c;
+            box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+            text-align:center;
+            position:relative;
+            border: 0;
+            float: right;
+            border-radius: .5em;
+            cursor: pointer;
+          }
+          button.copy-code:active{
+            top:0.1em;
+          }
+          
+          pre:hover button.copy-code{
+            display: inline-block !important;
+          }
+          button.copy-code.copied {
+            cursor: default !important;
+          }
+          
+          
+          @media all and (max-width:30em){
+            button.copy-code{
+              display:block;
+              margin:0.4em auto;
+            }
+          }
+        
+        
+      </style></head>
+<body id="mplab-harmony-class-b-library-for-pic32mz-w1-devices">
+<h1 class="title topictitle1" id="ariaid-title1">MPLAB® Harmony Class B Library for PIC32MZ W1 devices</h1><div class="body"><p class="p">The Class B Library provides APIs to perform self-tests for the on-board systems of the microcontroller.</p>
+<p class="p"><strong class="ph b">Features Tested by the Class B Library</strong></p>
+<p class="p">Following table shows the components tested by the Class B library.</p>
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="vertical-align:middle;" id="d2947e25"><span>Component</span></th>
+<th class="entry cellrowborder" style="vertical-align:middle;" id="d2947e27"><span>Reference (Table H1 of IEC 60730-1)</span></th>
+<th class="entry cellrowborder" style="vertical-align:middle;" id="d2947e29"><span>Fault/Error</span></th>
+<th class="entry cellrowborder" style="vertical-align:middle;" id="d2947e31"><span>Acceptable Measures</span></th>
+</tr>
+</thead>
+<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e25 "><span>CPU Registers</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e27 "><span>1.1</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e29 "><span>Stuck-at</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e31 "><span>Static memory test</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e25 "><span>CPU Program Counter</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e27 "><span>1.3</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e29 "><span>Stuck-at</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e31 "><span>Static memory test</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e25 "><span>Interrupts</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e27 "><span>2</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e29 "><span>No interrupt / too frequent interrupt</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e31 "><span>Functional test</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e25 "><span>CPU Clock</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e27 "><span>3</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e29 "><span>Wrong frequency</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e31 "><span>Frequency monitoring</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e25 "><span>Flash</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e27 "><span>4.1</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e29 "><span>All single bit faults</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e31 "><span>Modified checksum</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e25 "><span>SRAM</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e27 "><span>4.2</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e29 "><span>DC fault</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e31 "><span>Static memory test</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e25 "><span>SRAM data path</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e27 "><span>5.1</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e29 "><span>Stuck-at</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e31 "><span>Static memory test</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e25 "><span>SRAM data path</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e27 "><span>5.2</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e29 "><span>Wrong address</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e31 "><span>Static memory test</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e25 "><span>Digital I/O</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e27 "><span>7.1</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e29 "><span>Abnormal operation</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e31 "><span>Input comparison or output verification</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="p"><strong class="ph b">Class B Peripheral Library Usage</strong></p>
+<p class="p">This topic describes the basic architecture of the Class B library and provides information and examples on how to use it.
+APIs defined by the Class B library can be used either by the start-up code or by the application code.
+The application may use PLIBs, drivers or middleware from the Harmony 3 software framework along with the Class B library code.</p>
+<p class="p">Abstraction Model</p>
+<p class="p">The following picture shows positioning of Class B library in a Harmony 3 based application.</p>
+<br /><img class="image" src="GUID-022C4091-33EB-4FC5-A1F8-B38A95035B41-low.png" alt="H3_ClassB_Architecture" /><br /><p class="p"><strong class="ph b">Start-up vs. Run-time</strong></p>
+<p class="p">The Class B library contains many self-test routines those can be executed at startup and run-time.
+If a self-test is executed at startup, it is called as a Start-up Self-test (SST) and if it is executed
+at run-time, then it is called a Run-time Self-test (RST). There are a few self-tests which can be used
+only as SST or as RST, such self-tests have SST or RST in the API name
+eg: <code class="ph codeph">CLASSB_RST_IOTest()</code>, <code class="ph codeph">CLASSB_SST_InterruptTest()</code>. If a self-test API does not have SST or RST in its name, then it can be used at startup as well as runtime.</p>
+<p class="p"><strong class="ph b">Start-up Self-test (SST)</strong></p>
+<p class="p">SSTs are used to test a component inside the microcontroller before it is initialized and used.
+When the Class B library is added via MHC, the selected SSTs are inserted into the <code class="ph codeph">_on_bootstrap()</code>
+function which is called during start-up, before main. This means that none of the data initialization
+could have happened before running SSTs. So, the Class B library initializes necessary variables
+before using them. It is not mandatory to test all the components during startup. The SRAM can be
+tested partially if a faster startup is needed by the application. In this case, modify the
+corresponding configuration macro (<code class="ph codeph">CLASSB_SRAM_STARTUP_TEST_SIZE</code>) present in <code class="ph codeph">classb.h</code> file
+to change the size of the tested area.</p>
+<p class="p"><strong class="ph b">Run-time Self-test (RST)</strong></p>
+<p class="p">RSTs can be used by the application during run-time to check safe operation of different components
+in the microcontroller. These tests are non-destructive. In the case of run-time tests, the application
+shall decide which test to execute when.</p>
+<p class="p"><strong class="ph b">Components in the Library</strong></p>
+<p class="p">The Class B library contains self-test routines for different components inside the CPU.</p>
+<br /><img class="image" src="GUID-50922A65-4377-4403-A6C5-DACC0B5C43EB-low.png" alt="ClassB_SYS_Elements" /><br /><p class="p"><strong class="ph b">Critical and Non-critical Components</strong></p>
+<p class="p">Based on the impact of failure, different components inside this Class B library are categorized
+as critical or non-critical.</p>
+<p class="p">If the self-test for CPU registers, PC or Flash detects a failure, the code execution is stopped,
+and it remains in an infinite loop. This is to prevent unsafe code execution. In the case of non-critical
+components, a failsafe function (<code class="ph codeph">CLASSB_SelfTest_FailSafe</code>) is called when a failure is detected.
+This function contains a software break point and an infinite loop. Further code shall be added into
+this function as per the application need. The failsafe function must not return to the Class B library,
+since it is called due to a self-test failure.
+Avoid use of features which depend on the failed component. For example, if self-test for clock is failed,
+it is not advisable to use UART for error reporting as BAUD rate may not be accurate. In the case of SRAM
+failure, avoid the use of function calls or use of variables in SRAM. A simple error reporting mechanism
+in this case of SRAM failure can be toggling of an IO pin.</p>
+<p class="p"><strong class="ph b">Critical Components</strong></p>
+<ol class="ol"><li class="li"><span class="indent-level-default">1.</span><p class="p">CPU registers including the Program Counter</p>
+</li>
+<li class="li"><span class="indent-level-default">2.</span><p class="p">Internal Flash program memory</p>
+</li>
+</ol>
+<p class="p">Generic Flow of Critical Tests</p>
+<br /><img class="image" src="GUID-AA44D062-240B-4E16-BB70-57A9F7718009-low.png" alt="Generic_flow_Critical_test" /><br /><p class="p"><strong class="ph b">Non-critical Components</strong></p>
+<ol class="ol"><li class="li"><span class="indent-level-default">1.</span><p class="p">CPU clock</p>
+</li>
+<li class="li"><span class="indent-level-default">2.</span><p class="p">IO pins</p>
+</li>
+<li class="li"><span class="indent-level-default">3.</span><p class="p">Internal SRAM</p>
+</li>
+<li class="li"><span class="indent-level-default">4.</span><p class="p">Interrupts</p>
+</li>
+</ol>
+<p class="p">Generic Flow of Non-Critical Tests</p>
+<br /><img class="image" src="GUID-DCF285DD-A855-49C2-8068-C0D9BE85C6C8-low.png" alt="Generic_flow_Non_critial_tests" /><br /><p class="p"><strong class="ph b">Self-tests for Components in the Library</strong></p>
+<p class="p"><strong class="ph b">CPU Registers</strong></p>
+<p class="p">The MIPS32® M-Class Microprocessor Core is the CPU on the PIC32MZW1 devices. The Class B library checks the processor
+core registers for stuck-at faults. The stuck-at condition causes
+register bit to remain at logic 0 or logic 1. Code execution should be stopped if this error condition
+is detected in any of the CPU registers.</p>
+<p class="p">This self-test follows the register save/restore convention specified by AAPCS.
+It can be used at startup as well as run-time. The Program Counter (PC) self-test is designed
+as a separate test since this register cannot be checked with usual test data patterns.</p>
+<p class="p">Flow chart of the self-test for CPU registers</p>
+<br /><img class="image" src="GUID-3896935B-E59D-40B2-9DB4-1F917261BF45-low.png" alt="DD_Test_CPU" /><br /><p class="p"><strong class="ph b">Program Counter (PC)</strong></p>
+<p class="p">The self-test for PC checks whether a stuck-at condition is present in the PC register.
+The stuck-at condition causes register bit to remain at logic 0 or logic 1.
+Code execution should be stopped if this error condition is detected.</p>
+<p class="p">The self-test for PC calls multiple functions in predefined order and verifies that each function
+is executed and returns the expected value. If the return values of all test functions are correct,
+the Program Counter is assumed to be working fine. This self-test can be used at startup as well as run-time.</p>
+<p class="p">Flow chart of the self-test for Program Counter (PC)</p>
+<br /><img class="image" src="GUID-F76E839C-4DC8-4BE9-8202-A35197D725E5-low.png" alt="DD_PC_TEST" /><br /><p class="p"><strong class="ph b">Flash</strong></p>
+<p class="p">The internal flash memory of the device needs to be checked for proper functionality.
+The self-test for internal flash performs CRC check on the internal flash memory of the device.
+The address range is configurable for this self-test. It runs CRC-32 algorithm with
+reversed representation of the polynomial 0x04C11DB7 and compares the generated checksum
+with the expected checksum. It uses table-based approach where the table is generated during the execution.</p>
+<p class="p">This self-test uses a CRC-32 generation function. This function is used inside the Class B library to generate
+CRC-32 of the internal Flash memory but it can be used on any contiguous memory area.
+The flash self-test can be used at startup as well as run-time. If this self-test is used during start up,
+it must be ensured that the CRC of the application area is precalculated and stored at a specific memory
+address which is passed as an argument for the Flash self-test. If this self-test detects a failure,
+it remains in an infinite loop.</p>
+<p class="p">Flow chart of the self-test for internal flash program memory</p>
+<br /><img class="image" src="GUID-DE1D3A52-04D8-4B5C-B9BE-AA426701551E-low.png" alt="DD_Flash" /><br /><p class="p"><strong class="ph b">SRAM</strong></p>
+<p class="p">Self-test for the SRAM element looks for stuck-at faults, DC faults and addressing faults with the help
+of RAM March algorithms. One of the input arguments to this self-test selects the algorithm. This self-test
+copies the data from the tested area of the SRAM into the reserved area in the SRAM and restore the data
+after the test. Refer to section Configuring the Library for the details on reserving the SRAM.
+The stack pointer is moved to the reserved area in the SRAM before running this self-test.
+The SRAM self-test can be used at startup as well as run-time.</p>
+<p class="p">It provides three standard tests to detect error conditions,</p>
+<ol class="ol"><li class="li"><span class="indent-level-default">1.</span><p class="p">March C</p>
+</li>
+<li class="li"><span class="indent-level-default">2.</span><p class="p">March C minus</p>
+</li>
+<li class="li"><span class="indent-level-default">3.</span><p class="p">March B</p>
+</li>
+</ol>
+<p class="p">Fault Coverage for March Algorithms</p>
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="vertical-align:middle;" id="d2947e279"><span>Name</span></th>
+<th class="entry cellrowborder" style="vertical-align:middle;" id="d2947e281"><span>Fault Coverage</span></th>
+</tr>
+</thead>
+<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e279 "><span>March C</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e281 "><span>Addressing faults, Stuck-at faults, Transition faults, all coupling faults</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e279 "><span>March C-</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e281 "><span>Unlinked addressing faults, Stuck-at faults, Transition faults, all coupling faults</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e279 "><span>March B</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e281 "><span>Addressing faults, Stuck-at faults, Transition faults, Linked idempotent coupling faults, Linked inversion coupling faults</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="p">Flow chart of the self-test for SRAM</p>
+<br /><img class="image" src="GUID-5185A467-3FC6-4252-9C62-A184988E6413-low.png" alt="DD_Test_Init_SRAM" /><br /><p class="p">Flow chart of the internal routine for SRAM self-test</p>
+<br /><img class="image" src="GUID-990EAFC6-9BE4-4673-8A70-71CCC0ECCF92-low.png" alt="DD_Test_SRAM" /><br /><p class="p"><strong class="ph b">Clock</strong></p>
+<p class="p">The self-test for CPU clock checks whether the CPU clock frequency is within the permissible range.
+It uses TMR1 and SysTick to measure the CPU clock frequency. The TMR1 is clocked at 32768 Hz from the
+32 kHz External Crystal Oscillator and CPU clock can be from any other high frequency oscillator.
+If the CPU clock frequency is within specified error limit, it returns PASS. The test duration is
+defined by one of the input arguments.
+The clock self-test can be used at startup as well as run-time.</p>
+<p class="p">Note</p>
+<ol class="ol"><li class="li"><span class="indent-level-default">1.</span><p class="p">This self-test uses the TMR1 peripheral. Thus, if it is used during run-time, the TMR1 shall not
+be used by the application for continuous modes. If the TMR1 is used
+for some other purpose, it must be reconfigured after running the clock self-test.</p>
+</li>
+<li class="li"><span class="indent-level-default">2.</span><p class="p">Keep the clock test duration lesser than the WDT timeout period, to avoid the WDT resetting the device.</p>
+</li>
+</ol>
+<p class="p">Flow chart of the self-test for CPU clock frequency</p>
+<br /><img class="image" src="GUID-78C5843A-532E-452B-ADC3-F74C6E113E13-low.png" alt="DD_Clock" /><br /><p class="p"><strong class="ph b">Interrupt</strong></p>
+<p class="p">The self-test for this element checks the interrupts functionality of the microcontroller. It configures the EVIC, the Timer 1 (TMR1) and the Timer 2 (TMR2) peripherals to test the interrupt handling mechanism.
+It verifies that at least one interrupt is generated and handled properly.
+This self-test also checks whether the number of interrupts generated are too many within a given time period.TMR1 is configured for polling (Without ISR).
+It reports a PASS if the total number of interrupts generated by the TMR2 is greater than one and less than the specified upper limit. The clock used for TMR1 and TMR2 is from the Internal peripheral clock.
+The interrupt self-test can be used only at startup.</p>
+<p class="p">Note</p>
+<ol class="ol"><li class="li"><span class="indent-level-default">1.</span><p class="p">TThis startup self-test utilizes the interrupts generated by TMR2 and TMR1 with polling method. For run-time testing of interrupts, a separate self-test need to be developed.</p>
+</li>
+</ol>
+<p class="p">Flow chart of the self-test for interrupts</p>
+<br /><img class="image" src="GUID-EF7B2FCE-79CA-436A-93CE-1FA19F43B470-low.png" alt="DD_SST_Interrupt" /><br /><p class="p"><strong class="ph b">IO pin</strong></p>
+<p class="p">The self-test for IO pins verifies that any output pin is able to keep the configured logic state on the pin
+and any input pin is able to read the logic state present on the pin.</p>
+<p class="p">As the exact use of an IO pin is decide by the application, it is the responsibility of the application to
+configure the IO pin direction and drive the pin to the expected state before calling this self-test.
+When testing an input pin, ensure that the IO pin is externally kept at a defined logic state.
+The IO pin self-test can be used only at run-time.</p>
+<p class="p">Flow chart of the self-test for IO pins</p>
+<br /><img class="image" src="GUID-84E07496-E858-4781-9E08-A2C5E43FBC0C-low.png" alt="DD_RST_IO" /><br /><p class="p"><strong class="ph b">Class B Peripheral Library - Timing of self-tests</strong></p>
+<p class="p">Peripherals other than Flash and SRAM</p>
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="vertical-align:middle;" id="d2947e369"><span>Name</span></th>
+<th class="entry cellrowborder" style="vertical-align:middle;" id="d2947e371"><span>Time (in miroseconds)</span></th>
+</tr>
+</thead>
+<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e369 "><span>CLASSB_CPU_RegistersTest</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e371 "><span>82</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e369 "><span>CLASSB_CPU_PCTest</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e371 "><span>3</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e369 "><span>CLASSB_RST_IOTest</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e371 "><span>2</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e369 "><span>CLASSB_ClockTest</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e371 "><span>124347</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e369 "><span>CLASSB_SST_InterruptTest</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e371 "><span>107015</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="p">Flash and SRAM</p>
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="vertical-align:middle;" id="d2947e408"><span>Name</span></th>
+<th class="entry cellrowborder" style="vertical-align:middle;" id="d2947e410"><span>Time (in milliseconds)</span></th>
+<th class="entry cellrowborder" style="vertical-align:middle;" id="d2947e412"><span>Tested size</span></th>
+</tr>
+</thead>
+<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e408 "><span>CLASSB_FlashCRCTest</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e410 "><span>6</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e412 "><span>122 KB</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e408 "><span>CLASSB_SRAM_MarchTestInit</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e410 "><span>332</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e412 "><span>32 KB</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="p">Note</p>
+<ol class="ol"><li class="li"><span class="indent-level-default">1.</span><p class="p">Timing is measured using onchip peripherals (Coretimer and TIMER5) at optimization level -O1
+with CPU running at 200MHz from the internal 200MHz oscillator. Before using these self-tests
+in an application it is recommended to check self-test timings with the required
+configuration (CPU clock, compiler optimization, memory size).</p>
+</li>
+<li class="li"><span class="indent-level-default">2.</span><p class="p">Timing measured for CLASSB_SRAM_MarchTestInit using the ‘March C’ algorithm.</p>
+</li>
+<li class="li"><span class="indent-level-default">3.</span><p class="p">Following IDE and toolchain are used for timing measurements</p>
+<ol class="ol" type="a"><li class="li"><span class="indent-level-default">a.</span><p class="p">MPLAB X v6.00</p>
+</li>
+<li class="li"><span class="indent-level-default">b.</span><p class="p">XC32 Compiler v3.01</p>
+</li>
+</ol>
+</li>
+</ol>
+<p class="p"><strong class="ph b">Configuring the Library (MPLAB X)</strong></p>
+<p class="p">This section provides details necessary to integrate the Class B library with other software components.</p>
+<p class="p"><strong class="ph b">Optimization Requirements</strong></p>
+<p class="p">The self-test routines provides by the Class B software has specific optimization requirements which are
+listed in the following table. If the optimization level for the project is different from what is listed
+in this table, file level optimization has to be applied as per this table.</p>
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="vertical-align:middle;" id="d2947e465"><span>File</span></th>
+<th class="entry cellrowborder" style="vertical-align:middle;" id="d2947e467"><span>Optimization Level</span></th>
+</tr>
+</thead>
+<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e465 "><span>classb_cpu_pc_test.c, classb_sram_algorithm.c</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e467 "><span>-O0</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e465 "><span>All other files (.h, .c, .S)</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e467 "><span>-O1 or -O2 or -O3</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="p"><strong class="ph b">Applying File Level Optimization MPLAB X</strong></p>
+<br /><img class="image" src="GUID-87F17193-388F-45F5-B66E-8DE4C503DE9C-low.png" alt="MPLABX_file_optimization" /><br /><p class="p"><strong class="ph b">Reserved SRAM area for the Class B library</strong></p>
+<p class="p">It is required to reserve 1kB of SRAM for exclusive use by the Class B library.
+This reserved SRAM must not be accessed from outside the Class B library.
+To check or update test results, use the corresponding interface APIs.
+When the Class B library is added into the project with the help of MHC, the linker setting is modified by MHC as shown below.</p>
+<p class="p"><code class="ph codeph">-mreserve=data@0x00000000:0x000003ff</code></p>
+<br /><img class="image" src="GUID-FCE1D2B2-D1DE-4157-82A9-DC02AE249E80-low.png" alt="xc32_ld_SRAM_Reserve" /><br /><p class="p"><strong class="ph b">Modified Startup Sequence</strong></p>
+<p class="p">When generating project with help of MPLAB Harmony 3, the startup code is present in a file named <code class="ph codeph">crt0.s</code>.
+This is a compiler provided file and can be found in local folder of pc <code class="ph codeph">..\xc32\v3.01\pic32mx\lib</code> , after installation of <code class="ph codeph">xc32</code> compiler.
+Initialization of the Class B library is done from the <code class="ph codeph">_on_bootstrap</code> function which is to be executed inside before <code class="ph codeph">main()</code>. The function named <code class="ph codeph">CLASSB_Startup_Tests</code> executes all startup self-tests
+inserted into <code class="ph codeph">classb.c</code> file by the MHC. If none of the self-tests are failed, this function returns
+<code class="ph codeph">CLASSB_STARTUP_TEST_PASSED</code>. If any of the startup self-tests are failed, this function does not return becasue
+of the following reason.
+In the case of critical failures (CPU registers or internal flash),
+the corresponding self-test remains in an infinite loop to avoid unsafe execution of code.
+The self-tests for SRAM, Clock and Interrupt are considered non-critical since it may be possible to execute
+a fail-safe function after detecting a failure. In such case, the <code class="ph codeph">CLASSB_SelfTest_FailSafe()</code> function is
+called when a failure is detected. Since the default implementation of <code class="ph codeph">CLASSB_SelfTest_FailSafe</code> routine
+contains an infinite loop, it won't return to the caller.</p>
+<p class="p">Note</p>
+<ol class="ol"><li class="li"><span class="indent-level-default">1.</span><p class="p">The library defines the <code class="ph codeph">_on_bootstrap</code> function and handles some of the reset causes.
+The application developer shall insert functions to handle the rest of the reset causes.</p>
+</li>
+</ol>
+<p class="p"><strong class="ph b">WDT Test and Timeout</strong></p>
+<p class="p">The Watchdog timer is used as a recovery mechanism in case of software failures.
+The Class B library enables the WDT and checks whether a WDT reset is issued if the timer is not cleared.
+In <code class="ph codeph">_on_bootstrap</code> (in file <code class="ph codeph">classb.c</code>), before performing startup self-tests, the WDT timeout period is configured.</p>
+<p class="p">If any of these self-tests takes more time than the WDT timeout period, it results in a WDT reset.
+Thus, properly configuring the WDT period is essential during startup as well as runtime.</p>
+<p class="p"><img class="image" src="GUID-51D40DD9-7FA9-46FC-B5C1-C0B117D1DF4B-low.png" alt="WDT_STARTUP_A" /><br />
+<img class="image" src="GUID-7DC47F5A-2FC0-49CA-AC27-A1A16748E01C-low.png" alt="WDT_STARTUP_B" /><br /></p>
+<p class="p"><strong class="ph b">Configuring Startup Tests via MHC</strong></p>
+<p class="p">Clone the <code class="ph codeph">classb_pic32mzw1_wfi32e01</code> repo. When an MPLAB Harmony 3 project is created, the MHC lists all available
+components that can be added to the project. The self-tests which need to run during startup can be configured via MHC.
+The <code class="ph codeph">Configuration Options</code> menu appears with a mouse click on the <code class="ph codeph">Class B Library</code> component inside
+the <code class="ph codeph">Project Graph</code>. The configurations done via MHC does not configure the library, instead it helps to modify
+the input arguments and to decide whether to run a specific test during startup.</p>
+<br /><img class="image" src="GUID-D190B3BB-020C-48F8-B0F5-5AC83B6A8D78-low.png" alt="MHC_project_graph" /><br /><p class="p"><strong class="ph b">Class B Library Interface</strong></p>
+
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" class="table" frame="border" border="1" rules="all"><col style="width:" /><col style="width:" /><thead class="thead" style="text-align:left;"><tr class="row"><th class="entry cellrowborder" style="vertical-align:middle;" id="d2947e594"><span>Name</span></th>
+<th class="entry cellrowborder" style="vertical-align:middle;" id="d2947e596"><span>Description</span></th>
+</tr>
+</thead>
+<tbody class="tbody"><tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span><strong class="ph b">Constants Summary</strong></span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span> </span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_CLOCK_DEFAULT_CLOCK_FREQ</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Default CPU clock speed.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_CLOCK_ERROR_PERCENT</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Clock error percentage selected for startup test.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_CLOCK_MAX_CLOCK_FREQ</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Maximum CPU clock speed.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_CLOCK_MAX_SYSTICK_VAL</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Upper limit of SysTick counter.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_CLOCK_MAX_TEST_ACCURACY</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Maximum detectable accuracy for clock self-test.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_CLOCK_MUL_FACTOR</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Multiplication factor used in clock test.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_CLOCK_TEST_TMR1_RATIO_NS</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Duration of TMR1 clock in nano seconds.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_CLOCK_TEST_RATIO_NS_MS</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Ratio of milli second to nano second.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_COMPL_RESULT_ADDR</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Address of one's complement test results.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_FLASH_CRC32_POLYNOMIAL</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>CRC-32 polynomial.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_INTERRUPT_COUNT_VAR_ADDR</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Address of the variable which keeps interrupt count.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_INTERRUPT_TEST_VAR_ADDR</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Address of the variable which keeps interrupt test internal status.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_INTR_MAX_INT_COUNT</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Defines the upper limit for interrupt count.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_INVALID_TEST_ID</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Invalid test ID.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_ONGOING_TEST_VAR_ADDR</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Address at which the ID of ongoing test is stored.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_RESULT_ADDR</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Address of test results.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_SRAM_ALL_32BITS_HIGH</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Defines name for max 32-bit unsigned value.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_SRAM_APP_AREA_START</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Defines the start address of the SRAM for the application.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_SRAM_BUFF_START_ADDRESS</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>SRAM test buffer start address.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_SRAM_FINAL_WORD_ADDRESS</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Final word address in the SRAM.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_SRAM_STARTUP_TEST_SIZE</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Size of the SRAM tested during startup.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_SRAM_TEST_BUFFER_SIZE</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Defines the size of the buffer used for SRAM test.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_SRAM_TEMP_STACK_ADDRESS</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Address of the temporary stack.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_TEST_IN_PROG_VAR_ADDR</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Address of the variable which indicates that a Class B test is in progress.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_WDT_TEST_IN_PROG_VAR_ADDR</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Address of the variable which indicates that a WDT test is in progress.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span><strong class="ph b">Data types Summary</strong></span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span> </span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>*CLASSB_SST_RESULT_BF</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Pointer to the structure for the Class B library startup self-test result. This can be used to point to the result address 0xA0000000. It will help to see the result in text form via watch window</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>*CLASSB_RST_RESULT_BF</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Pointer to the structure for the Class B library run-time self-test result. This can be used to point to the result address 0xA0000004. It will help to see the result in text form via watch window</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_CPU_PC_TEST_VALUES</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Data type for PC Test input and output values.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_INIT_STATUS</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Identifies Class B initialization status.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_PORT_INDEX</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>PORT index definitions for Class B library I/O pin test.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_PORT_PIN</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>PIN definitions for Class B library I/O pin test.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_PORT_PIN_STATE</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>PORT pin state.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_SRAM_MARCH_ALGO</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Selects the RAM March algorithm to run.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_STARTUP_STATUS</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Identifies startup test status.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_TEST_ID</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Identifies Class B library tests.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_TEST_STATUS</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Identifies result from Class B library test.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_TEST_STATE</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Identifies Class B library test state.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_TEST_TYPE</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Identifies type of the Class B library test.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span><strong class="ph b">Interface Routines Summary</strong></span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span> </span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_App_WDT_Recovery</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>This function is called if a WDT reset has happened during run-time.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_CPU_RegistersTest</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>This self-test checks the processor core registers.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_CPU_PCTest</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>This self-test checks the Program Counter register (PC).</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_ClearTestResults</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Clears the results of SSTs or RSTs.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_ClockTest</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>This self-test checks whether the CPU clock frequency is within the permissible limit.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_GetTestResult</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Returns the result of the specified self-test.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_FlashCRCGenerate</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>Generates CRC-32 checksum for a given memory area.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_FlashCRCTest</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>This self-test checks the internal Flash program memory to detect single bit faults.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_GlobalsInit</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>This function initializes the global variables for the classb library.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_Init</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>This function is executed on every device reset. This shall be called right after the reset, before any other initialization is performed.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_SelfTest_FailSafe</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>This function is called if any of the non-critical tests detects a failure.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_SRAM_MarchTestInit</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>This self-test checks the SRAM with the help of RAM March algorithm.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_SST_InterruptTest</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>This self-test checks basic functionality of the interrupt handling mechanism.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_SST_WDT_Recovery</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>This function is called if a WDT reset has happened during the execution of an SST.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_Startup_Tests</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>This function executes all startup self-tests inserted into classb.c file.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_RST_IOTest</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>This self-test can be used to perform plausibility checks on IO pins.</span></td>
+</tr>
+<tr class="row"><td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e594 "><span>CLASSB_TestWDT</span></td>
+<td class="entry cellrowborder" style="vertical-align:middle;" headers="d2947e596 "><span>This function tests the WatchDog Timer (WDT).</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="related-links">
+<ul class="ullinks">
+<li class="link ulchildlink"><strong><a href="GUID-CCE57066-B6C1-4371-8E09-EF0F70ADC922.html">CLASSB_CLOCK_DEFAULT_CLOCK_FREQ</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-AD62D00F-1E5E-4B0A-8F53-1866CD47D30B.html">CLASSB_CLOCK_ERROR_PERCENT</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-61E01A71-6A37-4EEA-8292-F1D1D6A9B680.html">CLASSB_CLOCK_MAX_CLOCK_FREQ</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-619641B0-DBDC-4B08-BBA8-6BCEEFD110A0.html">CLASSB_CLOCK_MAX_SYSTICK_VAL</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-8C976313-0E57-48A3-8EA6-4599439A0092.html">CLASSB_CLOCK_MAX_TEST_ACCURACY</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-E1D68AD2-7422-4A2A-A558-391FD77CD340.html">CLASSB_CLOCK_MUL_FACTOR</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-8BA16DEC-E553-44E7-9EBC-78EAE1446F27.html">CLASSB_CLOCK_TMR1_CLK_FREQ</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-4537661B-6C75-4B5F-AA07-3269CF6B3C6E.html">CLASSB_CLOCK_TEST_TMR1_RATIO_NS</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-3D73A66C-FC6C-4BCC-A0A1-21FF31F2A71E.html">CLASSB_CLOCK_TEST_RATIO_NS_MS</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-6CECDC39-7E68-46E6-B958-F48B3392CB1C.html">CLASSB_COMPL_RESULT_ADDR</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-9823EFF4-2B47-4077-BB8D-BF1C74FFCB66.html">CLASSB_FLASH_CRC32_POLYNOMIAL</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-45405342-E12D-476A-9B86-77BD501E1766.html">CLASSB_INTERRUPT_COUNT_VAR_ADDR</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-A079F8CC-E2A0-452E-9166-F285E1AEE2C9.html">CLASSB_INTERRUPT_TEST_VAR_ADDR</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-F61F612F-75CB-4600-AD6F-7CF7D75407D3.html">CLASSB_INTR_MAX_INT_COUNT</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-F7768298-7179-49A1-8489-5D4BD3D37579.html">CLASSB_INVALID_TEST_ID</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-51127D44-8908-469D-8943-1F7483224DAE.html">CLASSB_ONGOING_TEST_VAR_ADDR</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-27B8A7B2-0038-445F-AD77-A372C0554B45.html">CLASSB_RESULT_ADDR</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-9D925FFD-EFF2-40B0-8B8E-855D5F7D071D.html">CLASSB_SRAM_ALL_32BITS_HIGH</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-602A1334-714B-4289-9EBA-FAE91ED4066E.html">CLASSB_SRAM_APP_AREA_START</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-E5118550-D100-4A77-95AF-30797C1A9537.html">CLASSB_SRAM_BUFF_START_ADDRESS</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-AD30D375-BA6E-4C5B-A90D-4711D3F09F31.html">CLASSB_SRAM_FINAL_WORD_ADDRESS</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-23A88CA4-D27F-4DF9-8076-2AF71C7004AE.html">CLASSB_SRAM_STARTUP_TEST_SIZE</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-8AAE4BDD-EFBF-48C3-8889-84955E137C8E.html">CLASSB_SRAM_TEMP_STACK_ADDRESS</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-452BC9BE-F5D8-4DE1-BE7B-1B147B5044A7.html">CLASSB_TEST_IN_PROG_VAR_ADDR</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-74D6C5A5-5188-47CC-8F65-2FA26514AFBE.html">CLASSB_WDT_TEST_IN_PROG_VAR_ADDR</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-8C5BC531-7BAE-4369-982F-1F18D6CD2528.html">CLASSB_SST_RESULT_BF</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-DA8C77CC-D696-4480-9DDF-10237F31C00A.html">CLASSB_RST_RESULT_BF</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-97A3FD8F-647D-4590-9878-1C1268CD4757.html">CLASSB_CPU_PC_TEST_VALUES</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-143383FB-0090-4FC4-9577-DED0B7EAB186.html">CLASSB_INIT_STATUS</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-9235F2F4-3CDF-46A4-B710-D290AA09B1D4.html">CLASSB_PORT_INDEX</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-7106413A-66EF-4F12-A8AE-69BA77F50E23.html">CLASSB_PORT_PIN</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-F89756AD-AEC4-4FD9-A23F-0E1505980E96.html">CLASSB_PORT_PIN_STATE</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-E330D7D0-F057-48C1-8F00-8271644ACA35.html">CLASSB_SRAM_MARCH_ALGO</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-17088B6E-BCED-4B42-AF08-72AB2FE31ED0.html">CLASSB_STARTUP_STATUS</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-26329DD5-2467-43AD-BAED-65C7CF94C7C2.html">CLASSB_TEST_ID</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-45E10218-E3FB-466E-A125-94AC6CD4D8B3.html">CLASSB_TEST_STATUS</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-048C12C1-6ED3-4155-AE80-CB6F20E59FCD.html">CLASSB_TEST_STATE</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-350D1148-A2A0-4F9D-A166-BE25FEB2A842.html">CLASSB_TEST_TYPE</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-F6690318-A4BF-4962-A6CE-7524D60D1FF5.html">CLASSB_App_WDT_Recovery</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-77029010-B5F8-46CB-B99A-AD73D24F9115.html">CLASSB_CPU_RegistersTest</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-35E81007-8341-48AB-AD50-4AEE24DC3326.html">CLASSB_CPU_PCTest</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-5D425E8C-8325-4F9F-8557-59282A6B63B1.html">CLASSB_ClearTestResults</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-2300B24F-0091-4818-BC0F-B79341A26941.html">CLASSB_ClockTest</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-17237FED-3B75-4E81-B1B9-FFE1653B648B.html">CLASSB_GetTestResult</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-88043599-F30C-4941-A65B-5D6DEF191040.html">CLASSB_FlashCRCGenerate</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-4B422C6C-B783-4B28-91AF-04FFEB0CEE83.html">CLASSB_FlashCRCTest</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-11D799A9-929A-47E1-9459-CF7599F61310.html">CLASSB_GlobalsInit</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-A60BF63D-D41D-4183-8A79-69B779C7AF3A.html">CLASSB_Init</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-AD965D66-F722-466F-871C-FD8CD73DAB08.html">CLASSB_SelfTest_FailSafe</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-75A1E221-5BCA-4562-A22E-438504EFA9CA.html">CLASSB_SRAM_MarchTestInit</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-0E6BF7A6-377C-4384-8421-D81F30D77E09.html">CLASSB_RST_IOTest</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-A1A352F6-517A-43CA-9680-72C02A8945E9.html">CLASSB_SRAM_TEST_BUFFER_SIZE</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-9F52A374-7DDE-47D7-B87E-64096C98B5E7.html">CLASSB_SST_InterruptTest</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-E59AD698-A8C2-4AE8-9279-1DC3A7DECDB5.html">CLASSB_SST_WDT_Recovery</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-206721F4-2684-4736-A544-44D11B17DEA2.html">CLASSB_Startup_Tests</a></strong><br />
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-28A74005-FBD0-483A-8CB5-4DFC36E9B81F.html">CLASSB_TestWDT</a></strong><br />
+</li>
+</ul>
+</div></body>
+</html>

@@ -37,51 +37,49 @@ def instantiateComponent(classBComponent):
 
     classBMenu = classBComponent.createMenuSymbol("CLASSB_MENU", None)
     classBMenu.setLabel("Class B Startup Test Configuration")
-    
+
     execfile(Module.getPath() +"/config/interface.py")
-    print("Test Module: Harmony Class B Library")
+    
     #Device params
-    #classBFlashNode = ATDF.getNode("/avr-tools-device-file/devices/device/address-spaces/address-space/memory-segment@[name=\"FLASH\"]")
     classBFlashNode = ATDF.getNode("/avr-tools-device-file/devices/device/address-spaces/address-space/memory-segment@[name=\"code\"]")
     if classBFlashNode != None:
         #Flash size
         classB_FLASH_SIZE = classBComponent.createIntegerSymbol("CLASSB_FLASH_SIZE", None)
         classB_FLASH_SIZE.setVisible(False)
         classB_FLASH_SIZE.setDefaultValue(int(classBFlashNode.getAttribute("size"), 16))
-        #classB_FLASH_SIZE.setDefaultValue(0)
-        print("Test Module: Harmony Class B Library")
+        
+    
     classBSRAMNode = ATDF.getNode("/avr-tools-device-file/devices/device/address-spaces/address-space/memory-segment@[name=\"kseg0_data_mem\"]")
-    #classBSRAMNode = ATDF.getNode("/avr-tools-device-file/devices/device/address-spaces/address-space/memory-segment@[name=\"HSRAM\"]")
-    print("Test Module: Harmony Class B Library")
     if classBSRAMNode != None:
         #SRAM size
         classB_SRAM_SIZE = classBComponent.createIntegerSymbol("CLASSB_SRAM_SIZE", None)
         classB_SRAM_SIZE.setVisible(False)
         classB_SRAM_SIZE.setDefaultValue(int(classBSRAMNode.getAttribute("size"), 16))
-        #classB_SRAM_SIZE.setDefaultValue(0)
+        
         #SRAM address
         classB_SRAM_ADDR = classBComponent.createHexSymbol("CLASSB_SRAM_START_ADDRESS", None)
         classB_SRAM_ADDR.setVisible(False)
         classB_SRAM_ADDR.setDefaultValue(int(classBSRAMNode.getAttribute("start"), 16)  + (0xA0000000))
-        #classB_SRAM_SIZE.setDefaultValue(0)
+        
         #SRAM address MSB 24 bits
         classB_SRAM_START_MSB = classBComponent.createHexSymbol("CLASSB_SRAM_START_MSB", None)
         classB_SRAM_START_MSB.setVisible(False)
-        #classB_SRAM_START_MSB.setDefaultValue(int(classBSRAMNode.getAttribute("start"), 16) >> 8)
         classB_SRAM_START_MSB.setDefaultValue((int(classBSRAMNode.getAttribute("start"), 16) >> 8) + (0xA0000000 >> 8))
-        #classB_SRAM_SIZE.setDefaultValue(0)
-    print("Test Module: Harmony Class B Library")
+        
+
     # Insert CPU test
     classB_UseCPUTest = classBComponent.createBooleanSymbol("CLASSB_CPU_TEST_OPT", classBMenu)
     classB_UseCPUTest.setLabel("Test CPU Registers?")
     classB_UseCPUTest.setVisible(True)
     classB_UseCPUTest.setDefaultValue(False)
+    classB_UseCPUTest.setHelp("Harmony_ClassB_Library_for_PIC32MZW1")
     
     # Insert SRAM test
     classB_UseSRAMTest = classBComponent.createBooleanSymbol("CLASSB_SRAM_TEST_OPT", classBMenu)
     classB_UseSRAMTest.setLabel("Test SRAM?")
     classB_UseSRAMTest.setVisible(True)
     classB_UseSRAMTest.setDefaultValue(False)
+    classB_UseSRAMTest.setHelp("Harmony_ClassB_Library_for_PIC32MZW1")
     
     # Select March algorithm for SRAM test
     classb_Ram_marchAlgo = classBComponent.createKeyValueSetSymbol("CLASSB_SRAM_MARCH_ALGORITHM", classB_UseSRAMTest)
@@ -94,25 +92,28 @@ def instantiateComponent(classBComponent):
     classb_Ram_marchAlgo.setDescription("Selects the SRAM March algorithm to be used during startup")
     classb_Ram_marchAlgo.setDefaultValue(0)
     classb_Ram_marchAlgo.setVisible(False)
+    classb_Ram_marchAlgo.setHelp("Harmony_ClassB_Library_for_PIC32MZW1")
     #This should be enabled based on the above configuration
     classb_Ram_marchAlgo.setDependencies(setClassB_SymbolVisibility, ["CLASSB_SRAM_TEST_OPT"])
     
     # Size of the area to be tested
     classb_Ram_marchSize = classBComponent.createIntegerSymbol("CLASSB_SRAM_MARCH_SIZE", classB_UseSRAMTest)
     classb_Ram_marchSize.setLabel("Size of the tested area (bytes)")
-    classb_Ram_marchSize.setDefaultValue(classB_SRAM_SIZE.getValue() / 4)
+    classb_Ram_marchSize.setDefaultValue(classB_SRAM_SIZE.getValue() / 128)
     classb_Ram_marchSize.setVisible(False)
     classb_Ram_marchSize.setMin(0)
+    classb_Ram_marchSize.setHelp("Harmony_ClassB_Library_for_PIC32MZW1")
     # 1024 bytes are reserved for the use of Class B library
     classb_Ram_marchSize.setMax(classB_SRAM_SIZE.getValue() - 1024)
     classb_Ram_marchSize.setDescription("Size of the SRAM area to be tested starting from 0x20000400")
     classb_Ram_marchSize.setDependencies(setClassB_SymbolVisibility, ["CLASSB_SRAM_TEST_OPT"])
-    print("Test Module: Harmony Class B Library")
+    
     # CRC-32 checksum availability
     classB_FlashCRC_Option = classBComponent.createBooleanSymbol("CLASSB_FLASH_CRC_CONF", classBMenu)
     classB_FlashCRC_Option.setLabel("Test Internal Flash?")
     classB_FlashCRC_Option.setVisible(True)
     classB_FlashCRC_Option.setDefaultValue(False)
+    classB_FlashCRC_Option.setHelp("Harmony_ClassB_Library_for_PIC32MZW1")
     classB_FlashCRC_Option.setDescription("Enable this option if the CRC-32 checksum of the application image is stored at a specific address in the Flash")
     
     # Address at which CRC-32 of the application image is stored
@@ -122,6 +123,7 @@ def instantiateComponent(classBComponent):
     classB_CRC_address.setMin(0)
     classB_CRC_address.setMax(classB_FLASH_SIZE.getValue() - 4)
     classB_CRC_address.setVisible(False)
+    classB_CRC_address.setHelp("Harmony_ClassB_Library_for_PIC32MZW1")
     #This should be enabled based on the above configuration
     classB_CRC_address.setDependencies(setClassB_SymbolVisibility, ["CLASSB_FLASH_CRC_CONF"])
     
@@ -129,6 +131,7 @@ def instantiateComponent(classBComponent):
     classB_UseClockTest = classBComponent.createBooleanSymbol("CLASSB_CLOCK_TEST_OPT", classBMenu)
     classB_UseClockTest.setLabel("Test CPU Clock?")
     classB_UseClockTest.setVisible(True)
+    classB_UseClockTest.setHelp("Harmony_ClassB_Library_for_PIC32MZW1")
     
     # Acceptable CPU clock frequency error at startup
     classb_ClockTestPercentage = classBComponent.createKeyValueSetSymbol("CLASSB_CLOCK_TEST_PERCENT", classB_UseClockTest)
@@ -141,6 +144,7 @@ def instantiateComponent(classBComponent):
     classb_ClockTestPercentage.setDescription("Selects the permitted CPU clock error at startup")
     classb_ClockTestPercentage.setDefaultValue(0)
     classb_ClockTestPercentage.setVisible(False)
+    classb_ClockTestPercentage.setHelp("Harmony_ClassB_Library_for_PIC32MZW1")
     classb_ClockTestPercentage.setDependencies(setClassB_SymbolVisibility, ["CLASSB_CLOCK_TEST_OPT"])
     
     # Clock test duration
@@ -148,6 +152,7 @@ def instantiateComponent(classBComponent):
     classb_ClockTestDuration.setLabel("Clock Test Duration (ms)")
     classb_ClockTestDuration.setDefaultValue(5)
     classb_ClockTestDuration.setVisible(False)
+    classb_ClockTestDuration.setHelp("Harmony_ClassB_Library_for_PIC32MZW1")
     classb_ClockTestDuration.setMin(5)
     classb_ClockTestDuration.setMax(20)
     classb_ClockTestDuration.setDependencies(setClassB_SymbolVisibility, ["CLASSB_CLOCK_TEST_OPT"])
@@ -156,18 +161,10 @@ def instantiateComponent(classBComponent):
     classB_UseInterTest = classBComponent.createBooleanSymbol("CLASSB_INTERRUPT_TEST_OPT", classBMenu)
     classB_UseInterTest.setLabel("Test Interrupts?")
     classB_UseInterTest.setVisible(True)
+    classB_UseInterTest.setHelp("Harmony_ClassB_Library_for_PIC32MZW1")
     classB_UseInterTest.setDefaultValue(False)
     classB_UseInterTest.setDescription("This self-test check interrupts operation with the help of NVIC, RTC and TC0")
     
-    #symbol_debug = classBComponent.createCommentSymbol("CLASSB_DEBUG_MENU", None)
-    #symbol_debug.setLabel("DEBUG")
-    #symbol_debug.setVisible(True)
-    
-    #symbol_APPDEBUG_enabling = classBComponent.createBooleanSymbol("CLASSB_DEBUG_ENABLE", symbol_debug)
-    #symbol_APPDEBUG_enabling.setLabel("Enable Debug parameters")
-    #symbol_APPDEBUG_enabling.setVisible(True)
-    #symbol_APPDEBUG_enabling.setDefaultValue(False)
-    #symbol_APPDEBUG_enabling.setDescription("Enable debug parameters")
     
     classBReadOnlyParams = classBComponent.createMenuSymbol("CLASSB_ADDR_MENU", None)
     classBReadOnlyParams.setLabel("Build parameters (read-only) used by the library")
@@ -177,6 +174,7 @@ def instantiateComponent(classBComponent):
     classb_AppRam_start.setLabel("Start address of non-reserved SRAM")
     classb_AppRam_start.setDefaultValue(0xA0000400)
     classb_AppRam_start.setReadOnly(True)
+    classb_AppRam_start.setHelp("Harmony_ClassB_Library_for_PIC32MZW1")
     classb_AppRam_start.setMin(0xA0000400)
     classb_AppRam_start.setMax(0xA0000400)
     classb_AppRam_start.setDescription("Initial 1kB of SRAM is used by the Class B library")
@@ -185,6 +183,7 @@ def instantiateComponent(classBComponent):
     classB_SRAM_lastWordAddr = classBComponent.createHexSymbol("CLASSB_SRAM_LASTWORD_ADDR", classBReadOnlyParams)
     classB_SRAM_lastWordAddr.setLabel("Address of the last word in SRAM")
     classB_SRAM_lastWordAddr.setReadOnly(True)
+    classB_SRAM_lastWordAddr.setHelp("Harmony_ClassB_Library_for_PIC32MZW1")
     classB_SRAM_lastWordAddr.setDefaultValue((0xA0000000 + classB_SRAM_SIZE.getValue() - 4))
     classB_SRAM_lastWordAddr.setMin((0xA0000000 + classB_SRAM_SIZE.getValue() - 4))
     classB_SRAM_lastWordAddr.setMax((0xA0000000 + classB_SRAM_SIZE.getValue() - 4))
@@ -196,6 +195,7 @@ def instantiateComponent(classBComponent):
     classb_FlashCRCPoly.setLabel("CRC-32 polynomial for Flash test")
     classb_FlashCRCPoly.setDefaultValue(0xEDB88320)
     classb_FlashCRCPoly.setReadOnly(True)
+    classb_FlashCRCPoly.setHelp("Harmony_ClassB_Library_for_PIC32MZW1")
     classb_FlashCRCPoly.setMin(0xEDB88320)
     classb_FlashCRCPoly.setMax(0xEDB88320)
     classb_FlashCRCPoly.setDescription("The CRC-32 polynomial used for Flash self-test is " + str(hex(classb_FlashCRCPoly.getValue())))
@@ -203,35 +203,39 @@ def instantiateComponent(classBComponent):
     # Read-only symbol for max SysTick count
     classb_SysTickMaxCount = classBComponent.createHexSymbol("CLASSB_SYSTICK_MAXCOUNT", classBReadOnlyParams)
     classb_SysTickMaxCount.setLabel("Maximum SysTick count")
-    classb_SysTickMaxCount.setDefaultValue(0xFFFFFF)
+    classb_SysTickMaxCount.setDefaultValue(0xFFFFFFFF)
     classb_SysTickMaxCount.setReadOnly(True)
-    classb_SysTickMaxCount.setMin(0xFFFFFF)
-    classb_SysTickMaxCount.setMax(0xFFFFFF)
-    classb_SysTickMaxCount.setDescription("The SysTick is a 24-bit counter with max count value " + str(hex(classb_SysTickMaxCount.getValue())))
+    classb_SysTickMaxCount.setHelp("Harmony_ClassB_Library_for_PIC32MZW1")
+    classb_SysTickMaxCount.setMin(0xFFFFFFFF)
+    classb_SysTickMaxCount.setMax(0xFFFFFFFF)
+    classb_SysTickMaxCount.setDescription("The SysTick is a 32-bit counter with max count value " + str(hex(classb_SysTickMaxCount.getValue())))
     
     # Read-only symbol for max CPU clock frequency
     classb_CPU_MaxClock = classBComponent.createIntegerSymbol("CLASSB_CPU_MAX_CLOCK", classBReadOnlyParams)
     classb_CPU_MaxClock.setLabel("Maximum CPU clock frequency")
     classb_CPU_MaxClock.setDefaultValue(200000000)
     classb_CPU_MaxClock.setReadOnly(True)
+    classb_CPU_MaxClock.setHelp("Harmony_ClassB_Library_for_PIC32MZW1")
     classb_CPU_MaxClock.setMin(200000000)
     classb_CPU_MaxClock.setMax(200000000)
     classb_CPU_MaxClock.setDescription("The self-test for CPU clock frequency assumes that the maximum CPU clock frequency is " + str(classb_CPU_MaxClock.getValue()) + "Hz")
     
     # Read-only symbol for expected RTC clock frequency
-    classb_RTC_Clock = classBComponent.createIntegerSymbol("CLASSB_TMR1_EXPECTED_CLOCK", classBReadOnlyParams)
-    classb_RTC_Clock.setLabel("Expected RTC clock frequency")
-    classb_RTC_Clock.setDefaultValue(32768)
-    classb_RTC_Clock.setReadOnly(True)
-    classb_RTC_Clock.setMin(32768)
-    classb_RTC_Clock.setMax(32768)
-    classb_RTC_Clock.setDescription("The self-test for CPU clock frequency expects the RTC clock frequency to be " + str(classb_RTC_Clock.getValue()) + "Hz")
+    classb_TMR_Clock = classBComponent.createIntegerSymbol("CLASSB_TMR1_EXPECTED_CLOCK", classBReadOnlyParams)
+    classb_TMR_Clock.setLabel("Expected RTC clock frequency")
+    classb_TMR_Clock.setDefaultValue(32768)
+    classb_TMR_Clock.setReadOnly(True)
+    classb_TMR_Clock.setHelp("Harmony_ClassB_Library_for_PIC32MZW1")
+    classb_TMR_Clock.setMin(32768)
+    classb_TMR_Clock.setMax(32768)
+    classb_TMR_Clock.setDescription("The self-test for CPU clock frequency expects the RTC clock frequency to be " + str(classb_TMR_Clock.getValue()) + "Hz")
     
     # Read-only symbol for maximum configurable accuracy for CPU clock self-test
     classb_MaxAccuracy = classBComponent.createIntegerSymbol("CLASSB_CPU_CLOCK_TEST_ACCUR", classBReadOnlyParams)
     classb_MaxAccuracy.setLabel("Maximum accuracy for CPU clock test")
     classb_MaxAccuracy.setDefaultValue(5)
     classb_MaxAccuracy.setReadOnly(True)
+    classb_MaxAccuracy.setHelp("Harmony_ClassB_Library_for_PIC32MZW1")
     classb_MaxAccuracy.setMin(5)
     classb_MaxAccuracy.setMax(5)
     classb_MaxAccuracy.setDescription("Error percentage selected for CPU clock frequency test must be " + str(classb_MaxAccuracy.getValue()) + "% or higher")
@@ -272,12 +276,21 @@ def instantiateComponent(classBComponent):
     
     # Source File for result handling
     classBSourceResultMgmt = classBComponent.createFileSymbol("CLASSB_SOURCE_RESULT_MGMT_S", None)
-    classBSourceResultMgmt.setSourcePath("/templates/pic32mzw1_wfi32e01/classb_result_management.S.ftl")
+    classBSourceResultMgmt.setSourcePath("/templates/pic32mzw1_wfi32e01/classb_result_management_xc32.S.ftl")
     classBSourceResultMgmt.setOutputName("classb_result_management.S")
     classBSourceResultMgmt.setDestPath("/classb")
     classBSourceResultMgmt.setProjectPath("config/" + configName + "/classb")
     classBSourceResultMgmt.setType("SOURCE")
     classBSourceResultMgmt.setMarkup(True)
+    
+    # Header File for result handling
+    classBHeaderResultMgmt = classBComponent.createFileSymbol("CLASSB_HEADER_RESULT_MGMT", None)
+    classBHeaderResultMgmt.setSourcePath("/templates/pic32mzw1_wfi32e01/classb_result_management.h.ftl")
+    classBHeaderResultMgmt.setOutputName("classb_result_management.h")
+    classBHeaderResultMgmt.setDestPath("/classb")
+    classBHeaderResultMgmt.setProjectPath("config/" + configName +"/classb")
+    classBHeaderResultMgmt.setType("HEADER")
+    classBHeaderResultMgmt.setMarkup(True)
 
     # Source File for CPU test
     classBSourceCpuTestAsm = classBComponent.createFileSymbol("CLASSB_SOURCE_CPUTEST_S", None)
@@ -332,6 +345,24 @@ def instantiateComponent(classBComponent):
     classBHeaderSRAMTest.setProjectPath("config/" + configName +"/classb")
     classBHeaderSRAMTest.setType("HEADER")
     classBHeaderSRAMTest.setMarkup(True)
+    
+    # Source File for SRAM test algorithms
+    classBSourceSRAMAlgo = classBComponent.createFileSymbol("CLASSB_SOURCE_SRAM_ALGO", None)
+    classBSourceSRAMAlgo.setSourcePath("/templates/pic32mzw1_wfi32e01/classb_sram_algorithm.c.ftl")
+    classBSourceSRAMAlgo.setOutputName("classb_sram_algorithm.c")
+    classBSourceSRAMAlgo.setDestPath("/classb")
+    classBSourceSRAMAlgo.setProjectPath("config/" + configName + "/classb")
+    classBSourceSRAMAlgo.setType("SOURCE")
+    classBSourceSRAMAlgo.setMarkup(True)
+    
+    # Header File for SRAM test algorithms
+    classBHeaderSRAMAlgo = classBComponent.createFileSymbol("CLASSB_HEADER_SRAM_ALGO", None)
+    classBHeaderSRAMAlgo.setSourcePath("/templates/pic32mzw1_wfi32e01/classb_sram_algorithm.h.ftl")
+    classBHeaderSRAMAlgo.setOutputName("classb_sram_algorithm.h")
+    classBHeaderSRAMAlgo.setDestPath("/classb")
+    classBHeaderSRAMAlgo.setProjectPath("config/" + configName +"/classb")
+    classBHeaderSRAMAlgo.setType("HEADER")
+    classBHeaderSRAMAlgo.setMarkup(True)
     
     # Source File for Flash test
     classBSourceFLASHTest = classBComponent.createFileSymbol("CLASSB_SOURCE_FLASH_TEST", None)
@@ -417,6 +448,7 @@ def instantiateComponent(classBComponent):
     classB_xc32ld_reserve_sram.setCategory("C32-LD")
     classB_xc32ld_reserve_sram.setKey("oXC32ld-extra-opts")
     classB_xc32ld_reserve_sram.setAppend(True, ";")
-    classB_xc32ld_reserve_sram.setValue("-mreserve=data@0x00000000:0x00000400")
+    
+    classB_xc32ld_reserve_sram.setValue("-mreserve=data@0x00000000:0x000003ff")
    
     

@@ -84,9 +84,9 @@ extern void _CLASSB_UpdateTestResult(CLASSB_TEST_TYPE test_type,
     CLASSB_TEST_ID test_id, CLASSB_TEST_STATUS value);
 
 /*Internal functions for PC test*/
-static CLASSB_CPU_PC_TEST_VALUES __attribute__((optimize("-O0"))) _CLASSB_CPU_PCTestRoutineA(CLASSB_CPU_PC_TEST_VALUES);
-static CLASSB_CPU_PC_TEST_VALUES __attribute__((optimize("-O0"))) _CLASSB_CPU_PCTestRoutineB(CLASSB_CPU_PC_TEST_VALUES);
-static CLASSB_CPU_PC_TEST_VALUES __attribute__((optimize("-O0"))) _CLASSB_CPU_PCTestRoutineC(CLASSB_CPU_PC_TEST_VALUES);
+static CLASSB_CPU_PC_TEST_VALUES OPTIMIZE_O0 _CLASSB_CPU_PCTestRoutineA(CLASSB_CPU_PC_TEST_VALUES);
+static CLASSB_CPU_PC_TEST_VALUES OPTIMIZE_O0 _CLASSB_CPU_PCTestRoutineB(CLASSB_CPU_PC_TEST_VALUES);
+static CLASSB_CPU_PC_TEST_VALUES OPTIMIZE_O0 _CLASSB_CPU_PCTestRoutineC(CLASSB_CPU_PC_TEST_VALUES);
 
 /*============================================================================
 static CLASSB_CPU_PC_TEST_VALUES _CLASSB_CPU_PCTestRoutineA(CLASSB_CPU_PC_TEST_VALUES pc_test_data)
@@ -99,7 +99,7 @@ Notes  : This function is called from 'CLASSB_CPU_PCTest' to check the Program
 ============================================================================*/
 static CLASSB_CPU_PC_TEST_VALUES _CLASSB_CPU_PCTestRoutineA(CLASSB_CPU_PC_TEST_VALUES pc_test_data)
 {
-    return (pc_test_data << 1);
+    return (CLASSB_CPU_PC_TEST_VALUES) (pc_test_data << 1);
 }
 
 /*============================================================================
@@ -113,7 +113,7 @@ Notes  : This function is called from 'CLASSB_CPU_PCTest' to check the Program
 ============================================================================*/
 static CLASSB_CPU_PC_TEST_VALUES _CLASSB_CPU_PCTestRoutineB(CLASSB_CPU_PC_TEST_VALUES pc_test_data)
 {
-    return (pc_test_data << 1);
+    return (CLASSB_CPU_PC_TEST_VALUES) (pc_test_data << 1);
 }
 
 /*============================================================================
@@ -127,7 +127,7 @@ Notes  : This function is called from 'CLASSB_CPU_PCTest' to check the Program
 ============================================================================*/
 static CLASSB_CPU_PC_TEST_VALUES _CLASSB_CPU_PCTestRoutineC(CLASSB_CPU_PC_TEST_VALUES pc_test_data)
 {
-    return (pc_test_data << 1);
+    return (CLASSB_CPU_PC_TEST_VALUES) (pc_test_data << 1);
 }
 
 /*============================================================================

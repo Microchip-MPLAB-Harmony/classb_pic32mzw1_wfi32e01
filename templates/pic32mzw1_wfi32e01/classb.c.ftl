@@ -49,8 +49,8 @@
  
 
 
-#define FLASH_START_ADDR 0x90000000
-#define FLASH_SIZE       0x100000
+#define FLASH_START_ADDR 		    0x90000000
+#define FLASH_SIZE       		    0x100000
 
 #define SRAM_BASE_ADDRESS                   (0xA0000000)
 #define CLASSB_RESULT_ADDR                  (0x${CLASSB_SRAM_START_ADDRESS}U)
@@ -68,8 +68,9 @@
 #define CLASSB_FLASH_CRC32_ADDR             (0x${CLASSB_FLASHCRC_ADDR}U)
     </#if>
 </#if>
-#define CLASSB_CLOCK_TEST_RTC_CYCLES        (200U)
-// RTC is clocked from 32768 Hz Crystal. One RTC cycle is 30517 nano sec
+
+/* TMR1 is clocked from 32768 Hz Crystal for CPU clock test. 
+   One TMR1 cycle is 30517 nano sec*/
 #define CLASSB_CLOCK_TEST_TMR1_RATIO_NS      (30517U)
 #define CLASSB_CLOCK_TEST_RATIO_NS_MS       (1000000U)
 #define CLASSB_CLOCK_DEFAULT_CLOCK_FREQ     (200000000U)
@@ -148,6 +149,7 @@ void CLASSB_WDT_Clear( void )
     *wdtclrkey = 0x5743;
 }
 
+static uint32_t classb_original_wdtps;
 /*============================================================================
 void CLASSB_WDT_Config(void)
 ------------------------------------------------------------------------------
@@ -162,7 +164,32 @@ void CLASSB_WDT_Config( void )
     SYSKEY = 0xAA996655;
     SYSKEY = 0x556699AA;
     
-    CFGCON2bits.WDTPS = 11; //2 sec
+    classb_original_wdtps = CFGCON2bits.WDTPS;
+    CFGCON2bits.WDTPS = 10; //1 sec
+    
+    SYSKEY = 0x33333333;
+     Nop();
+    Nop();
+    Nop();
+    Nop();
+}
+
+
+/*============================================================================
+void CLASSB_WDT_ReConfig(void)
+------------------------------------------------------------------------------
+Purpose: For configuring WDT.
+Input  : None
+Output : None
+Notes  : None
+============================================================================*/
+void CLASSB_WDT_ReConfig( void )
+{
+    SYSKEY = 0x00000000;
+    SYSKEY = 0xAA996655;
+    SYSKEY = 0x556699AA;
+    
+    CFGCON2bits.WDTPS = classb_original_wdtps; //2 sec
     
     SYSKEY = 0x33333333;
      Nop();
@@ -201,7 +228,7 @@ Notes  : This function is called before C startup code
 ============================================================================*/
 
 static void CLASSB_GlobalsInit(void) {
-    /* Initialize persistent pointers
+    /* Initialize pointers needed to access variables in SRAM.
      * These variables point to address' in the reserved SRAM for the
      * Class B library.
      */
@@ -280,7 +307,7 @@ static void CLASSB_TestWDT(void) {
     } else {
         // If WDT is not enabled, enable WDT and wait
         if (WDTCONbits.ON == 0) {
-            // Configure timeout
+            
             WDTCONbits.ON = 1;
             // Infinite loop
             while (1) {
@@ -295,14 +322,30 @@ static void CLASSB_TestWDT(void) {
     }
 }
 
-inline RESET_REASON SYS_RESET_ReasonGet(void) {
+/*============================================================================
+RESET_REASON CLASSB_SYS_RESET_ReasonGet(void)
+------------------------------------------------------------------------------
+Purpose: To check System reset reason
+Input  : None
+Output : None
+Notes  : This function is executed to know the sytem reset reason.
+============================================================================*/
+RESET_REASON CLASSB_SYS_RESET_ReasonGet(void) {
     return (RESET_REASON) (RCON & (_RCON_CMR_MASK | _RCON_EXTR_MASK |
             _RCON_SWR_MASK | _RCON_DMTO_MASK | _RCON_WDTO_MASK |
             _RCON_BOR_MASK | _RCON_POR_MASK | _RCON_VBPOR_MASK |
             _RCON_VBAT_MASK | _RCON_PORIO_MASK | _RCON_PORCORE_MASK));
 }
 
-inline void SYS_RESET_ReasonClear(RESET_REASON reason) {
+/*============================================================================
+ void CLASSB_SYS_RESET_ReasonClear(RESET_REASON reason)
+------------------------------------------------------------------------------
+Purpose: To clear RCON register.
+Input  : None
+Output : None
+Notes  : This function is executed to clear RCON register.
+============================================================================*/
+void CLASSB_SYS_RESET_ReasonClear(RESET_REASON reason) {
     RCONCLR = reason;
 }
 /*============================================================================
@@ -317,7 +360,7 @@ Notes  : This function is executed on every device reset. This shall be
 ============================================================================*/
 
 static CLASSB_INIT_STATUS CLASSB_Init(void) {
-    /* Initialize persistent pointers
+    /* Initialize pointers needed to access variables in SRAM.
      * These variables point to address' in the reserved SRAM for the
      * Class B library.
      */
@@ -329,8 +372,8 @@ static CLASSB_INIT_STATUS CLASSB_Init(void) {
 
     CLASSB_INIT_STATUS ret_val = CLASSB_SST_NOT_DONE;
 
-    resetReason = SYS_RESET_ReasonGet();
-    SYS_RESET_ReasonClear(RESET_REASON_ALL);
+    resetReason = CLASSB_SYS_RESET_ReasonGet();
+    CLASSB_SYS_RESET_ReasonClear(RESET_REASON_ALL);
     
     /*Check if reset was triggered by WDT */
     if ((resetReason & RESET_REASON_WDT_TIMEOUT) == RESET_REASON_WDT_TIMEOUT) {
@@ -362,7 +405,7 @@ static CLASSB_INIT_STATUS CLASSB_Init(void) {
             ram_buffer_test_ok = CLASSB_RAMMarchC((uint32_t *) SRAM_BASE_ADDRESS + CLASSB_SRAM_TEST_BUFFER_SIZE, CLASSB_SRAM_TEST_BUFFER_SIZE);
             if ((result_area_test_ok == true) && (ram_buffer_test_ok == true)) {
 
-                // Initialize all Class B variables after the March test
+                // Initialize all Class B variables
                 CLASSB_GlobalsInit();
                 CLASSB_ClearTestResults(CLASSB_TEST_TYPE_SST);
                 CLASSB_ClearTestResults(CLASSB_TEST_TYPE_RST);
@@ -395,13 +438,19 @@ Notes  : This function calls all the configured self-tests during startup.
 static CLASSB_STARTUP_STATUS CLASSB_Startup_Tests(void) {
     CLASSB_STARTUP_STATUS cb_startup_status = CLASSB_STARTUP_TEST_NOT_EXECUTED;
     <#if (CLASSB_CPU_TEST_OPT?? && CLASSB_CPU_TEST_OPT == true) ||
-         (CLASSB_FPU_OPT?? && CLASSB_FPU_OPT == true) ||
          (CLASSB_SRAM_TEST_OPT?? && CLASSB_SRAM_TEST_OPT == true) ||
          (CLASSB_FLASH_CRC_CONF?? && CLASSB_FLASH_CRC_CONF == true) ||
          (CLASSB_CLOCK_TEST_OPT?? && CLASSB_CLOCK_TEST_OPT == true) ||
          (CLASSB_INTERRUPT_TEST_OPT?? && CLASSB_INTERRUPT_TEST_OPT == true)>
     CLASSB_STARTUP_STATUS cb_temp_startup_status = CLASSB_STARTUP_TEST_NOT_EXECUTED;
     CLASSB_TEST_STATUS cb_test_status = CLASSB_TEST_NOT_EXECUTED;
+    //Enable watchdog if it is not enabled via fuses
+    if ((WDTCONbits.ON == 0) && (DEVCFG2bits.WDTEN == 0)){
+    	
+            WDTCONbits.ON = 1;
+    }
+    // Update the flag before running any self-test
+    *classb_test_in_progress = CLASSB_TEST_STARTED;	
     </#if>
     <#if CLASSB_CLOCK_TEST_OPT??>
         <#if CLASSB_CLOCK_TEST_OPT == true>
@@ -411,13 +460,9 @@ static CLASSB_STARTUP_STATUS CLASSB_Startup_Tests(void) {
         </#if>
     </#if>
 
-    //Enable watchdog if it is not enabled
-        if (WDTCONbits.ON == 0) {
-            // Configure timeout
-            WDTCONbits.ON = 1;
-        }
+    
     <#if CLASSB_CPU_TEST_OPT?? && CLASSB_CPU_TEST_OPT == true>
-        // CPU reg test
+        // Test processor core registers
         *ongoing_sst_id = CLASSB_TEST_CPU;
         cb_test_status = CLASSB_CPU_RegistersTest(false);
 
@@ -442,6 +487,8 @@ static CLASSB_STARTUP_STATUS CLASSB_Startup_Tests(void) {
     <#if CLASSB_SRAM_TEST_OPT??>
         <#if CLASSB_SRAM_TEST_OPT == true>
             <#lt>        //SRAM test
+	    <#lt>        // Clear WDT before test
+            <#lt>        CLASSB_WDT_Clear();
             <#lt>        *ongoing_sst_id = CLASSB_TEST_RAM;
             <#if CLASSB_SRAM_MARCH_ALGORITHM?has_content>
                 <#lt>    cb_test_status = CLASSB_SRAM_MarchTestInit((uint32_t *)CLASSB_SRAM_APP_AREA_START,
@@ -461,31 +508,15 @@ static CLASSB_STARTUP_STATUS CLASSB_Startup_Tests(void) {
             <#lt>        CLASSB_WDT_Clear();
         </#if>
     </#if>
-
-    <#if CLASSB_CLOCK_TEST_OPT??>
-        <#if CLASSB_CLOCK_TEST_OPT == true>
-            
-            <#lt>        // Clock Test
-            <#lt>        *ongoing_sst_id = CLASSB_TEST_CLOCK;
-            <#lt>        cb_test_status = CLASSB_ClockTest(CLASSB_CLOCK_DEFAULT_CLOCK_FREQ, CLASSB_CLOCK_ERROR_PERCENT, clock_test_tmr1_cycles, false);
-            <#lt>        if (cb_test_status == CLASSB_TEST_PASSED)
-            <#lt>        {
-            <#lt>            cb_temp_startup_status = CLASSB_STARTUP_TEST_PASSED;
-            <#lt>        }
-            <#lt>        else if (cb_test_status == CLASSB_TEST_FAILED)
-            <#lt>        {
-
-            <#lt>            cb_temp_startup_status = CLASSB_STARTUP_TEST_FAILED;
-            <#lt>        }
-            <#lt>        CLASSB_WDT_Clear();
-        </#if>
-    </#if>
     
-    <#if CLASSB_FLASH_CRC_CONF?has_content>
+        <#if CLASSB_FLASH_CRC_CONF?has_content>
         <#if CLASSB_FLASH_CRC_CONF == true>
             
             <#lt>    // Flash Test
             <#lt>    *ongoing_sst_id = CLASSB_TEST_FLASH;
+            <#lt>    // Clear WDT before test
+            <#lt>    CLASSB_WDT_Clear();
+            <#lt>    // Flash test. Read CRC-32 and verify it
             <#lt>    cb_test_status = CLASSB_FlashCRCTest(FLASH_START_ADDR, FLASH_SIZE,*(uint32_t *)CLASSB_FLASH_CRC32_ADDR, false);
             <#lt>    if (cb_test_status == CLASSB_TEST_PASSED)
             <#lt>    {
@@ -499,13 +530,40 @@ static CLASSB_STARTUP_STATUS CLASSB_Startup_Tests(void) {
             <#lt>    }
             <#lt>    CLASSB_WDT_Clear();
         </#if>
-    </#if>    
+    </#if>  
+    
+    <#if CLASSB_CLOCK_TEST_OPT??>
+        <#if CLASSB_CLOCK_TEST_OPT == true>
+            
+            <#lt>        // Clock Test
+            <#lt>        *ongoing_sst_id = CLASSB_TEST_CLOCK;
+	    <#lt>        // Clear WDT before test
+            <#lt>        CLASSB_WDT_Clear();
+            <#if CLASSB_CLOCK_TEST_PERCENT?has_content && CLASSB_CLOCK_TEST_DURATION?has_content>
+            	<#lt>        cb_test_status = CLASSB_ClockTest(CLASSB_CLOCK_DEFAULT_CLOCK_FREQ, CLASSB_CLOCK_ERROR_PERCENT, clock_test_tmr1_cycles, false);
+            </#if>
+            <#lt>        if (cb_test_status == CLASSB_TEST_PASSED)
+            <#lt>        {
+            <#lt>            cb_temp_startup_status = CLASSB_STARTUP_TEST_PASSED;
+            <#lt>        }
+            <#lt>        else if (cb_test_status == CLASSB_TEST_FAILED)
+            <#lt>        {
+
+            <#lt>            cb_temp_startup_status = CLASSB_STARTUP_TEST_FAILED;
+            <#lt>        }
+            <#lt>        CLASSB_WDT_Clear();
+        </#if>
+    </#if>
+    
+  
     
     <#if CLASSB_INTERRUPT_TEST_OPT??>
         <#if CLASSB_INTERRUPT_TEST_OPT == true>
 
             <#lt>    // Interrupt Test
             <#lt>    *ongoing_sst_id = CLASSB_TEST_INTERRUPT;
+            <#lt>    // Clear WDT before test
+            <#lt>    CLASSB_WDT_Clear();
             <#lt>    cb_test_status = CLASSB_SST_InterruptTest();
             <#lt>    if (cb_test_status == CLASSB_TEST_PASSED)
             <#lt>    {
@@ -521,7 +579,6 @@ static CLASSB_STARTUP_STATUS CLASSB_Startup_Tests(void) {
 
 
     <#if (CLASSB_CPU_TEST_OPT?? && CLASSB_CPU_TEST_OPT == true) ||
-         (CLASSB_FPU_OPT?? && CLASSB_FPU_OPT == true) ||
          (CLASSB_SRAM_TEST_OPT?? && CLASSB_SRAM_TEST_OPT == true) ||
          (CLASSB_FLASH_CRC_CONF?? && CLASSB_FLASH_CRC_CONF == true) ||
          (CLASSB_CLOCK_TEST_OPT?? && CLASSB_CLOCK_TEST_OPT == true) ||
@@ -554,11 +611,9 @@ void _on_bootstrap(void) {
     CLASSB_INIT_STATUS init_status = CLASSB_Init();
 
     if (init_status == CLASSB_SST_NOT_DONE) {
-
-        *classb_test_in_progress = CLASSB_TEST_STARTED;
         // Run all startup self-tests
         startup_tests_status = CLASSB_Startup_Tests();
-
+        
         if (startup_tests_status == CLASSB_STARTUP_TEST_PASSED) {
             // Reset the device if all tests are passed.
             Classb_SystemReset();
@@ -574,11 +629,14 @@ void _on_bootstrap(void) {
             }
             
         } else {
+            CLASSB_WDT_ReConfig();
             // If startup tests are not enabled via MHC, do nothing.
             ;
         }
     } else if (init_status == CLASSB_SST_DONE) {
         // Clear flags
+        CLASSB_WDT_ReConfig();
         *classb_test_in_progress = CLASSB_TEST_NOT_STARTED;
     }
+    
 }

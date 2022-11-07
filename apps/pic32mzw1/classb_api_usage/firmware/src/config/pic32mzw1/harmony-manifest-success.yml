@@ -4,18 +4,18 @@
 
 
 project: classb_api_usage
-creation_date: 2021-08-24T18:15:40.892+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2022-11-02T19:46:22.110+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
-mhc_mode: IDE            # [IDE|Standalone|Headless]
-mhc_version: v3.8.0
-mplabx_version: v5.50        # if MPLAB X plugin only
-plugin_version: v3.6.4        # if MPLAB X plugin only
-compiler: XC32 (3.01)
+mhc_mode: Standalone            # [IDE|Standalone|Headless]
+mhc_version: v3.8.5
+mplabx_version: NA        # if MPLAB X plugin only
+plugin_version: NA        # if MPLAB X plugin only
+compiler: xc32
 
 modules:
-    - {name: "csp", version: "v3.9.1"}
-    - {name: "core", version: "v3.9.2"}
-    - {name: "dev_packs", version: "v3.9.0"}
-    - {name: "classb_pic32mzw1_wfi32e01", version: "v1.0.0"}
-    - {name: "bsp", version: "v3.9.0"}
+    - {name: "csp", version: "v3.14.0"}
+    - {name: "core", version: "v3.11.1"}
+    - {name: "dev_packs", version: "v3.13.1"}
+    - {name: "classb_pic32mzw1_wfi32e01", version: "unknown"}
+    - {name: "bsp", version: "v3.13.0"}
 

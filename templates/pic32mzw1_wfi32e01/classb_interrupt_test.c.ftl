@@ -205,6 +205,60 @@ static void set_ebase_org(unsigned int value)
 }
 
 /*============================================================================
+static void DelayMs ( uint32_t delay_ms)
+------------------------------------------------------------------------------
+Purpose: This function is used for introducing delay during clock initialization
+Input  : delay in ms.
+Output : None.
+============================================================================*/
+static void DelayMs ( uint32_t delay_ms)
+{
+    uint32_t startCount, endCount;
+    /* Calculate the end count for the given delay */
+    endCount=(CORE_TIMER_FREQ/1000)*delay_ms;
+    startCount=_CP0_GET_COUNT();
+    while((_CP0_GET_COUNT()-startCount)<endCount);
+}
+
+/*============================================================================
+static void _CLASSB_Wifi_Spi_Write(unsigned int spi_addr, unsigned int data)
+------------------------------------------------------------------------------
+Purpose: This function is used for clock initialization
+Input  : None.
+Output : None.
+============================================================================*/
+static void _CLASSB_Wifi_Spi_Write(unsigned int spi_addr, unsigned int data)
+{
+    unsigned int  addr_bit, data_bit, bit_idx;
+    unsigned int cs_high, clk_high, en_bit_bang;
+    unsigned int *wifi_spi_ctrl_reg = (unsigned int *)0xBF8C8028;
+    clk_high = 0x1 ;
+    cs_high  = 0x2;
+    en_bit_bang  = 0x1 << 31;
+    addr_bit = 0; data_bit = 0;
+
+    *wifi_spi_ctrl_reg = en_bit_bang | cs_high ;
+    *wifi_spi_ctrl_reg = (en_bit_bang | cs_high | clk_high );
+     *wifi_spi_ctrl_reg = (en_bit_bang);
+     *wifi_spi_ctrl_reg = (en_bit_bang | clk_high);
+
+    for (bit_idx=0;bit_idx<=7;bit_idx++) {
+        addr_bit = (spi_addr>>(7-bit_idx)) & 0x1;
+        *wifi_spi_ctrl_reg = (en_bit_bang | (addr_bit << 2 ));               // Falling edge of clk
+        *wifi_spi_ctrl_reg = (en_bit_bang | (addr_bit << 2 ) | clk_high);    // Rising edge of clk
+    }
+
+    for (bit_idx=0;bit_idx<=15;bit_idx++) {
+        data_bit = (data>>(15-bit_idx)) & 0x1;
+        *wifi_spi_ctrl_reg = (en_bit_bang | (data_bit << 2 ));                // Falling edge of clk with data bit
+        *wifi_spi_ctrl_reg = (en_bit_bang | (data_bit << 2 ) | clk_high);     // Rising edge of clk
+    }
+
+    *wifi_spi_ctrl_reg = (en_bit_bang | cs_high | clk_high); // Rising edge of clk
+    *wifi_spi_ctrl_reg = 0;                                // Set the RF override bit and CS_n high
+}
+
+/*============================================================================
 static void _CLASSB_INT_CLK_Initialize(void)
 ------------------------------------------------------------------------------
 Purpose: Configure clock for Interrupt self-test
@@ -213,70 +267,131 @@ Output : None.
 ============================================================================*/
 static void _CLASSB_INT_CLK_Initialize(void)
 {
+    volatile unsigned int *PMDRCLR = (unsigned int *) 0xBF8000B4;
     /* unlock system for clock configuration */
     SYSKEY = 0x00000000;
     SYSKEY = 0xAA996655;
     SYSKEY = 0x556699AA;
 
-    OSCCONbits.FRCDIV = 0;
 
-    /* SPLLBSWSEL   = 5   */
-    /* SPLLPWDN     = PLL_ON     */
-    /* SPLLPOSTDIV1 = 4 */
-    /* SPLLFLOCK    = NO_ASSERT    */
-    /* SPLLRST      = NO_ASSERT      */
-    /* SPLLFBDIV    = 20  */
-    /* SPLLREFDIV   = 1   */
-    /* SPLLICLK     = POSC     */
-    /* SPLL_BYP     = NO_BYPASS     */
-    SPLLCON = 0x414045;
+    if (((DEVID & 0x0FF00000) >> 20) == PIC32MZW1_B0) {
+        CFGCON2 |= 0x300; // Start with POSC Turned OFF
+        /* if POSC was on give some time for POSC to shut off */
+        DelayMs(2);
+        // Read counter part is there only for debug and testing, or else not needed, so use ifdef as needed
+        _CLASSB_Wifi_Spi_Write(0x85, 0x00F0); /* MBIAS filter and A31 analog_test */ //if (wifi_spi_read (0x85) != 0xF0) {Error, Stop};
+        _CLASSB_Wifi_Spi_Write(0x84, 0x0001); /* A31 Analog test */// if (wifi_spi_read (0x84) != 0x1) {Error, Stop};
+        _CLASSB_Wifi_Spi_Write(0x1e, 0x510); /* MBIAS reference adjustment */ //if (wifi_spi_read (0x1e) != 0x510) {Error, Stop};
+        _CLASSB_Wifi_Spi_Write(0x82, 0x6400); /* XTAL LDO feedback divider (1.3+v) */ //if (wifi_spi_read (0x82) != 0x6000) {Error, Stop};
 
-    /* Power down the UPLL */
-    UPLLCONbits.UPLLPWDN = 1;
+        /* Enable POSC */
+        CFGCON2 &= 0xFFFFFCFF; // enable POSC
 
-    /* Power down the EWPLL */
-    EWPLLCONbits.EWPLLPWDN = 1;
+        /* Wait for POSC ready */
+        while (!(CLKSTAT & 0x00000004));
 
-    /* Power down the BTPLL */
-    BTPLLCONbits.BTPLLPWDN = 1;
+        /*Configure SPLL*/
+        CFGCON3 = 10;
+        CFGCON0bits.SPLLHWMD = 1;
 
-    /* ETHPLLPOSTDIV2 = a */
-    /* SPLLPOSTDIV2   = 0 */
-    /* BTPLLPOSTDIV2  = 0 */
-    CFGCON3 = 10;
+        /* SPLLCON = 0x01496869 */
+        /* SPLLBSWSEL   = 5   */
+        /* SPLLPWDN     = PLL_ON     */
+        /* SPLLPOSTDIV1 = 4 */
+        /* SPLLFLOCK    = NO_ASSERT    */
+        /* SPLLRST      = NO_ASSERT      */
+        /* SPLLFBDIV    = 20  */
+        /* SPLLREFDIV   = 1   */
+        /* SPLLICLK     = POSC     */
+        /* SPLL_BYP     = NO_BYPASS     */
+        SPLLCON = 0x414045;
 
-    /* OSWEN    = SWITCH_COMPLETE    */
-    /* SOSCEN   = OFF   */
-    /* UFRCEN   = USBCLK   */
-    /* CF       = NO_FAILDET       */
-    /* SLPEN    = IDLE    */
-    /* CLKLOCK  = UNLOCKED  */
-    /* NOSC     = SPLL     */
-    /* WAKE2SPD = SELECTED_CLK */
-    /* DRMEN    = NO_EFFECT    */
-    /* FRCDIV   = OSC_FRC_DIV_1   */
-    OSCCON = 0x100;
+        /* OSWEN    = SWITCH_COMPLETE    */
+        /* SOSCEN   = OFF   */
+        /* UFRCEN   = USBCLK   */
+        /* CF       = NO_FAILDET       */
+        /* SLPEN    = IDLE    */
+        /* CLKLOCK  = UNLOCKED  */
+        /* NOSC     = SPLL     */
+        /* WAKE2SPD = SELECTED_CLK */
+        /* DRMEN    = NO_EFFECT    */
+        /* FRCDIV   = OSC_FRC_DIV_1   */
+        OSCCON = 0x100;
 
-    OSCCONSET = _OSCCON_OSWEN_MASK;  /* request oscillator switch to occur */
+        OSCCONSET = _OSCCON_OSWEN_MASK; /* request oscillator switch to occur */
 
-    Nop();
-    Nop();
+        while (OSCCONbits.OSWEN);
+        DelayMs(5);
 
-    while( OSCCONbits.OSWEN );        /* wait for indication of successful clock change before proceeding */
- 
+        /* Power down the EWPLL */
+        EWPLLCONbits.EWPLLPWDN = 1;
+
+        /* Power down the UPLL */
+        UPLLCONbits.UPLLPWDN = 1;
+
+        /* Power down the BTPLL */
+        BTPLLCONbits.BTPLLPWDN = 1;
+
+        *(PMDRCLR) = 0x1000;
+    }
 
     /* Peripheral Module Disable Configuration */
-    
 
     PMD1 = 0x25818981;
     PMD2 = 0x7c0f0f;
     PMD3 = 0x19031316;
 
-   
+
     /* Lock system since done with clock configuration */
     SYSKEY = 0x33333333;
 }
 
+/*============================================================================
+bool _CLASSB_Int_EVIC_SourceStatusGet( INT_SOURCE source )
+------------------------------------------------------------------------------
+Purpose: Get EVIC source status
+Input  : None.
+Output : None.
+Notes  : None.
+============================================================================*/
+bool _CLASSB_Int_EVIC_SourceStatusGet( INT_SOURCE source )
+{
+    volatile uint32_t *IFSx = (volatile uint32_t *)(&IFS0 + ((0x10 * (source / 32)) / 4));
+
+    return (bool)((*IFSx >> (source & 0x1f)) & 0x1);
+}
+
+/*============================================================================
+void _CLASSB_Int_EVIC_SourceStatusClear( INT_SOURCE source )
+------------------------------------------------------------------------------
+Purpose: Clear EVIC source status
+Input  : None.
+Output : None.
+Notes  : None.
+============================================================================*/
+void _CLASSB_Int_EVIC_SourceStatusClear( INT_SOURCE source )
+{
+    volatile uint32_t *IFSx = (volatile uint32_t *) (&IFS0 + ((0x10 * (source / 32)) / 4));
+    volatile uint32_t *IFSxCLR = (volatile uint32_t *)(IFSx + 1);
+
+    *IFSxCLR = 1 << (source & 0x1f);
+}
+
+/*============================================================================
+void _CLASSB_Int_EVIC_SourceEnable( INT_SOURCE source )
+------------------------------------------------------------------------------
+Purpose: Enable EVIC source for CPU clock self-test
+Input  : None.
+Output : None.
+Notes  : None.
+============================================================================*/
+void _CLASSB_Int_EVIC_SourceEnable( INT_SOURCE source )
+{
+    volatile uint32_t *IECx = (volatile uint32_t *) (&IEC0 + ((0x10 * (source / 32)) / 4));
+    volatile uint32_t *IECxSET = (volatile uint32_t *)(IECx + 2);
+
+    *IECxSET = 1 << (source & 0x1f);
+}
 
 /*============================================================================
 static void _CLASSB_TMR1_Initialize(void)
@@ -302,13 +417,15 @@ void _CLASSB_TMR1_Initialize(void)
     */
     T1CONbits.TCS = 0;
     T1CONSET = 0x00;
-    T1CONSET = 0x230;
+    T1CONSET = 0x230; // Prescaler - 1:256, Internal peripheral Clock
 
     /* Clear counter */
     TMR1 = 0x0;
 
     /*Set period */
-    PR1 = 39061;
+    PR1 = 39061; //Period is set for 100 ms
+    
+    _CLASSB_Int_EVIC_SourceEnable(INT_SOURCE_TIMER_1);
 }
 
 /*============================================================================
@@ -350,17 +467,19 @@ void _CLASSB_TMR2_Initialize(void)
     T32   = 0
     TCS = 0
     */
-    T2CONSET = 0x70;
+    T2CONSET = 0x70; // prescaler - 1:256, Internal peripheral clock,
 
     /* Clear counter */
     TMR2 = 0x0;
 
     /*Set period */
-    PR2 = 3905U;
+    PR2 = 3905U; // 10 Ms
 
     /* Enable TMR Interrupt */
     IEC0SET = _IEC0_T2IE_MASK;
-
+    
+    /*Clear the status flag*/
+    IFS0CLR = _IFS0_T2IF_MASK;
 }
 
 
@@ -375,7 +494,7 @@ Notes  : The clocks required for TMR1 are configured in a separate function.
 static void _CLASSB_INT_TMR1_Period_Set(uint32_t period)
 {
     PR1 = period;
-    EVIC_SourceEnable(INT_SOURCE_TIMER_1);
+    
 }
 
 
@@ -406,6 +525,19 @@ static void _CLASSB_INT_TMR2_Start(void)
 }
 
 /*============================================================================
+static void _CLASSB_INT_TMR1_Stop(void)
+------------------------------------------------------------------------------
+Purpose: Stops the TMR1
+Input  : None.
+Output : None.
+Notes  : None.
+============================================================================*/
+static void _CLASSB_INT_TMR1_Stop (void)
+{
+    T1CONCLR = _T1CON_ON_MASK;
+}
+
+/*============================================================================
 static void _CLASSB_INT_TMR2_Stop(void)
 ------------------------------------------------------------------------------
 Purpose: Stops the TMR2
@@ -430,15 +562,14 @@ CLASSB_TEST_STATUS CLASSB_SST_InterruptTest(void)
 {
     
     CLASSB_TEST_STATUS intr_test_status = CLASSB_TEST_NOT_EXECUTED;
-    EVIC_SourceStatusClear(INT_SOURCE_TIMER_1); 
+    _CLASSB_Int_EVIC_SourceStatusClear(INT_SOURCE_TIMER_1); 
     // Reset the counter
-    *interrupt_count = 0;
+    *interrupt_count = 0U;
     _CLASSB_UpdateTestResult(CLASSB_TEST_TYPE_SST, CLASSB_TEST_INTERRUPT,
         CLASSB_TEST_INPROGRESS);
     
-
-    _CLASSB_BuildVectorTable();
     __builtin_disable_interrupts();
+    _CLASSB_BuildVectorTable();
     _CLASSB_INT_CLK_Initialize();
     _CLASSB_TMR2_Initialize();
     _CLASSB_TMR1_Initialize();
@@ -447,19 +578,23 @@ CLASSB_TEST_STATUS CLASSB_SST_InterruptTest(void)
     /* Enable global interrupts */
     __builtin_enable_interrupts();
     
+    /*Set period for 100 ms*/
     _CLASSB_INT_TMR1_Period_Set(39061);
-       
+    
+    
+    _CLASSB_Int_EVIC_SourceStatusClear(INT_SOURCE_TIMER_1);
+    while(_CLASSB_Int_EVIC_SourceStatusGet(INT_SOURCE_TIMER_1));
     _CLASSB_INT_TMR1_Start();
     _CLASSB_INT_TMR2_Start();
     
-    while(!EVIC_SourceStatusGet(INT_SOURCE_TIMER_1));
-    EVIC_SourceStatusClear(INT_SOURCE_TIMER_1);    
-        
+    while(!_CLASSB_Int_EVIC_SourceStatusGet(INT_SOURCE_TIMER_1));
+    _CLASSB_Int_EVIC_SourceStatusClear(INT_SOURCE_TIMER_1);    
+    _CLASSB_Int_EVIC_SourceStatusClear(INT_SOURCE_TIMER_2);    
     _CLASSB_INT_TMR2_Stop();
-    
+    _CLASSB_INT_TMR1_Stop();
     
     if ((*interrupt_count < CLASSB_INTR_MAX_INT_COUNT)
-        &&  (*interrupt_count > 0))
+        &&  (*interrupt_count > 0U))
     {
         T1CONCLR = _T1CON_ON_MASK;// stop timer1
         intr_test_status = CLASSB_TEST_PASSED;

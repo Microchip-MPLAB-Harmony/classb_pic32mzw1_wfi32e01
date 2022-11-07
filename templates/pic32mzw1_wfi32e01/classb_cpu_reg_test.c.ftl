@@ -56,6 +56,17 @@ extern void _CLASSB_UpdateTestResult(CLASSB_TEST_TYPE test_type,
 CLASSB_TEST_STATUS CLASSB_CPU_RegistersTest(bool running_context)
 {
     int ret;
+    if (running_context == true)
+    {
+        _CLASSB_UpdateTestResult(CLASSB_TEST_TYPE_RST, CLASSB_TEST_CPU,
+            CLASSB_TEST_INPROGRESS);
+    }
+    else
+    {
+        _CLASSB_UpdateTestResult(CLASSB_TEST_TYPE_SST, CLASSB_TEST_CPU,
+            CLASSB_TEST_INPROGRESS);
+    }
+    
     ret = CLASSB_CPURegistersTest();
     if (ret == CLASSB_TEST_PASSED)
     {
@@ -70,7 +81,7 @@ CLASSB_TEST_STATUS CLASSB_CPU_RegistersTest(bool running_context)
                     CLASSB_TEST_PASSED);
         }
     }
-    else if (ret == CLASSB_TEST_FAILED)
+    else
     {
         if (running_context == true)
         {

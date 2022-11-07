@@ -53,7 +53,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 ; /* SRAM address for SST results */
 .equ SST_RES_ADDRESS, 0xA0000000
 ; /* SRAM address for RST results */
-.equ RST_RES_ADDRESS, 0xA0000002
+.equ RST_RES_ADDRESS, 0xA0000004
 ; /* Result mask is 0x03 (2-bit results) */
 .equ RESULT_BIT_MASK, 0x03
 ; /* CLASSB_TEST_STATUS */
@@ -63,7 +63,7 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 .equ REG_CLEAR_VAL, 0x00000000
 
 
-#if 1
+
 CLASSB_GetTestResult:
 ; /* Input arguments are test_type and test_id */
 ; /* test_type in a0, test_id in a1 */
@@ -94,7 +94,7 @@ GetResTestTypeSST:
     and     $v0,$v0,$t6
             
     ; /* Load 1s complement result into t7 */
-    lhu      $t7,4($t4)
+    lhu      $t7,8($t4)
     ; /* Check whether the read results are 1s complements */
     xor     $t5,$t7,$t5
     srl     $t5,$t5,$a1
@@ -147,13 +147,13 @@ UpdateResTestTypeSST:
     or      $t5, $t5, $t7      
     sh      $t5,($t4)  
     ; /* Load the 1s complement of the result */
-    ; /* For SSTs, this address is 0xA0000004 */
-    ; /* For RSTs, this address is 0xA0000006 */
+    ; /* For SSTs, this address is 0xA0000008 */
+    ; /* For RSTs, this address is 0xA000000C */
     ; /* Take 1s complement of the value */
     not     $t2, $t5
     
     /*store half word to memory*/
-    sh      $t2, 4($t4)
+    sh      $t2, 8($t4)
     /*************POP******************/
     
     lw      $t4, 12($sp)
@@ -186,8 +186,8 @@ ClearResTestTypeSST:
     sh      $t5,($t4)
     ; /* Store 1s complement of the result */
     not     $t5,$t5
-    ; /* Add 4 to get the address of 1s complement result */
-    sh      $t5,4($t4)
+    ; /* Add 8 to get the address of 1s complement result */
+    sh      $t5,8($t4)
     /*************POP******************/
     
     lw      $t4, 12($sp)
@@ -197,4 +197,3 @@ ClearResTestTypeSST:
     addiu   $sp,$sp,16
     /***********************************/
     jr      $ra
-#endif

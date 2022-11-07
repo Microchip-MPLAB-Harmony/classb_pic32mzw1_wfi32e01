@@ -104,8 +104,11 @@ CLASSB_TEST_STATUS CLASSB_RST_IOTest(CLASSB_PORT_INDEX port, CLASSB_PORT_PIN pin
     CLASSB_TEST_STATUS io_test_status = CLASSB_TEST_NOT_EXECUTED;
     CLASSB_PORT_PIN_STATE pin_read_state  = PORT_PIN_INVALID;
 
+    _CLASSB_UpdateTestResult(CLASSB_TEST_TYPE_RST, CLASSB_TEST_IO,
+            CLASSB_TEST_NOT_EXECUTED);
+                
     // Check the input variable limits
-    if (((port > CLASSB_GPIO_PORT_C) && (port != CLASSB_GPIO_PORT_K)) || (pin > PIN31))
+    if (((port > CLASSB_GPIO_PORT_C) && (port != CLASSB_GPIO_PORT_K)) || (pin > PIN31) || ((state != PORT_PIN_LOW) & (state != PORT_PIN_HIGH)))
     {
         ;
     }

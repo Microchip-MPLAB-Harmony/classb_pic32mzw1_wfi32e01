@@ -1,14 +1,14 @@
 configName: pic32mzw1
 folderName: classb_api_usage
 format_version: v1.0
-frameworkPath: E:\git_repo\rio_ofc_repo_3_4_1_new
+frameworkPath: ../../PIC32MZW1_repo
 processor: PIC32MZ1025W104132
 projectName: classb_api_usage
 settings:
-  PackageFilter: bsp;classb_pic32mzw1_wfi32e01;classb_pic32mzw1_wfi32e01_bp;core;core_apps_pic32mz_w1;core_B0;crypto;cryptoauthlib;csp;csp_B0;net;quick_docs;usb;wireless_apps_pic32mzw1_wfi32e01;wireless_system_pic32mzw1_wfi32e01;wireless_wifi;wireless_wifi_org
+  PackageFilter: bsp;classb_pic32mzw1_wfi32e01;classb_pic32mzw1_wfi32e01_bp;classb_pic32mzw1_wfi32e01_bp1;classb_pic32mzw1_wfi32e01_bp2;core;csp;dev_packs;quick_docs;validation;validation_1
   FORCE_OPTIMIZATION: 'false'
   GENERATE_BACKUP: 'true'
   TRUSTZONE: 'false'
-  CMSISPath: .\dev_packs\arm\CMSIS\5.7.0
+  CMSISPath: .\dev_packs\arm\CMSIS\5.8.0
   MERGE_STRATEGY: USER_ALL
-  DFPPath: .\dev_packs\Microchip\PIC32MZ-W_DFP\1.4.193\atdf\PIC32MZ1025W104132.atdf
+  DFPPath: .\dev_packs\Microchip\PIC32MZ-W_DFP\1.5.203\atdf\PIC32MZ1025W104132.atdf

@@ -151,7 +151,7 @@ void app_classb_tests(void) {
 
     /*CPU Clock self test*/
     __builtin_disable_interrupts();
-    classb_test_status = CLASSB_ClockTest(200000000, 5, 1638, true);
+    classb_test_status = CLASSB_ClockTest(200000000, 5, 163, true);
     //SYS_Initialize(NULL);
     __builtin_enable_interrupts();
     SYS_CONSOLE_PRINT("\r\n\tResult of CPU Clock RST is %s\r\n", test_status_str[classb_test_status]);

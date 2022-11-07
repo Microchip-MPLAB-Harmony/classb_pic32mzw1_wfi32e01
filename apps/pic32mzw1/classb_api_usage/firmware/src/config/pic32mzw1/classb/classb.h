@@ -54,8 +54,10 @@
  *     Include files
  *----------------------------------------------------------------------------*/
 #include "classb/classb_common.h"
+#include "classb/classb_result_management.h"
 #include "classb/classb_cpu_reg_test.h"
 #include "classb/classb_sram_test.h"
+#include "classb/classb_sram_algorithm.h"
 #include "classb/classb_flash_test.h"
 #include "classb/classb_interrupt_test.h"
 #include "classb/classb_clock_test.h"
@@ -72,9 +74,6 @@
 /*----------------------------------------------------------------------------
  *     Functions
  *----------------------------------------------------------------------------*/
-void CLASSB_ClearTestResults(CLASSB_TEST_TYPE test_type);
-CLASSB_TEST_STATUS CLASSB_GetTestResult(CLASSB_TEST_TYPE test_type,
-    CLASSB_TEST_ID test_id);
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

@@ -53,11 +53,18 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
  *     Include files
  *----------------------------------------------------------------------------*/
 #include <xc.h>
+#include "device.h"
 #include <stdbool.h>
+#include <stdint.h>
 
 /*----------------------------------------------------------------------------
  *     Constants
  *----------------------------------------------------------------------------*/
+#if (defined (__XC32))
+	#define OPTIMIZE_O0 __attribute__((optimize("-O0")))
+#else
+	#define OPTIMIZE_O0
+#endif
 
 /*----------------------------------------------------------------------------
  *     Globals
@@ -82,8 +89,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 */
 typedef enum classb_test_state
 {
-    CLASSB_TEST_NOT_STARTED = 0,
-    CLASSB_TEST_STARTED = 1
+    CLASSB_TEST_NOT_STARTED = 0U,
+    CLASSB_TEST_STARTED = 1U
 } CLASSB_TEST_STATE;
 
 // *****************************************************************************
@@ -102,14 +109,13 @@ typedef enum classb_test_state
 */
 typedef enum classb_test_id
 {
-    CLASSB_TEST_CPU         = 0,
-    CLASSB_TEST_PC          = 2,
-    CLASSB_TEST_RAM         = 4,
-    CLASSB_TEST_FLASH       = 6,
-    CLASSB_TEST_CLOCK       = 8,
-    CLASSB_TEST_INTERRUPT   = 10,
-    CLASSB_TEST_IO          = 12,
-    CLASSB_TEST_FPU          = 14
+    CLASSB_TEST_CPU         = 0U,
+    CLASSB_TEST_PC          = 2U,
+    CLASSB_TEST_RAM         = 4U,
+    CLASSB_TEST_FLASH       = 6U,
+    CLASSB_TEST_CLOCK       = 8U,
+    CLASSB_TEST_INTERRUPT   = 10U,
+    CLASSB_TEST_IO          = 12U
 } CLASSB_TEST_ID;
 
 // *****************************************************************************
@@ -126,10 +132,10 @@ typedef enum classb_test_id
 */
 typedef enum classb_test_status
 {
-    CLASSB_TEST_NOT_EXECUTED  = 0,
-    CLASSB_TEST_PASSED        = 1,
-    CLASSB_TEST_FAILED        = 2,
-    CLASSB_TEST_INPROGRESS    = 3
+    CLASSB_TEST_NOT_EXECUTED  = 0U,
+    CLASSB_TEST_PASSED        = 1U,
+    CLASSB_TEST_FAILED        = 2U,
+    CLASSB_TEST_INPROGRESS    = 3U
 } CLASSB_TEST_STATUS;
 
 // *****************************************************************************
@@ -147,8 +153,8 @@ typedef enum classb_test_status
 */
 typedef enum classb_init_status
 {
-    CLASSB_SST_DONE = 1,
-    CLASSB_SST_NOT_DONE = 2
+    CLASSB_SST_DONE = 1U,
+    CLASSB_SST_NOT_DONE = 2U
 } CLASSB_INIT_STATUS;
 
 // *****************************************************************************
@@ -166,9 +172,9 @@ typedef enum classb_init_status
 */
 typedef enum classb_startup_status
 {
-    CLASSB_STARTUP_TEST_NOT_EXECUTED  = 0,
-    CLASSB_STARTUP_TEST_PASSED = 1,
-    CLASSB_STARTUP_TEST_FAILED = 2
+    CLASSB_STARTUP_TEST_NOT_EXECUTED  = 0U,
+    CLASSB_STARTUP_TEST_PASSED = 1U,
+    CLASSB_STARTUP_TEST_FAILED = 2U
 } CLASSB_STARTUP_STATUS;
 
 // *****************************************************************************
@@ -187,8 +193,8 @@ typedef enum classb_startup_status
 */
 typedef enum classb_test_type
 {
-    CLASSB_TEST_TYPE_SST  = 0,
-    CLASSB_TEST_TYPE_RST  = 1
+    CLASSB_TEST_TYPE_SST  = 0U,
+    CLASSB_TEST_TYPE_RST  = 1U
 } CLASSB_TEST_TYPE;
 
 // *****************************************************************************
@@ -211,7 +217,6 @@ typedef struct classb_sst_result_bf
     CLASSB_TEST_STATUS FLASH_STATUS:2;
     CLASSB_TEST_STATUS CLOCK_STATUS:2;
     CLASSB_TEST_STATUS INTERRUPT_STATUS:2;
-    CLASSB_TEST_STATUS FPU_STATUS:2;
 } *CLASSB_SST_RESULT_BF;
 
 // *****************************************************************************
@@ -235,7 +240,6 @@ typedef struct classb_rst_result_bf
     CLASSB_TEST_STATUS CLOCK_STATUS:2;
     CLASSB_TEST_STATUS UNUSED_STATUS:2;
     CLASSB_TEST_STATUS IO_STATUS:2;
-    CLASSB_TEST_STATUS FPU_STATUS:2;
 } *CLASSB_RST_RESULT_BF;
 
 
