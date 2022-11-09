@@ -1,0 +1,21 @@
+package:
+  format-version: "1.0.0"
+  name: "classb_pic32mzw1_wfi32e01"
+  type: "application"
+  status: "production"
+  version: "2.0.0"
+
+  dependencies:
+    - name: "csp"
+      type: "package"
+      version: "3.14.0"
+    - name: "core"
+      type: "package"
+      version: "3.11.1"
+    - name: "dev_packs"
+      type: "package"
+      version: "3.13.1"
+    - name: "bsp"
+      type: "package"
+      version: "3.13.0"
+      
