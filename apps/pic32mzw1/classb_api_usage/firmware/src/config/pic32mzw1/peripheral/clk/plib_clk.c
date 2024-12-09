@@ -346,13 +346,13 @@ void CLK_Initialize( void )
 
     /* Peripheral Module Disable Configuration */
 
-    CFGCON0bits.PMDLOCK = 0;
+    //CFGCON0bits.PMDLOCK = 0;
 
     PMD1 = 0x25818981;
     PMD2 = 0x7f0f0f;
     PMD3 = 0x19031316;
 
-    CFGCON0bits.PMDLOCK = 1;
+    //CFGCON0bits.PMDLOCK = 1;
 	if(1 == RCONbits.POR)
 		RCONbits.POR = 0;
 	if(1 == RCONbits.EXTR)
