@@ -1,9 +1,4 @@
----
-grand_parent: Harmony 3 Class B Library for PIC32MZW1
-parent: PIC32MZW1 Class B Library Examples
-title: Class B Library API Usage Example
-nav_order: 7
----
+
 
 # PIC32MZW1 Class B API Usage Example
 

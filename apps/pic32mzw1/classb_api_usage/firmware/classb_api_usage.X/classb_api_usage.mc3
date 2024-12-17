@@ -444,7 +444,11 @@
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="core" name="!@#harmonyUserData"/>
          <value>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;UserData&gt;
   &lt;UserData dnOrder=&quot;0&quot;&gt;
-    &lt;ComponentGraph dnOrder=&quot;0&quot; id=&quot;__ROOTVIEW&quot;&gt;
+    &lt;GraphSettings canvasHeight=&quot;487&quot; canvasWidth=&quot;461&quot; dnOrder=&quot;0&quot;/&gt;
+    &lt;PowerProfiles dnOrder=&quot;1&quot;&gt;
+      &lt;Profile dnOrder=&quot;0&quot; id=&quot;profile0&quot; name=&quot;Main&quot;/&gt;
+    &lt;/PowerProfiles&gt;
+    &lt;ComponentGraph dnOrder=&quot;2&quot; id=&quot;__ROOTVIEW&quot;&gt;
       &lt;ElementPositions dnOrder=&quot;0&quot;&gt;
         &lt;ElementPosition dnOrder=&quot;0&quot; id=&quot;BSP_PIC32MZ_W1_Curiosity&quot; x=&quot;-27&quot; y=&quot;68&quot;/&gt;
         &lt;ElementPosition dnOrder=&quot;1&quot; id=&quot;HarmonyCore&quot; x=&quot;320&quot; y=&quot;20&quot;/&gt;
@@ -456,7 +460,6 @@
         &lt;ElementPosition dnOrder=&quot;7&quot; id=&quot;uart1&quot; x=&quot;28&quot; y=&quot;244&quot;/&gt;
       &lt;/ElementPositions&gt;
     &lt;/ComponentGraph&gt;
-    &lt;GraphSettings canvasHeight=&quot;487&quot; canvasWidth=&quot;461&quot; dnOrder=&quot;1&quot;/&gt;
   &lt;/UserData&gt;
 &lt;/UserData&gt;
 </value>
@@ -2116,170 +2119,14 @@
 </value>
       </entry>
    </tokenMap>
-   <generatedFileHashHistoryMap class="java.util.HashMap">
-      <entry>
-         <file>..\src\config\pic32mzw1\classb\classb_clock_test.h</file>
-         <hash>9ef95b6339f55360ba3912eb497a78a154bfe9aef7002edf56c24671ae9db1a7</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\peripheral\uart\plib_uart1.h</file>
-         <hash>f6725b015f87425815e91b2b86b6a5baedef19d163f51616fabe72a43da79aad</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\driver\driver.h</file>
-         <hash>042fdd289460dbddb8e805850af7e3ac9aea95468e37414959781ebc5b2f454d</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\classb\classb_sram_algorithm.c</file>
-         <hash>ddc720b6c9ff4555629e486df30bdbf264cabf0ed253df3c6b2e64adc211bdf7</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\system\system.h</file>
-         <hash>2b75f8e370e5cb2c54f70da7351ee149f0d5a7673e700f39b373099716b31b55</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\peripheral\nvm\plib_nvm.c</file>
-         <hash>12dc2733c2a98450b988fc718f2e9933e69d8d9480136d2536f62b174dc83889</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\definitions.h</file>
-         <hash>22a43009d60afc9de33821048456bdf2855e23c0fa92e876f91ace85f09f367f</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\classb\classb.c</file>
-         <hash>eaeee4137776a3252c59669a62b86ef1c7bb161c5724dfdfa91fc922e187297d</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\osal\osal_impl_basic.h</file>
-         <hash>0c388837ef1d4e207a028ed31bfe07f1aac7ea8b0505caff58f737667ccbeaee</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\classb\classb_clock_test.c</file>
-         <hash>afea0d501fef0a2c2b55f840be5f510a943b8588370d9c57341e1390c4b0c34c</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\peripheral\uart\plib_uart1.c</file>
-         <hash>4375949bb133698f62b83e9d931d46da45db4d9fccb738a2b294e08c3fb82ec9</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\system\console\src\sys_console.c</file>
-         <hash>40aa2013385ec344c267d5779ef941d663ecc0739ebe962ad906324e71666c43</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\system\console\src\sys_console_local.h</file>
-         <hash>024a0b50ea2fea72b964b8209fb256b5df6693badd320485821e7912c5eebb25</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\peripheral\nvm\plib_nvm.h</file>
-         <hash>0d8aaf0054c6b03cb7c7d256a07a28c6460211ec1553649cd45957595f215a4f</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\classb\classb_sram_algorithm.h</file>
-         <hash>7ef266b0c56bb06861ac8ab3cf16d0074fb624bc6073b879a52083f49e5eeda0</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\classb\classb_flash_test.c</file>
-         <hash>e1bb98107812d04a889863faff96e26a9490ebb653d426dfaf9060d5cad0cd11</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\classb\classb_result_management.h</file>
-         <hash>87db4d14fd4b9d7d5366b1a9ed1ed0f098f19c5d25ca54d73df49406be9db459</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\peripheral\clk\plib_clk.h</file>
-         <hash>b840fefdf4043774246f3e05833181661d24f1fc8c1249f3ea3250f0e6606232</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\peripheral\clk\plib_clk.c</file>
-         <hash>89499662a7cab939e642ce78c26cf9ed0f940dd0378d8f9f3d128942a9dad857</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\classb\classb.h</file>
-         <hash>8cebead327375c8e7560dbecb3e5ecd17c2c47894778a6259be08511fca75c08</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\pmu_init.c</file>
-         <hash>20186aeedbab688e197d056d8650cb2fd4fbd19ec307fb69d31f065726fb8fbf</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\system\int\sys_int.h</file>
-         <hash>c6ec8fc3c7ad1fa570998b9f65cb37fba4364ab07c3869f2d6cb30612a8a91e8</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\user.h</file>
-         <hash>451e0878e9fcf6cf9fab046c1452ea662757988346c7f39e6bc98478ca25f995</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\classb\classb_cpu_reg_test_asm.S</file>
-         <hash>379c97c8b32c6598cb59c814692f727915fd60ce2ba0fe7186d4dbc3b3bb8b57</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\driver\driver_common.h</file>
-         <hash>5217965f6720b4fdf717e99ce9df4f2c9fbd82bbbc9655847166d1eefa806fee</hash>
-      </entry>
-      <entry>
-         <file>..\src\app.h</file>
-         <hash>8e35d8509552a4d1d6e6f123ad75694cf784a707f7dac592ed33b55121aa8e28</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\classb\classb_flash_test.h</file>
-         <hash>183d61363e616cc170cfad5e2939f5dfd33564faa3dbbd2c054215a3e769e273</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\exceptions.c</file>
-         <hash>c7f83f167acb4cd93e430dd7eb6a3d13194218fdad1d75c129783ede94db1723</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\peripheral\uart\plib_uart_common.h</file>
-         <hash>90d1791d0855caa86d5d529a0ba209330f20cd0da2436950a7e71b38ef8da02b</hash>
-      </entry>
+   <generatedFileHashHistoryMap class="java.util.TreeMap">
       <entry>
          <file>..\src\app.c</file>
          <hash>632c78c323cb9f8c6359f20337440c08f8461eb4b0304552b6a3cfd5c4052620</hash>
       </entry>
       <entry>
-         <file>..\src\config\pic32mzw1\classb\classb_cpu_reg_test.h</file>
-         <hash>3413adfa13d1ec72cf109601f2277440f21426d328b15a1e39364fe5cb2d7b01</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\toolchain_specifics.h</file>
-         <hash>84276afca06869943bba17727ff4f41fea61e4f81329ee20a333cafe39562a73</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\classb\classb_cpu_reg_test.c</file>
-         <hash>621769b986af9beb7f756aaa13220bbbe538ed0aab7fdd6ef2fa9e673f694890</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\p32MZ1025W104132.ld</file>
-         <hash>faa9c359cf4e7de76330fc14ead3392b11c9019b93afdc81801c1f48cc737b50</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\peripheral\evic\plib_evic.c</file>
-         <hash>f3ba0aa95272411c0986d62e4c0e35e08df392ad1f4e8631d1cc51ad5edf5dac</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\classb\classb_interrupt_test.h</file>
-         <hash>2b089756445ef51b528d2d22ad10e589f0c1414343a9a33000c3d8b6a893b0be</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\classb\classb_interrupt_test.c</file>
-         <hash>52e2580ff5defa888ae3050b2f4248f757f63c71003b9fe269baf155ab2dca58</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\peripheral\evic\plib_evic.h</file>
-         <hash>d7afeb65efc7a50e33b620590feed760e0a1478f326ba8aa87546a1483764079</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\system\system_module.h</file>
-         <hash>981fac23277aa77f682e7a9a28d436f892006cd5b4c7f23f50941b6d9a30e740</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\tasks.c</file>
-         <hash>a0a5635725958e3d6fa49acab203bcbcd065ee9cad515933082afc40cde5201e</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\interrupts.h</file>
-         <hash>91abdb8d191ae865fc6082f30783c3d6cca8aa8d5aca823a7fb2cc65e3a57d24</hash>
+         <file>..\src\app.h</file>
+         <hash>8e35d8509552a4d1d6e6f123ad75694cf784a707f7dac592ed33b55121aa8e28</hash>
       </entry>
       <entry>
          <file>..\src\config\pic32mzw1\bsp\bsp.c</file>
@@ -2287,107 +2134,267 @@
       </entry>
       <entry>
          <file>..\src\config\pic32mzw1\bsp\bsp.h</file>
-         <hash>42339c30dd1a689dfc8e2213fd7551e3acbde1b6945dc69f87349a7a943e0752</hash>
+         <hash>be14e503762949aa6c787d012b9c3499227c7530a994b65aad9828ef1b4a0350</hash>
       </entry>
       <entry>
-         <file>..\src\config\pic32mzw1\system\int\sys_int_mapping.h</file>
-         <hash>771b853250bfb05ceac0f525749007ca1d4478e660c13f6a7b7e8fe28eefcf75</hash>
+         <file>..\src\config\pic32mzw1\classb\classb.c</file>
+         <hash>eaeee4137776a3252c59669a62b86ef1c7bb161c5724dfdfa91fc922e187297d</hash>
       </entry>
       <entry>
-         <file>..\src\config\pic32mzw1\classb\classb_result_management.S</file>
-         <hash>ea584125c9eefee154f21ce4730a73392e2d9ec379f60516f2d9aa4bf302d8e5</hash>
+         <file>..\src\config\pic32mzw1\classb\classb.h</file>
+         <hash>8cebead327375c8e7560dbecb3e5ecd17c2c47894778a6259be08511fca75c08</hash>
       </entry>
       <entry>
-         <file>..\src\config\pic32mzw1\initialization.c</file>
-         <hash>1a30cb717a09255e38b947f326d373f321e651f940dc1643d82c8db1a53d5b97</hash>
+         <file>..\src\config\pic32mzw1\classb\classb_clock_test.c</file>
+         <hash>afea0d501fef0a2c2b55f840be5f510a943b8588370d9c57341e1390c4b0c34c</hash>
       </entry>
       <entry>
-         <file>..\src\config\pic32mzw1\interrupts.c</file>
-         <hash>b0ffa1fbd32c34039a90c785317820080e31eb9366004be9208a354a5a32eb9d</hash>
+         <file>..\src\config\pic32mzw1\classb\classb_clock_test.h</file>
+         <hash>9ef95b6339f55360ba3912eb497a78a154bfe9aef7002edf56c24671ae9db1a7</hash>
       </entry>
       <entry>
          <file>..\src\config\pic32mzw1\classb\classb_common.h</file>
          <hash>158299b4f2baf80eb19d4879eb7e5820198b72664cb9f15167d392d03424e692</hash>
       </entry>
       <entry>
-         <file>..\src\config\pic32mzw1\classb\classb_io_pin_test.c</file>
-         <hash>75ed9b678b21686b5f70fc3764caddd0fe776d6949c5dce23400bb5307248080</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\osal\osal_definitions.h</file>
-         <hash>0a5ca28c4812bb37babfebc1fe30a90b13583504d81910ad159feb746a5b002c</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\configuration.h</file>
-         <hash>c7eeba9089497b4219155f7052c5622686de0a1b34b97aff5bd9a440a28ae481</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\stdio\xc32_monitor.c</file>
-         <hash>858f8710d4287200a5ee7f3b3ad7c24f505aed9c05c16956ab0ff9f7bb162a6a</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\osal\osal.h</file>
-         <hash>d42702188d00d3e1d7219d7eef030485896bf8b5ebe55318656e82f0fbb89788</hash>
-      </entry>
-      <entry>
          <file>..\src\config\pic32mzw1\classb\classb_cpu_pc_test.c</file>
          <hash>7c2b36393b386c5308eccaa7cc1bcc60aede2b4279d6f6af24b3a4f0c3a641c6</hash>
       </entry>
       <entry>
-         <file>..\src\config\pic32mzw1\peripheral\gpio\plib_gpio.h</file>
-         <hash>6790434a0a01d46089c12e39a77722c274135303c73192e0d1961e08f13d4d02</hash>
+         <file>..\src\config\pic32mzw1\classb\classb_cpu_reg_test.c</file>
+         <hash>621769b986af9beb7f756aaa13220bbbe538ed0aab7fdd6ef2fa9e673f694890</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\classb\classb_cpu_reg_test.h</file>
+         <hash>3413adfa13d1ec72cf109601f2277440f21426d328b15a1e39364fe5cb2d7b01</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\classb\classb_cpu_reg_test_asm.S</file>
+         <hash>379c97c8b32c6598cb59c814692f727915fd60ce2ba0fe7186d4dbc3b3bb8b57</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\classb\classb_flash_test.c</file>
+         <hash>e1bb98107812d04a889863faff96e26a9490ebb653d426dfaf9060d5cad0cd11</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\classb\classb_flash_test.h</file>
+         <hash>183d61363e616cc170cfad5e2939f5dfd33564faa3dbbd2c054215a3e769e273</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\classb\classb_interrupt_test.c</file>
+         <hash>52e2580ff5defa888ae3050b2f4248f757f63c71003b9fe269baf155ab2dca58</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\classb\classb_interrupt_test.h</file>
+         <hash>2b089756445ef51b528d2d22ad10e589f0c1414343a9a33000c3d8b6a893b0be</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\classb\classb_io_pin_test.c</file>
+         <hash>75ed9b678b21686b5f70fc3764caddd0fe776d6949c5dce23400bb5307248080</hash>
       </entry>
       <entry>
          <file>..\src\config\pic32mzw1\classb\classb_io_pin_test.h</file>
          <hash>757469de67e5fd37b5a16df51d8f685edb1ec6a3155ab884a52888530bc586d7</hash>
       </entry>
       <entry>
-         <file>..\src\config\pic32mzw1\system\system_common.h</file>
-         <hash>0dbf2f60b29c97426e70187bc59c652ab5a355f51cfbe3f195ff1c8c6c0b1602</hash>
+         <file>..\src\config\pic32mzw1\classb\classb_result_management.S</file>
+         <hash>ea584125c9eefee154f21ce4730a73392e2d9ec379f60516f2d9aa4bf302d8e5</hash>
       </entry>
       <entry>
-         <file>..\src\config\pic32mzw1\system\int\src\sys_int.c</file>
-         <hash>ff706bb4bde7b62a65b603efea8bab8b5a7d9a1a2c1cb2a9e981d68bbf20f764</hash>
+         <file>..\src\config\pic32mzw1\classb\classb_result_management.h</file>
+         <hash>87db4d14fd4b9d7d5366b1a9ed1ed0f098f19c5d25ca54d73df49406be9db459</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\classb\classb_sram_algorithm.c</file>
+         <hash>ddc720b6c9ff4555629e486df30bdbf264cabf0ed253df3c6b2e64adc211bdf7</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\classb\classb_sram_algorithm.h</file>
+         <hash>7ef266b0c56bb06861ac8ab3cf16d0074fb624bc6073b879a52083f49e5eeda0</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\classb\classb_sram_test.c</file>
+         <hash>ca0d4d5f5a0429b4d407df0bc453588e4deaaad740cae1bbd23c23f4c8b9df16</hash>
       </entry>
       <entry>
          <file>..\src\config\pic32mzw1\classb\classb_sram_test.h</file>
          <hash>73a258f9b09ee8a6ee095f17ec34840858cf1301b5f9d1f70bb6d6e7497978b7</hash>
       </entry>
       <entry>
-         <file>..\src\config\pic32mzw1\peripheral\gpio\plib_gpio.c</file>
-         <hash>217531449a16f82577b69991c2ebd59d083910234a6bff9f84c8796a8f56ed53</hash>
+         <file>..\src\config\pic32mzw1\configuration.h</file>
+         <hash>104d614f221aeece68cc421a5d6ca0121398972aee4ad1407ad3bfd4b2ec1361</hash>
       </entry>
       <entry>
-         <file>..\src\config\pic32mzw1\system\debug\sys_debug.h</file>
-         <hash>16fbc4bbf026e4713e9b835b1511411e053aaf92ab7d6a000638630576fe92b3</hash>
-      </entry>
-      <entry>
-         <file>..\src\config\pic32mzw1\system\console\src\sys_console_uart.c</file>
-         <hash>ac0304a177b5e152c80d648da5f5cd87f7d926814f093131b76142c41fde6473</hash>
+         <file>..\src\config\pic32mzw1\definitions.h</file>
+         <hash>9809d64dd9d80ebb111267e66e59cb8b4848368272e321fac4fbd5b79ce28625</hash>
       </entry>
       <entry>
          <file>..\src\config\pic32mzw1\device.h</file>
          <hash>10ec93c43a7b158a129ae05bd8f4a59ff5bcf3d0f3f062fdd64c374bc2d42099</hash>
       </entry>
       <entry>
-         <file>..\src\config\pic32mzw1\system\console\sys_console.h</file>
-         <hash>e8a97986345fb2c80389834b113384eba523837ee43f7798d9b56be630a6e7b3</hash>
+         <file>..\src\config\pic32mzw1\driver\driver.h</file>
+         <hash>042fdd289460dbddb8e805850af7e3ac9aea95468e37414959781ebc5b2f454d</hash>
       </entry>
       <entry>
-         <file>..\src\config\pic32mzw1\system\console\src\sys_console_uart_definitions.h</file>
-         <hash>0b8c26a32e6ab6cb50039434ed379044bfa539b4ed2ed4b65a281d943a8868d8</hash>
+         <file>..\src\config\pic32mzw1\driver\driver_common.h</file>
+         <hash>5217965f6720b4fdf717e99ce9df4f2c9fbd82bbbc9655847166d1eefa806fee</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\exceptions.c</file>
+         <hash>d8d867098b4578d1c8221d25728bd2ea5d88c688fddda30d355fa7a5fb952de1</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\initialization.c</file>
+         <hash>ab463733989a13ed4d44d3582ea25108988b6f1d3adbb43e9a36b484154a3313</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\interrupts.c</file>
+         <hash>a6f63dad297c6e02ba713d73ef00795a7b34a1b23399a6fbb013ebfa22241479</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\interrupts.h</file>
+         <hash>9f6b86a82010e8ca9897586267026bc7cff25862fb6a87be183d91a6ee423eb9</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\osal\osal.h</file>
+         <hash>1cfe3b61d9693b2369922041eef33fe16b3c1ccd9c85d4ded808b805f90a869c</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\osal\osal_definitions.h</file>
+         <hash>5f0a2513a093b6d228e2b50646b204923a82047335a47f3d35a2938309ab6f37</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\osal\osal_impl_basic.h</file>
+         <hash>65e68edbc0320d0407399f65e6d06ff7e6d3d7697231cf1fe0a1fdf1d65f0463</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\p32MZ1025W104132.ld</file>
+         <hash>35861b67340e3270f2fcd1f7581d11a2a4d11e78db12c06e5551f8cbace1e5a8</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\peripheral\clk\plib_clk.c</file>
+         <hash>d937b448ba008c194cef456f03e21910e81c44d166ea18354b2e5c664ff66e1c</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\peripheral\clk\plib_clk.h</file>
+         <hash>e898efaccaf25a733d0de02c3ccac5011ea50f04fa4c24fe4790d16f64d15e17</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\peripheral\evic\plib_evic.c</file>
+         <hash>8a934b19febd15a68e4355da139e8562c33af2fe6b202da3482b7dc3749d5399</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\peripheral\evic\plib_evic.h</file>
+         <hash>61f076457c5302ca6a2c990e31e4a588ae923795991315f68dd937bc31af9168</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\peripheral\gpio\plib_gpio.c</file>
+         <hash>8e326cf96303e6ec05b2117c5b3e9c3a19477abf862a2a92a639ed2963251ef0</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\peripheral\gpio\plib_gpio.h</file>
+         <hash>d948ef00390595e19a1e77ad885d2e6b89fd259ab927e9a33b90b90a7c182462</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\peripheral\nvm\plib_nvm.c</file>
+         <hash>8f9c4847fe39537770fcd2e9bdf2c316197228da667ecde963de89f872510097</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\peripheral\nvm\plib_nvm.h</file>
+         <hash>0d8aaf0054c6b03cb7c7d256a07a28c6460211ec1553649cd45957595f215a4f</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\peripheral\uart\plib_uart1.c</file>
+         <hash>78a1584a07f2026386b7b244aaab2c02dbe3e78b39d064e3b3b6d62f7fea4b7b</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\peripheral\uart\plib_uart1.h</file>
+         <hash>f6725b015f87425815e91b2b86b6a5baedef19d163f51616fabe72a43da79aad</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\peripheral\uart\plib_uart_common.h</file>
+         <hash>70213cd740b3ff9a591d93ad6aac9493335851db084dd862275effacdebf710d</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\pmu_init.c</file>
+         <hash>70937443833ec65619bf2d685fce49cde38145bed57c625401be7fc8b26192c6</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\stdio\xc32_monitor.c</file>
+         <hash>858f8710d4287200a5ee7f3b3ad7c24f505aed9c05c16956ab0ff9f7bb162a6a</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\sys_tasks.h</file>
+         <hash>21f254f497a18a024cd00128d06c4776c2643f867a460c1ba9880a7dd41a8d56</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\system\console\src\sys_console.c</file>
+         <hash>622a27844a650b4fa265c7a4739ba3768a76e4148600be42e44eec2e0673d7c6</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\system\console\src\sys_console_local.h</file>
+         <hash>024a0b50ea2fea72b964b8209fb256b5df6693badd320485821e7912c5eebb25</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\system\console\src\sys_console_uart.c</file>
+         <hash>ff3d1854f469e4fc41d96adce6f7ec38afad5d1b076c295eb4777936777673d0</hash>
       </entry>
       <entry>
          <file>..\src\config\pic32mzw1\system\console\src\sys_console_uart.h</file>
          <hash>690c74d55c9204f3e3d621635257df1de1c89f097671a678c359f5e24461589a</hash>
       </entry>
       <entry>
-         <file>..\src\main.c</file>
-         <hash>d3c233d419e6304bfacbafc18cc68c0f5c26e365f23b20ea40ccfac458f664c5</hash>
+         <file>..\src\config\pic32mzw1\system\console\src\sys_console_uart_definitions.h</file>
+         <hash>bf403c11673266a5a861fd99253c377030c1a7f9e912eef446101e416b4f8c9a</hash>
       </entry>
       <entry>
-         <file>..\src\config\pic32mzw1\classb\classb_sram_test.c</file>
-         <hash>ca0d4d5f5a0429b4d407df0bc453588e4deaaad740cae1bbd23c23f4c8b9df16</hash>
+         <file>..\src\config\pic32mzw1\system\console\sys_console.h</file>
+         <hash>cc82ba93f8d69bf31a9dfcfe1e425de3924bcf9e4e4b31f7efad9c2d062dcbf6</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\system\debug\sys_debug.h</file>
+         <hash>aa94da8f32cbcb40672145542d149d077ff8f4b25c08d47d53e3d206d1c6bb83</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\system\int\src\sys_int.c</file>
+         <hash>30ac5e334ca90204f545f1ab769ae26f421b910b3fb3be99354b364febceee64</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\system\int\sys_int.h</file>
+         <hash>2c878ab7ff41ae56b5c0c3c94929ad66eb87b8660bf9a439177d049e8ad8f8c8</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\system\int\sys_int_mapping.h</file>
+         <hash>a2dcf05575becc98aa212af1d220eda07487bd645d82c4d7a980aa3a22384cf3</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\system\system.h</file>
+         <hash>2b75f8e370e5cb2c54f70da7351ee149f0d5a7673e700f39b373099716b31b55</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\system\system_common.h</file>
+         <hash>c9f34bd226f8efab12f5766e77f8355996cd0430b50e0f6ee30258664c494984</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\system\system_module.h</file>
+         <hash>96c74368801b0a7aaa25aec3ec2cb0d483250385f103ffc1ff64089b4ca2c6d9</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\tasks.c</file>
+         <hash>2c5b7b5402eb402d88e04c31c98e2f5c68367dcf6c85d154ce695d6356b0b7c2</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\toolchain_specifics.h</file>
+         <hash>fd2fc7bbe60706409cc0c0a525825c0194f6f71adc0a89e6310041f06dc2f645</hash>
+      </entry>
+      <entry>
+         <file>..\src\config\pic32mzw1\user.h</file>
+         <hash>451e0878e9fcf6cf9fab046c1452ea662757988346c7f39e6bc98478ca25f995</hash>
+      </entry>
+      <entry>
+         <file>..\src\main.c</file>
+         <hash>d3c233d419e6304bfacbafc18cc68c0f5c26e365f23b20ea40ccfac458f664c5</hash>
       </entry>
    </generatedFileHashHistoryMap>
 </config>
